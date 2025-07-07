@@ -1,0 +1,16 @@
+import typescript from "@rollup/plugin-typescript";
+
+export default {
+  input: "src/index.ts",
+  output: {
+    file: "dist/bundle.js",
+    format: "umd",
+    name: "knowledgeGraph",
+    globals: {
+      d3: "d3",
+      "d3-quadtree": "d3",
+    },
+  },
+  external: ["d3", "d3-quadtree"],
+  plugins: [typescript()],
+};
