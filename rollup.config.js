@@ -1,4 +1,5 @@
 import typescript from "@rollup/plugin-typescript";
+import copy from "rollup-plugin-copy";
 
 export default {
   input: "src/index.ts",
@@ -13,5 +14,10 @@ export default {
     },
   },
   external: ["d3", "d3-quadtree", "@adaptivekind/graph-schema"],
-  plugins: [typescript()],
+  plugins: [
+    typescript(),
+    copy({
+      targets: [{ src: "src/themes/default.css", dest: "dist/default.css" }],
+    }),
+  ],
 };
