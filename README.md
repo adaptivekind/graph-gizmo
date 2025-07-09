@@ -2,6 +2,8 @@
 
 A D3.js-based knowledge graph visualization library built with TypeScript.
 
+![Example Graph](docs/images/example-graph.png)
+
 ## Features
 
 - Interactive graph visualization using D3.js
@@ -85,23 +87,6 @@ npm run test:watch    # Watch mode
 npm run lint          # Check code style
 npm run lint:fix      # Fix issues
 ```
-
-## API Reference
-
-### Core Functions
-
-- `render(rootId, data, configuration, svg)` - Render a graph
-- `defaultConfiguration(options)` - Get default configuration
-- `builder()` - Create graph data builder
-- `getDistance(graph, sourceId, targetId)` - Calculate shortest distance between nodes
-- `collideRectangle()` - Collision detection utility
-- `itemName()` - Item naming utility
-
-### Types
-
-- `GraphConfiguration` - Configuration options
-- `PresentationGraph` - Graph data structure
-- `GardenSimulation` - Simulation state
 
 ## License
 
