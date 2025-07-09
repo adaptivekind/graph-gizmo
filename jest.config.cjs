@@ -6,6 +6,7 @@ const config = {
   },
   testEnvironment: "jsdom",
   testMatch: ["**/*.test.ts"],
+  setupFiles: ["<rootDir>/test/setup.jest.ts"],
   globals: {
     TextEncoder: require("util").TextEncoder,
     TextDecoder: require("util").TextDecoder,
