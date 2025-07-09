@@ -289,7 +289,7 @@ const render = (
   start: string,
   data: Graph,
   config: Partial<DefaultConfigurationParameters>,
-  svgId: string,
+  containerSelector: string,
   window?: any,
   providedGraphElement?: GraphSelect,
   callback: (name: string, event: MouseEvent) => void = () => {},
@@ -301,7 +301,7 @@ const render = (
     ...config,
   });
   if (fullConfig.debug) {
-    renderDebugPanel(document, svgId, fullConfig);
+    renderDebugPanel(document, containerSelector, fullConfig);
   }
 
   const graphElement: GraphSelect = ((): GraphSelect => {
@@ -312,8 +312,10 @@ const render = (
     svg.setAttribute("width", width);
     svg.setAttribute("height", height);
     svg.classList.add("linkGraph");
-    document.getElementById(svgId)?.appendChild(svg);
-    const _graphElement: GraphSelect = d3.select(`#${svgId} svg.linkGraph`);
+    document.querySelector(containerSelector)?.appendChild(svg);
+    const _graphElement: GraphSelect = d3.select(
+      `${containerSelector} svg.linkGraph`,
+    );
     _graphElement.attr("viewBox", `0 0 ${width} ${height}`);
     return _graphElement;
   })();

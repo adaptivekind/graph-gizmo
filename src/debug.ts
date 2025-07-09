@@ -2,7 +2,7 @@ import { GraphConfiguration } from "./types";
 
 export const renderDebugPanel = (
   document: Document,
-  elementId: string,
+  containerSelector: string,
   config: GraphConfiguration,
 ) => {
   const div = document.createElement("div");
@@ -15,5 +15,5 @@ export const renderDebugPanel = (
     `width : ${config.viewWidth} ; height: ${config.viewHeight}`,
   );
   div.appendChild(text);
-  document.getElementById(elementId)?.appendChild(div);
+  document.querySelector(containerSelector)?.appendChild(div);
 };
