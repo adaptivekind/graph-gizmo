@@ -93,6 +93,7 @@ npm run lint:fix      # Fix issues
 - `render(rootId, data, configuration, svg)` - Render a graph
 - `defaultConfiguration(options)` - Get default configuration
 - `builder()` - Create graph data builder
+- `getDistance(graph, sourceId, targetId)` - Calculate shortest distance between nodes
 - `collideRectangle()` - Collision detection utility
 - `itemName()` - Item naming utility
 

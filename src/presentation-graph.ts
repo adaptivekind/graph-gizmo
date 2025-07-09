@@ -4,6 +4,7 @@ import {
   InitialNodeValueMap,
   GraphNodeDatum,
 } from "./types";
+import getDistance from "./distance";
 
 export const createPresentationGraph = (
   root: string,
@@ -15,12 +16,7 @@ export const createPresentationGraph = (
     .flat()
     .filter((value, index, self) => self.indexOf(value) === index);
 
-  const getDepth = (id: string) => {
-    if (root === id) {
-      return 0;
-    }
-    return 1;
-  };
+  const getDepth = (id: string) => getDistance(graph, root, id);
 
   const nodes: GraphNodeDatum[] = [
     ...idsInView.map((id: string) => {
