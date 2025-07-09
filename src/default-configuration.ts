@@ -1,7 +1,7 @@
 import { Link } from "@adaptivekind/graph-schema";
 import { SimulationNodeDatum } from "d3";
 
-import { GraphConfiguration, GraphLink } from "./types";
+import { GraphConfiguration, GraphLink, GraphNode } from "./types";
 const DEPTH_1_RADIUS = 30;
 const boundarySize = DEPTH_1_RADIUS * 4;
 
@@ -47,8 +47,14 @@ const defaultConfiguration = (
     centerForceFactor: Math.min(0.25 * (1100.0 / minDimension) ** 2, 0.3),
     boundarySize,
     depth,
-    getRadius: () => {
-      return 10;
+    getRadius: (d: GraphNode) => {
+      return d.depth === 0
+        ? DEPTH_1_RADIUS
+        : d.depth === 1
+          ? 15
+          : d.depth === 2
+            ? 5
+            : 2;
     },
 
     // How much node repels

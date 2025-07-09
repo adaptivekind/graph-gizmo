@@ -120,7 +120,7 @@ const update = (
         const group = entry
           .append("g")
           .attr("class", function (d: GraphNodeDatum) {
-            return `node`;
+            return `node depth-${d.depth}`;
           })
           .classed("group", true)
           .classed("wanted", (d: GraphNodeDatum) => d.wanted)
@@ -164,7 +164,6 @@ const update = (
       (update) => {
         update
           .classed("hideLabel", (d: GraphNodeDatum) => !d.showLabel)
-          .classed("depth-0", (d: GraphNodeDatum) => d.depth === 0)
           .classed("fixed", (d: GraphNodeDatum) => d.fx !== undefined)
           .select("circle")
           .attr("r", config.getRadius);
@@ -286,9 +285,7 @@ const render = (
   data: Graph,
   config: GraphConfiguration,
   svg: GraphSelect,
-  callback = (name: string, event: MouseEvent) => {
-    console.log(`Linked to ${name} : ${event}`);
-  },
+  callback = (name: string, event: MouseEvent) => {},
 ) => {
   const simulation = createSimulation(config, svg);
   function updateEvent(

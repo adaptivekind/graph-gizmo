@@ -56,7 +56,7 @@ export interface GraphConfiguration {
   maxNodes: number;
 
   depth: number;
-  getRadius: (d: GraphNodeDatum | SimulationNodeDatum) => number;
+  getRadius: (d: GraphNode) => number;
   getCharge: (
     factor: number,
   ) => (d: GraphNodeDatum | SimulationNodeDatum) => number;
