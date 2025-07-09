@@ -287,7 +287,7 @@ const applySimulation = (
 
 const render = (
   graph: Graph,
-  config: Partial<DefaultConfigurationParameters>,
+  config: Partial<DefaultConfigurationParameters> = {},
   providedGraphElement?: GraphSelect,
   callback: (name: string, event: MouseEvent) => void = () => {},
 ) => {
