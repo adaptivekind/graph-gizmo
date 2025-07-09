@@ -75,4 +75,5 @@ export type DefaultConfigurationParameters = {
   viewWidth: number;
   viewHeight: number;
   debug: boolean;
+  start?: string;
 };

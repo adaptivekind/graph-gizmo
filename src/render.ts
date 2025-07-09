@@ -286,8 +286,7 @@ const applySimulation = (
 };
 
 const render = (
-  start: string,
-  data: Graph,
+  graph: Graph,
   config: Partial<DefaultConfigurationParameters>,
   containerSelector: string,
   window?: any,
@@ -327,10 +326,17 @@ const render = (
     d: GraphNodeDatum,
   ): void {
     callback(d.id, event);
-    update(fullConfig, graphElement, simulation, d.id, data, updateEvent);
+    update(fullConfig, graphElement, simulation, d.id, graph, updateEvent);
   }
 
-  update(fullConfig, graphElement, simulation, start, data, updateEvent);
+  update(
+    fullConfig,
+    graphElement,
+    simulation,
+    config.start || Object.keys(graph.nodes)[0],
+    graph,
+    updateEvent,
+  );
   return simulation;
 };
 
