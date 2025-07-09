@@ -1,4 +1,4 @@
-import { Graph } from "@adaptivekind/graph-schema";
+import { builder } from "@adaptivekind/graph-schema";
 import { findAllByText } from "@testing-library/dom";
 import * as d3 from "d3";
 import { BaseType } from "d3";
@@ -9,17 +9,7 @@ import { GraphConfiguration } from "./types";
 
 describe("render graph", () => {
   it("should render OK", async () => {
-    const graph: Graph = {
-      nodes: {
-        foo: {
-          label: "foo",
-        },
-        bar: {
-          label: "bar",
-        },
-      },
-      links: [{ source: "bar", target: "foo" }],
-    };
+    const graph = builder().id("foo").to("bar").id("bar").build();
 
     const graphConfiguration: GraphConfiguration = defaultConfiguration({
       viewWidth: 800,
