@@ -1,4 +1,8 @@
-import { GraphConfiguration, GraphNodeDatum } from "./types";
+import {
+  DefaultConfigurationParameters,
+  GraphConfiguration,
+  GraphNodeDatum,
+} from "./types";
 const DEPTH_1_RADIUS = 30;
 const boundarySize = DEPTH_1_RADIUS * 4;
 
@@ -8,16 +12,12 @@ const linkTypeForceWeight = () => {
 
 const linkDepthForceWeight = () => 1;
 
-type DefaultConfigurationParameters = {
-  viewWidth: number;
-  viewHeight: number;
-};
-
 const defaultConfiguration = (
   parameters: DefaultConfigurationParameters,
 ): GraphConfiguration => {
   const viewHeight = parameters.viewHeight;
   const viewWidth = parameters.viewWidth;
+  const debug = parameters.debug;
   const minDimension = Math.min(viewWidth, viewHeight);
   const xOffset = viewWidth / 2;
   const yOffset = viewHeight / 2;
@@ -25,6 +25,7 @@ const defaultConfiguration = (
   const maxNodes = 300;
 
   return {
+    debug,
     viewHeight,
     viewWidth,
     minDimension,

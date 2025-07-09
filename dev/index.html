@@ -7,30 +7,26 @@
   </head>
 
   <body>
-    <svg id="linkmap" />
+    <div id="linkGraph" />
     <script type="module">
-      import * as d3 from "d3";
-      import * as knowledgeGraph from "/src/index.ts";
+      import * as graphSchema from "@adaptivekind/graph-schema";
+      import * as linkGraph from "/src/index.ts";
 
       window.onload = function () {
-        var svg = d3.select("#linkmap");
-        var width = window.innerWidth;
-        var height = window.innerHeight;
-        svg.attr("viewBox", `0 0 ${width} ${height}`);
-        var data = knowledgeGraph
+        var data = graphSchema
           .builder()
           .many(10, {
             linkCount: 15,
           })
           .build();
-        knowledgeGraph.render(
+        linkGraph.render(
           "baz",
           data,
-          knowledgeGraph.defaultConfiguration({
-            viewWidth: width,
-            viewHeight: height,
-          }),
-          svg,
+          {
+            debug: true,
+          },
+          "linkGraph",
+          window,
         );
       };
     </script>

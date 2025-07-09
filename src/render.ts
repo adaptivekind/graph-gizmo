@@ -10,8 +10,11 @@ import {
   GraphNodeDatum,
   GraphSelect,
   InitialNodeValueMap,
+  DefaultConfigurationParameters,
 } from "./types";
 import { Graph } from "@adaptivekind/graph-schema";
+import { renderDebugPanel } from "./debug";
+import defaultConfiguration from "./default-configuration";
 
 const onNodeMouseOver = (_: MouseEvent, current: GraphNodeDatum) => {
   d3.selectAll<SVGAElement, GraphNodeDatum>(".group")
@@ -285,21 +288,47 @@ const applySimulation = (
 const render = (
   start: string,
   data: Graph,
-  config: GraphConfiguration,
-  svg: GraphSelect,
+  config: Partial<DefaultConfigurationParameters>,
+  svgId: string,
+  window?: any,
+  providedGraphElement?: GraphSelect,
   callback: (name: string, event: MouseEvent) => void = () => {},
 ) => {
-  const simulation = createSimulation(config, svg);
+  const width = window ? window.innerWidth : 100;
+  const height = window ? window.innerHeight : 100;
+  const fullConfig = defaultConfiguration({
+    ...{ viewWidth: width, viewHeight: height, debug: false },
+    ...config,
+  });
+  if (fullConfig.debug) {
+    renderDebugPanel(document, svgId, fullConfig);
+  }
+
+  const graphElement: GraphSelect = ((): GraphSelect => {
+    if (providedGraphElement) {
+      return providedGraphElement;
+    }
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("width", width);
+    svg.setAttribute("height", height);
+    svg.classList.add("linkGraph");
+    document.getElementById(svgId)?.appendChild(svg);
+    const _graphElement: GraphSelect = d3.select(`#${svgId} svg.linkGraph`);
+    _graphElement.attr("viewBox", `0 0 ${width} ${height}`);
+    return _graphElement;
+  })();
+
+  const simulation = createSimulation(fullConfig, graphElement);
   function updateEvent(
     this: HTMLAnchorElement,
     event: MouseEvent,
     d: GraphNodeDatum,
   ): void {
     callback(d.id, event);
-    update(config, svg, simulation, d.id, data, updateEvent);
+    update(fullConfig, graphElement, simulation, d.id, data, updateEvent);
   }
 
-  update(config, svg, simulation, start, data, updateEvent);
+  update(fullConfig, graphElement, simulation, start, data, updateEvent);
   return simulation;
 };
 

@@ -11,17 +11,12 @@ describe("render graph", () => {
   it("should render OK", async () => {
     const graph = builder().id("foo").to("bar").id("bar").build();
 
-    const graphConfiguration: GraphConfiguration = defaultConfiguration({
-      viewWidth: 800,
-      viewHeight: 800,
-    });
-
     const container = document.createElement("svg");
     const svg = d3.select<d3.BaseType, null>(
       container.getRootNode() as BaseType,
     );
 
-    render("foo", graph, graphConfiguration, svg);
+    render("foo", graph, {}, "linkGraph", window, svg);
 
     const fooNode = await findAllByText(container, "foo");
     expect(fooNode).toBeDefined();

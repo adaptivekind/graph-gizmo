@@ -13,7 +13,7 @@
   "license": "MIT",
   "author": "",
   "type": "module",
-  "main": "index.js",
+  "main": "dist/bundle.js",
   "scripts": {
     "build": "rollup -c --bundleConfigAsCjs --failAfterWarnings",
     "build:watch": "rollup -c --bundleConfigAsCjs --watch",
@@ -28,7 +28,7 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@adaptivekind/graph-schema": "^0.1.5",
+    "@adaptivekind/graph-schema": "^0.1.7",
     "@typescript-eslint/eslint-plugin": "^8.36.0",
     "d3": "^7.9.0",
     "d3-quadtree": "^3.0.1",

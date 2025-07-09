@@ -54,6 +54,7 @@ export interface GraphConfiguration {
   chargeForceFactor: number;
   centerForceFactor: number;
   maxNodes: number;
+  debug: boolean;
 
   depth: number;
   getRadius: (d: GraphNodeDatum) => number;
@@ -69,3 +70,9 @@ export type GraphSelect = d3.Selection<
   HTMLElement | null,
   undefined
 >;
+
+export type DefaultConfigurationParameters = {
+  viewWidth: number;
+  viewHeight: number;
+  debug: boolean;
+};

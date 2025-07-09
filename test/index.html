@@ -5,39 +5,23 @@
 
     <script src="../node_modules/d3/dist/d3.js"></script>
     <script src="../node_modules/d3-quadtree/dist/d3-quadtree.js"></script>
+    <script src="../node_modules/@adaptivekind/graph-schema/dist/index.umd.js"></script>
     <script src="../dist/bundle.js"></script>
     <link rel="stylesheet" href="../src/themes/default.css" />
   </head>
 
   <body>
-    <h1>graph smoke test</h1>
-    <svg id="linkmap" />
+    <div id="linkGraph" />
     <script>
       window.onload = function () {
-        var svg = d3.select("#linkmap");
-        var width = window.innerWidth;
-        var height = window.innerHeight;
-        svg.attr("viewBox", `0 0 ${width} ${height}`);
-        var data = {
-          nodes: {
-            foo: {
-              label: "foo",
-            },
-            bar: {
-              label: "bar",
-            },
-          },
-          links: [{ source: "bar", target: "foo" }],
-        };
-        linkGraph.render(
-          "foo",
-          data,
-          linkGraph.defaultConfiguration({
-            viewWidth: width,
-            viewHeight: height,
-          }),
-          svg,
-        );
+        var graph = graphSchema
+          .builder()
+          .many(10, {
+            linkCount: 15,
+          })
+          .build();
+
+        linkGraph.render("foo", graph, {}, "linkGraph", window);
       };
     </script>
   </body>
