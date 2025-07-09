@@ -17,7 +17,7 @@ export default {
   plugins: [
     typescript(),
     copy({
-      targets: [{ src: "src/themes/default.css", dest: "dist/default.css" }],
+      targets: [{ src: "src/themes/default.css", dest: "dist/" }],
     }),
   ],
 };
