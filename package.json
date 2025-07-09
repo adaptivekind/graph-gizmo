@@ -1,14 +1,14 @@
 {
-  "name": "@adaptivekind/knowledge-graph",
+  "name": "@adaptivekind/link-graph",
   "version": "0.0.1",
-  "description": "D3 visualisation of a knowledge graph",
-  "homepage": "https://github.com/ianhomer/knowledge-graph#readme",
+  "description": "D3 visualisation of a link graph",
+  "homepage": "https://github.com/ianhomer/link-graph#readme",
   "bugs": {
-    "url": "https://github.com/ianhomer/knowledge-graph/issues"
+    "url": "https://github.com/adaptivekind/link-graph/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ianhomer/knowledge-graph.git"
+    "url": "git+https://github.com/adaptivekind/link-graph.git"
   },
   "license": "MIT",
   "author": "",

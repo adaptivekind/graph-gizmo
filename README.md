@@ -1,6 +1,6 @@
-# Knowledge Graph
+# Link Graph
 
-A D3.js-based knowledge graph visualization library built with TypeScript.
+A D3.js-based link graph visualization library built with TypeScript.
 
 ![Example Graph](docs/images/example-graph.png)
 
@@ -21,7 +21,7 @@ npm install @adaptivekind/knowledge-graph
 ## Quick Start
 
 ```typescript
-import * as knowledgeGraph from "@adaptivekind/knowledge-graph";
+import * as linkGraph from "@adaptivekind/linkGraph";
 import * as d3 from "d3";
 
 // Create sample data
