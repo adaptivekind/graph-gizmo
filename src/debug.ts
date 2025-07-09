@@ -12,7 +12,7 @@ export const renderDebugPanel = (
   div.style.top = "0;";
   div.style.backgroundColor = "#bbb";
   const text = document.createTextNode(
-    `width : ${config.viewWidth} ; height: ${config.viewHeight}`,
+    `width : ${config.viewWidth} ; height: ${config.viewHeight} `,
   );
   div.appendChild(text);
   document.querySelector(containerSelector)?.appendChild(div);
