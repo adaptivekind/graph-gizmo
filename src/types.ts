@@ -36,32 +36,32 @@ export interface InitialNodeValue {
 export type InitialNodeValueMap = { [key: string]: InitialNodeValue };
 
 export interface GraphConfiguration {
-  viewWidth: number;
-  viewHeight: number;
-  minDimension: number;
-  xOffset: number;
-  yOffset: number;
+  bottomBoundary: number;
   boundarySize: number;
+  centerForceFactor: number;
+  chargeForceFactor: number;
+  container: string;
+  debug: boolean;
+  depth: number;
+  getCharge: (factor: number) => (d: GraphNodeDatum) => number;
+  getLinkForce: (factor: number) => (d: GraphLink) => number;
+  getRadius: (d: GraphNodeDatum) => number;
+  heightText: number;
   leftBoundary: number;
+  linkDepthForceWeight: (link: GraphLink) => number;
+  linkForceFactor: number;
+  linkTypeForceWeight: () => number;
+  maxNodes: number;
+  minDimension: number;
   rightBoundary: number;
   topBoundary: number;
-  bottomBoundary: number;
-  xOffsetText: number;
-  yOffsetText: number;
-  heightText: number;
+  viewHeight: number;
+  viewWidth: number;
   widthText: number;
-  linkForceFactor: number;
-  chargeForceFactor: number;
-  centerForceFactor: number;
-  maxNodes: number;
-  debug: boolean;
-
-  depth: number;
-  getRadius: (d: GraphNodeDatum) => number;
-  getCharge: (factor: number) => (d: GraphNodeDatum) => number;
-  linkTypeForceWeight: () => number;
-  linkDepthForceWeight: (link: GraphLink) => number;
-  getLinkForce: (factor: number) => (d: GraphLink) => number;
+  xOffset: number;
+  xOffsetText: number;
+  yOffset: number;
+  yOffsetText: number;
 }
 
 export type GraphSelect = d3.Selection<
@@ -72,8 +72,9 @@ export type GraphSelect = d3.Selection<
 >;
 
 export type DefaultConfigurationParameters = {
-  viewWidth: number;
-  viewHeight: number;
+  container?: string;
   debug: boolean;
   start?: string;
+  viewHeight: number;
+  viewWidth: number;
 };

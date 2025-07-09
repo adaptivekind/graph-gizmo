@@ -16,7 +16,7 @@ describe("render graph", () => {
       container.getRootNode() as BaseType,
     );
 
-    render(graph, {}, "linkGraph", svg);
+    render(graph, {}, svg);
 
     const fooNode = await findAllByText(container, "foo");
     expect(fooNode).toBeDefined();

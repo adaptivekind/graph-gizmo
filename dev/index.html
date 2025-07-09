@@ -14,14 +14,9 @@
 
       window.onload = function () {
         var graph = graphSchema.builder().many(20).build();
-        gizmo.render(
-          graph,
-          {
-            debug: true,
-          },
-          "#gizmo",
-          window,
-        );
+        gizmo.render(graph, {
+          debug: true,
+        });
       };
     </script>
   </body>

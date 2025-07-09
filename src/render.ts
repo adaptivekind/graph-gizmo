@@ -288,7 +288,6 @@ const applySimulation = (
 const render = (
   graph: Graph,
   config: Partial<DefaultConfigurationParameters>,
-  containerSelector: string,
   providedGraphElement?: GraphSelect,
   callback: (name: string, event: MouseEvent) => void = () => {},
 ) => {
@@ -298,6 +297,7 @@ const render = (
     ...{ viewWidth: width, viewHeight: height, debug: false },
     ...config,
   });
+  const containerSelector = fullConfig.container;
   if (fullConfig.debug) {
     renderDebugPanel(document, containerSelector, fullConfig);
   }
