@@ -2,7 +2,7 @@
   "name": "@adaptivekind/graph-gizmo",
   "version": "0.0.1",
   "description": "D3 interactive visualisation of a nodes and links in a graph",
-  "homepage": "https://github.com/ianhomer/graph-gizmo#readme",
+  "homepage": "https://github.com/adaptivekind/graph-gizmo#readme",
   "bugs": {
     "url": "https://github.com/adaptivekind/graph-gizmo/issues"
   },
