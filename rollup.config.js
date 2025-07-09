@@ -5,7 +5,7 @@ export default {
   output: {
     file: "dist/bundle.js",
     format: "umd",
-    name: "linkGraph",
+    name: "graphGizmo",
     globals: {
       d3: "d3",
       "d3-quadtree": "d3",

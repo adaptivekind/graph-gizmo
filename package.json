@@ -1,14 +1,14 @@
 {
-  "name": "@adaptivekind/link-graph",
+  "name": "@adaptivekind/graph-gizmo",
   "version": "0.0.1",
-  "description": "D3 visualisation of a link graph",
-  "homepage": "https://github.com/ianhomer/link-graph#readme",
+  "description": "D3 interactive visualisation of a nodes and links in a graph",
+  "homepage": "https://github.com/ianhomer/graph-gizmo#readme",
   "bugs": {
-    "url": "https://github.com/adaptivekind/link-graph/issues"
+    "url": "https://github.com/adaptivekind/graph-gizmo/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/adaptivekind/link-graph.git"
+    "url": "git+https://github.com/adaptivekind/graph-gizmo.git"
   },
   "license": "MIT",
   "author": "",

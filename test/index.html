@@ -11,12 +11,12 @@
   </head>
 
   <body>
-    <div id="linkGraph" />
+    <div id="gizmo" />
     <script>
       window.onload = function () {
         var graph = graphSchema.builder().many(15).build();
 
-        linkGraph.render(graph, {}, "#linkGraph", window);
+        graphGizmo.render(graph, {}, "#gizmo", window);
       };
     </script>
   </body>
