@@ -289,7 +289,6 @@ const render = (
   graph: Graph,
   config: Partial<DefaultConfigurationParameters>,
   containerSelector: string,
-  window?: any,
   providedGraphElement?: GraphSelect,
   callback: (name: string, event: MouseEvent) => void = () => {},
 ) => {
@@ -308,8 +307,8 @@ const render = (
       return providedGraphElement;
     }
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    svg.setAttribute("width", width);
-    svg.setAttribute("height", height);
+    svg.setAttribute("width", String(width));
+    svg.setAttribute("height", String(height));
     svg.classList.add("linkGraph");
     document.querySelector(containerSelector)?.appendChild(svg);
     const _graphElement: GraphSelect = d3.select(
