@@ -13,14 +13,9 @@
       import * as linkGraph from "/src/index.ts";
 
       window.onload = function () {
-        var data = graphSchema
-          .builder()
-          .many(10, {
-            linkCount: 15,
-          })
-          .build();
+        var data = graphSchema.builder().many(20).build();
         linkGraph.render(
-          "baz",
+          "foo",
           data,
           {
             debug: true,
