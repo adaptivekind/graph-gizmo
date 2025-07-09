@@ -105,31 +105,21 @@
     <h1>Knowledge Graph - Development</h1>
     <svg id="linkmap" />
     <script type="module">
-      import * as d3 from 'd3';
-      import * as knowledgeGraph from '/src/index.ts';
+      import * as d3 from "d3";
+      import * as knowledgeGraph from "/src/index.ts";
 
       window.onload = function () {
         var svg = d3.select("#linkmap");
         var width = window.innerWidth;
         var height = window.innerHeight;
         svg.attr("viewBox", `0 0 ${width} ${height}`);
-        var data = {
-          nodes: {
-            foo: {
-              label: "foo",
-            },
-            bar: {
-              label: "bar",
-            },
-            baz: {
-              label: "baz",
-            },
-          },
-          links: [
-            { source: "bar", target: "foo" },
-            { source: "baz", target: "foo" }
-          ],
-        };
+        var data = knowledgeGraph
+          .builder()
+          .many(10, {
+            linkCount: 10,
+            linkCluster: 3,
+          })
+          .build();
         knowledgeGraph.render(
           "foo",
           data,

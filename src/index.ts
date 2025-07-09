@@ -1,3 +1,4 @@
+import { builder } from "@adaptivekind/graph-schema";
 import collideRectangle from "./collide-rectangle";
 import defaultConfiguration from "./default-configuration";
 import itemName from "./item-name";
@@ -10,4 +11,4 @@ import {
 
 export type { GardenSimulation, PresentationGraph, GraphConfiguration };
 
-export { collideRectangle, defaultConfiguration, itemName, render };
+export { builder, collideRectangle, defaultConfiguration, itemName, render };
