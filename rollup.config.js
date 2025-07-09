@@ -1,5 +1,6 @@
 import typescript from "@rollup/plugin-typescript";
 import copy from "rollup-plugin-copy";
+import { nodeResolve } from "@rollup/plugin-node-resolve";
 
 export default {
   input: "src/index.ts",
@@ -13,11 +14,12 @@ export default {
       "@adaptivekind/graph-schema": "graphSchema",
     },
   },
-  external: ["d3", "d3-quadtree", "@adaptivekind/graph-schema"],
+  external: ["d3", "d3-quadtree"],
   plugins: [
     typescript(),
     copy({
       targets: [{ src: "src/themes/default.css", dest: "dist/" }],
     }),
+    nodeResolve(),
   ],
 };

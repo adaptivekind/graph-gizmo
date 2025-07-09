@@ -12,7 +12,7 @@ import {
   InitialNodeValueMap,
   DefaultConfigurationParameters,
 } from "./types";
-import { Graph } from "@adaptivekind/graph-schema";
+import { builder, Graph } from "@adaptivekind/graph-schema";
 import { renderDebugPanel } from "./debug";
 import defaultConfiguration from "./default-configuration";
 
@@ -286,7 +286,7 @@ const applySimulation = (
 };
 
 const render = (
-  graph: Graph,
+  graph: Graph | number,
   config: Partial<DefaultConfigurationParameters> = {},
   providedGraphElement?: GraphSelect,
   callback: (name: string, event: MouseEvent) => void = () => {},
@@ -318,6 +318,9 @@ const render = (
     return _graphElement;
   })();
 
+  const actualGraph =
+    typeof graph === "number" ? builder().many(graph).build() : graph;
+
   const simulation = createSimulation(fullConfig, graphElement);
   function updateEvent(
     this: HTMLAnchorElement,
@@ -325,15 +328,22 @@ const render = (
     d: GraphNodeDatum,
   ): void {
     callback(d.id, event);
-    update(fullConfig, graphElement, simulation, d.id, graph, updateEvent);
+    update(
+      fullConfig,
+      graphElement,
+      simulation,
+      d.id,
+      actualGraph,
+      updateEvent,
+    );
   }
 
   update(
     fullConfig,
     graphElement,
     simulation,
-    config.start || Object.keys(graph.nodes)[0],
-    graph,
+    config.start || Object.keys(actualGraph.nodes)[0],
+    actualGraph,
     updateEvent,
   );
   return simulation;

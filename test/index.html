@@ -5,7 +5,6 @@
 
     <script src="../node_modules/d3/dist/d3.js"></script>
     <script src="../node_modules/d3-quadtree/dist/d3-quadtree.js"></script>
-    <script src="../node_modules/@adaptivekind/graph-schema/dist/index.umd.js"></script>
     <script src="../dist/graph-gizmo.js"></script>
     <link rel="stylesheet" href="../src/themes/default.css" />
   </head>
@@ -13,10 +12,7 @@
   <body>
     <div id="gizmo" />
     <script>
-      window.onload = function () {
-        var graph = graphSchema.builder().many(15).build();
-        graphGizmo.render(graph);
-      };
+      graphGizmo.render(15);
     </script>
   </body>
 </html>

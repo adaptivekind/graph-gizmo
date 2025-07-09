@@ -20,33 +20,37 @@ npm install @adaptivekind/knowledge-graph
 
 ## Quick Start
 
-```typescript
-import * as linkGraph from "@adaptivekind/linkGraph";
-import * as d3 from "d3";
+```html
+<!doctype html>
+<html>
+  <head>
+    <title>Graph Gizmo Example</title>
 
-// Create sample data
-const data = knowledgeGraph
-  .builder()
-  .many(4, {
-    linkCount: 5,
-    linkCluster: 3,
-  })
-  .build();
+    <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-quadtree@3.0.1/dist/d3-quadtree.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@adaptivekind/graph-gizmo@0.0.6"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@adaptivekind/graph-gizmo@0.0.6/dist/default.css"
+    />
+  </head>
 
-// Set up SVG
-const svg = d3.select("#my-graph");
-svg.attr("viewBox", "0 0 800 600");
-
-// Render the graph
-knowledgeGraph.render(
-  "root-node",
-  data,
-  knowledgeGraph.defaultConfiguration({
-    viewWidth: 800,
-    viewHeight: 600,
-  }),
-  svg,
-);
+  <body>
+    <div id="gizmo" />
+    <script>
+      graphGizmo.render({
+        nodes: { a: {}, b: {}, c: {}, d: {}, e: {} },
+        links: [
+          { source: "a", target: "b" },
+          { source: "a", target: "c" },
+          { source: "a", target: "d" },
+          { source: "b", target: "c" },
+          { source: "d", target: "e" },
+        ],
+      });
+    </script>
+  </body>
+</html>
 ```
 
 ## Development
