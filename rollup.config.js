@@ -3,7 +3,7 @@ import typescript from "@rollup/plugin-typescript";
 export default {
   input: "src/index.ts",
   output: {
-    file: "dist/bundle.js",
+    file: "dist/graph-gizmo.js",
     format: "umd",
     name: "graphGizmo",
     globals: {
