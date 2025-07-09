@@ -16,7 +16,9 @@
   "main": "index.js",
   "scripts": {
     "build": "rollup -c --bundleConfigAsCjs",
+    "build:watch": "rollup -c --bundleConfigAsCjs --watch",
     "clean": "rimraf tsconfig.tsbuildinfo bundle.js dist .rollup.cache",
+    "start": "vite",
     "eslint": "eslint src --ext .ts",
     "eslint:fix": "eslint src --ext .ts --fix",
     "lint": "npm run eslint",
@@ -50,6 +52,7 @@
     "lint-staged": "^16.1.2",
     "rimraf": "5.0.8",
     "rollup": "^4.18.0",
-    "typescript": "^5.5.3"
+    "typescript": "^5.5.3",
+    "vite": "^7.0.3"
   }
 }

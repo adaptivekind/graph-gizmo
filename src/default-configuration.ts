@@ -47,18 +47,8 @@ const defaultConfiguration = (
     centerForceFactor: Math.min(0.25 * (1100.0 / minDimension) ** 2, 0.3),
     boundarySize,
     depth,
-    getRadius: (d: Node | SimulationNodeDatum) => {
-      if ("depth" in d) {
-        return d.depth === 0
-          ? DEPTH_1_RADIUS
-          : d.depth === 1
-            ? 15
-            : d.depth === 2
-              ? 5
-              : 2;
-      } else {
-        return 2;
-      }
+    getRadius: () => {
+      return 10;
     },
 
     // How much node repels
