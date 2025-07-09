@@ -9,8 +9,9 @@ export default {
     globals: {
       d3: "d3",
       "d3-quadtree": "d3",
+      "@adaptivekind/graph-schema": "graphSchema",
     },
   },
-  external: ["d3", "d3-quadtree"],
+  external: ["d3", "d3-quadtree", "@adaptivekind/graph-schema"],
   plugins: [typescript()],
 };

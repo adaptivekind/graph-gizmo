@@ -1,4 +1,4 @@
-import { Graph, Link } from "@adaptivekind/graph-schema";
+import { Graph } from "@adaptivekind/graph-schema";
 import {
   PresentationGraph,
   InitialNodeValueMap,
@@ -9,7 +9,6 @@ export const createPresentationGraph = (
   root: string,
   graph: Graph,
   initalValues: InitialNodeValueMap,
-  firstTime: boolean,
 ): PresentationGraph => {
   const idsInView = graph.links
     .map((link) => [link.source, link.target])

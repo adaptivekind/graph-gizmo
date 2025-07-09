@@ -1,6 +1,6 @@
 import { SimulationLinkDatum, SimulationNodeDatum } from "d3-force";
 
-export type GardenSimulation = d3.Simulation<SimulationNodeDatum, undefined>;
+export type GardenSimulation = d3.Simulation<GraphNodeDatum, undefined>;
 
 export interface GraphNode {
   id: string;
@@ -56,10 +56,8 @@ export interface GraphConfiguration {
   maxNodes: number;
 
   depth: number;
-  getRadius: (d: GraphNode) => number;
-  getCharge: (
-    factor: number,
-  ) => (d: GraphNodeDatum | SimulationNodeDatum) => number;
+  getRadius: (d: GraphNodeDatum) => number;
+  getCharge: (factor: number) => (d: GraphNodeDatum) => number;
   linkTypeForceWeight: () => number;
   linkDepthForceWeight: (link: GraphLink) => number;
   getLinkForce: (factor: number) => (d: GraphLink) => number;

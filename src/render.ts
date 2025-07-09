@@ -61,7 +61,6 @@ const update = (
     event: MouseEvent,
     d: GraphNodeDatum,
   ) => void,
-  firstTime = true,
 ) => {
   const selectGroup = svg.selectAll<SVGElement, GraphNodeDatum>(".group");
 
@@ -79,7 +78,6 @@ const update = (
     start,
     graph,
     initialValues,
-    firstTime,
   );
 
   function click(
@@ -103,13 +101,13 @@ const update = (
       (entry) =>
         entry
           .append("line")
-          .attr("class", (d: GraphLinkDatum) => `link`)
+          .attr("class", () => `link`)
           .attr("x1", config.xOffset)
           .attr("x2", config.xOffset)
           .attr("y1", config.yOffset)
           .attr("y2", config.yOffset)
           .lower(),
-      (update) => update.attr("class", (d: GraphLinkDatum) => `link`).lower(),
+      (update) => update.attr("class", () => `link`).lower(),
       (exit) => exit.remove(),
     );
 
@@ -178,7 +176,7 @@ const update = (
 
   svg.selectAll<SVGElement, GraphNodeDatum>(".group");
 
-  return applySimulation(config, presentationGraph, svg, simulation, firstTime);
+  return applySimulation(config, presentationGraph, svg, simulation);
 };
 
 const newTick = (svg: GraphSelect, xOffset: number, yOffset: number) => () => {
@@ -207,12 +205,17 @@ const createSimulation = (
 ): GardenSimulation => {
   const tick = newTick(svg, config.xOffset, config.yOffset);
   return d3
-    .forceSimulation()
+    .forceSimulation<GraphNodeDatum>()
     .force(
       "charge",
-      d3.forceManyBody().strength(config.getCharge(config.chargeForceFactor)),
+      d3
+        .forceManyBody<GraphNodeDatum>()
+        .strength(config.getCharge(config.chargeForceFactor)),
     )
-    .force("collide", d3.forceCollide().radius(config.getRadius))
+    .force(
+      "collide",
+      d3.forceCollide<GraphNodeDatum>().radius(config.getRadius),
+    )
     .force(
       "collideRectangle",
       collideRectangle(
@@ -240,7 +243,6 @@ const applySimulation = (
   graph: PresentationGraph,
   svg: GraphSelect,
   simulation: GardenSimulation,
-  firstTime: boolean,
 ) => {
   simulation.nodes(graph.nodes);
   simulation.force(
@@ -285,7 +287,7 @@ const render = (
   data: Graph,
   config: GraphConfiguration,
   svg: GraphSelect,
-  callback = (name: string, event: MouseEvent) => {},
+  callback: (name: string, event: MouseEvent) => void = () => {},
 ) => {
   const simulation = createSimulation(config, svg);
   function updateEvent(
@@ -294,7 +296,7 @@ const render = (
     d: GraphNodeDatum,
   ): void {
     callback(d.id, event);
-    update(config, svg, simulation, d.id, data, updateEvent, false);
+    update(config, svg, simulation, d.id, data, updateEvent);
   }
 
   update(config, svg, simulation, start, data, updateEvent);

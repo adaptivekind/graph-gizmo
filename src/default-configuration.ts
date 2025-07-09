@@ -1,7 +1,4 @@
-import { Link } from "@adaptivekind/graph-schema";
-import { SimulationNodeDatum } from "d3";
-
-import { GraphConfiguration, GraphLink, GraphNode } from "./types";
+import { GraphConfiguration, GraphNodeDatum } from "./types";
 const DEPTH_1_RADIUS = 30;
 const boundarySize = DEPTH_1_RADIUS * 4;
 
@@ -47,7 +44,7 @@ const defaultConfiguration = (
     centerForceFactor: Math.min(0.25 * (1100.0 / minDimension) ** 2, 0.3),
     boundarySize,
     depth,
-    getRadius: (d: GraphNode) => {
+    getRadius: (d: GraphNodeDatum) => {
       return d.depth === 0
         ? DEPTH_1_RADIUS
         : d.depth === 1
@@ -58,15 +55,21 @@ const defaultConfiguration = (
     },
 
     // How much node repels
-    getCharge: (factor: number) => (d: Node | SimulationNodeDatum) => {
-      return -8000 * factor;
+    getCharge: (factor: number) => (d: GraphNodeDatum) => {
+      return d.depth === 0
+        ? -8000 * factor
+        : d.depth === 1
+          ? -4000 * factor
+          : d.depth === 2
+            ? -50 * factor
+            : -5 * factor;
     },
 
     linkTypeForceWeight,
     linkDepthForceWeight,
 
     // How much each link attracts
-    getLinkForce: (factor: number) => (d: GraphLink) =>
+    getLinkForce: (factor: number) => () =>
       factor * linkTypeForceWeight() * linkDepthForceWeight(),
   };
 };

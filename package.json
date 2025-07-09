@@ -15,7 +15,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "build": "rollup -c --bundleConfigAsCjs",
+    "build": "rollup -c --bundleConfigAsCjs --failAfterWarnings",
     "build:watch": "rollup -c --bundleConfigAsCjs --watch",
     "clean": "rimraf tsconfig.tsbuildinfo bundle.js dist .rollup.cache",
     "start": "vite",
