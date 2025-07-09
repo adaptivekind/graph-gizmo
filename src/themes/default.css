@@ -1,0 +1,40 @@
+line {
+  transition: stroke-width 2s;
+  stroke-width: 1;
+}
+
+line.link {
+  stroke: black;
+}
+
+line.active {
+  stroke-width: 3;
+  transition: stroke-width 0s;
+}
+
+.node {
+  fill: #555;
+}
+
+.fixed .node {
+  stroke: #000;
+  fill: #ff0080;
+  fill-opacity: 1;
+}
+
+g.depth-0 {
+  z-index: 100;
+}
+g.depth-1 {
+  z-index: 90;
+}
+g.depth-2 {
+  z-index: 80;
+}
+
+.depth-0 text {
+  font-size: 4em;
+}
+.depth-1 text {
+  font-size: 3em;
+}
