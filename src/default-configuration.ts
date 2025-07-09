@@ -53,17 +53,7 @@ const defaultConfiguration = (
 
     // How much node repels
     getCharge: (factor: number) => (d: Node | SimulationNodeDatum) => {
-      if ("depth" in d) {
-        return d.depth === 0
-          ? -8000 * factor
-          : d.depth === 1
-            ? -4000 * factor
-            : d.depth === 2
-              ? -50 * factor
-              : -5 * factor;
-      } else {
-        return -20 * factor;
-      }
+      return -8000 * factor;
     },
 
     linkTypeForceWeight,

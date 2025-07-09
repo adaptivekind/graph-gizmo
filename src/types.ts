@@ -6,6 +6,7 @@ export interface GraphNode {
   id: string;
   label: string;
   context?: string;
+  depth: number;
   showLabel: boolean;
   wanted: boolean;
 }

@@ -79,6 +79,7 @@ const update = (
     start,
     graph,
     initialValues,
+    firstTime,
   );
 
   function click(
@@ -89,7 +90,7 @@ const update = (
     delete d.fx;
     delete d.fy;
     d3.select(this.parentElement).classed("fixed", false);
-    simulation.restart();
+    simulation.alpha(0.3).restart();
   }
 
   svg
@@ -163,6 +164,7 @@ const update = (
       (update) => {
         update
           .classed("hideLabel", (d: GraphNodeDatum) => !d.showLabel)
+          .classed("depth-0", (d: GraphNodeDatum) => d.depth === 0)
           .classed("fixed", (d: GraphNodeDatum) => d.fx !== undefined)
           .select("circle")
           .attr("r", config.getRadius);
@@ -226,7 +228,7 @@ const createSimulation = (
     )
     .force("forceX", d3.forceX(0).strength(config.centerForceFactor))
     .force("forceY", d3.forceY(0).strength(config.centerForceFactor))
-    .tick(100)
+    .tick(100) // Step forward 100 ticks in the simulation
     .alpha(1)
     .alphaMin(0.0002)
     .alphaDecay(0.03)
@@ -250,11 +252,6 @@ const applySimulation = (
       .strength(config.getLinkForce(config.linkForceFactor)),
   );
 
-  if (!firstTime) {
-    // hack - delay restart otherwise simulation doesn't apply. Not sure why.
-    setTimeout(() => simulation.velocityDecay(0.6).alpha(0.5).restart(), 10);
-  }
-
   function dragstart(this: SVGElement) {
     d3.select(this).classed("fixed", true);
   }
@@ -273,7 +270,7 @@ const applySimulation = (
       config.topBoundary,
       config.bottomBoundary,
     );
-    simulation.alphaTarget(0.001).alphaDecay(0.02).alpha(0.3).restart();
+    simulation.alpha(0.3).restart();
   }
 
   const drag = d3
