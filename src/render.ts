@@ -281,11 +281,6 @@ const applySimulation = (
   container.selectAll<SVGElement, EnrichedNodeDatum>(".group").call(drag);
 };
 
-export interface GraphRenderer {
-  simulation: GraphSimulation;
-  updateConfig: (configUpdate: Partial<GraphConfiguration>) => void;
-}
-
 const render = (
   graph: Graph | number,
   config: Partial<GraphConfiguration> = {},
@@ -297,7 +292,7 @@ const render = (
 
   const width = window ? window.innerWidth : 100;
   const height = window ? window.innerHeight : 100;
-  let fullConfig = defaultConfiguration({
+  const fullConfig = defaultConfiguration({
     ...{ viewWidth: width, viewHeight: height, debug: false },
     ...config,
   });
@@ -339,7 +334,7 @@ const render = (
   }
 
   const updateConfig = (configUpdate: Partial<GraphConfiguration>) => {
-    fullConfig = { ...fullConfig, ...configUpdate };
+    const updatedConfig = { ...fullConfig, ...configUpdate };
 
     // Get the current links from the simulation
     const linkForce = simulation.force("link") as d3.ForceLink<
@@ -348,7 +343,9 @@ const render = (
     >;
     if (linkForce) {
       // Update the link force strength
-      linkForce.strength(fullConfig.getLinkForce(fullConfig.linkForceFactor));
+      linkForce.strength(
+        updatedConfig.getLinkForce(updatedConfig.linkForceFactor),
+      );
     }
 
     // Restart the simulation with new forces
