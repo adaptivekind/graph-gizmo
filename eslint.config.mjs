@@ -36,13 +36,13 @@ export default defineConfig([
     },
 
     rules: {
-      "@typescript-eslint/no-unused-vars": "error",
       "@typescript-eslint/no-explicit-any": "error",
-      "prefer-const": "error",
-      "no-var": "error",
-      "no-undef": "error",
-      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": "error",
       "no-console": "error",
+      "no-undef": "error",
+      "no-unused-vars": "off", // recommended to disable no-unused-vars https://typescript-eslint.io/rules/no-unused-vars/
+      "no-var": "error",
+      "prefer-const": "error",
     },
   },
 ]);
