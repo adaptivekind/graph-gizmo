@@ -5,9 +5,9 @@ import { Node } from "@adaptivekind/graph-schema";
 export type GraphSimulation = d3.Simulation<EnrichedNodeDatum, undefined>;
 
 export interface EnrichedNode extends Node {
-  id: string;
   context?: string;
   depth: number;
+  id: string;
   showLabel: boolean;
   wanted: boolean;
 }
@@ -28,12 +28,12 @@ export interface EnrichedGraph {
 }
 
 export interface InitialNodeValue {
-  x?: number;
-  y?: number;
-  vx?: number;
-  vy?: number;
   fx?: number;
   fy?: number;
+  vx?: number;
+  vy?: number;
+  x?: number;
+  y?: number;
 }
 
 export type InitialNodeValueMap = { [key: string]: InitialNodeValue };
@@ -57,10 +57,12 @@ export interface GraphConfiguration {
   linkDepthForceWeight: (link: EnrichedLink) => number;
   linkForceFactor: number;
   linkTypeForceWeight: () => number;
+  loadAlpine: boolean;
+  loadShoelace: boolean;
   maxNodes: number;
   minDimension: number;
-  rootNode?: string;
   rightBoundary: number;
+  rootNode?: string;
   topBoundary: number;
   velocityDecay: number;
   viewHeight: number;
@@ -70,8 +72,6 @@ export interface GraphConfiguration {
   xOffsetText: number;
   yOffset: number;
   yOffsetText: number;
-  loadShoelace: boolean;
-  loadAlpine: boolean;
 }
 
 export type Canvas = d3.Selection<
