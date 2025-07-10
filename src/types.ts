@@ -36,6 +36,7 @@ export interface InitialNodeValue {
 export type InitialNodeValueMap = { [key: string]: InitialNodeValue };
 
 export interface GraphConfiguration {
+  alphaDecay: number;
   bottomBoundary: number;
   boundarySize: number;
   centerForceFactor: number;
@@ -57,6 +58,7 @@ export interface GraphConfiguration {
   rootNode?: string;
   rightBoundary: number;
   topBoundary: number;
+  velocityDecay: number;
   viewHeight: number;
   viewWidth: number;
   widthText: number;

@@ -1,5 +1,14 @@
 import { GraphConfiguration } from "./types";
 
+const appendConfigValue = (
+  div: HTMLElement,
+  config: GraphConfiguration,
+  name: keyof GraphConfiguration,
+) => {
+  const text = document.createTextNode(`${name} = ${config[name]} ; `);
+  div.appendChild(text);
+};
+
 export const renderDebugPanel = (
   document: Document,
   containerSelector: string,
@@ -12,9 +21,15 @@ export const renderDebugPanel = (
   div.style.top = "0";
   div.style.backgroundColor = "#bbb";
   div.style.width = "500px";
-  const text = document.createTextNode(
-    `width : ${config.viewWidth} ; height: ${config.viewHeight} ; link force factor = ${config.linkForceFactor}`,
+  [
+    "viewWidth",
+    "viewHeight",
+    "linkForceFactor",
+    "chargeForceFactor",
+    "centerForceFactor",
+  ].forEach((name) =>
+    appendConfigValue(div, config, name as keyof GraphConfiguration),
   );
-  div.appendChild(text);
+
   document.querySelector(containerSelector)?.appendChild(div);
 };

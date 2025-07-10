@@ -21,9 +21,12 @@ const defaultConfiguration = (
 
   return {
     ...{
+      alphaDecay: 0.03,
       bottomBoundary: viewHeight - yOffset - boundarySize,
       boundarySize,
-      centerForceFactor: Math.min(0.25 * (1100.0 / minDimension) ** 2, 0.3),
+      centerForceFactor:
+        Math.round(100 * Math.min(0.25 * (1100.0 / minDimension) ** 2, 0.3)) /
+        100,
       chargeForceFactor: 1.2,
       containerSelector: "#gizmo",
       depth,
@@ -36,6 +39,7 @@ const defaultConfiguration = (
       minDimension,
       rightBoundary: viewWidth / 2 - boundarySize,
       topBoundary: -yOffset + boundarySize,
+      velocityDecay: 0.5,
       viewHeight,
       viewWidth,
       widthText: 1500,

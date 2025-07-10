@@ -232,8 +232,8 @@ const createSimulation = (
     .tick(100) // Step forward 100 ticks in the simulation
     .alpha(1)
     .alphaMin(0.0002)
-    .alphaDecay(0.03)
-    .velocityDecay(0.5)
+    .alphaDecay(config.alphaDecay)
+    .velocityDecay(config.velocityDecay)
     .on("tick", tick);
 };
 
@@ -371,6 +371,16 @@ const render = (
       if (forceY) {
         forceY.strength(updatedConfig.centerForceFactor);
       }
+    }
+
+    // Update alpha decay if changed
+    if (configUpdate.alphaDecay !== undefined) {
+      simulation.alphaDecay(updatedConfig.alphaDecay);
+    }
+
+    // Update velocity decay if changed
+    if (configUpdate.velocityDecay !== undefined) {
+      simulation.velocityDecay(updatedConfig.velocityDecay);
     }
 
     // Update the config reference
