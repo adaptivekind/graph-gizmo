@@ -2,6 +2,8 @@
 
 A D3.js-based link graph visualization library built with TypeScript.
 
+See [Live Demo](https://adaptivekind.github.io/graph-gizmo/)
+
 ![Example Graph](docs/images/example-graph.png)
 
 ## Features
