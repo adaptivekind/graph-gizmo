@@ -1,5 +1,5 @@
 import { builder } from "@adaptivekind/graph-schema";
-import { findByRole } from "@testing-library/dom";
+import { findByRole, findByText } from "@testing-library/dom";
 import * as d3 from "d3";
 import { BaseType } from "d3";
 
@@ -10,9 +10,15 @@ describe("render graph", () => {
     const graph = builder().id("foo").to("bar").id("bar").build();
 
     const container = document.createElement("div");
-    render(graph, { configPanel: true, dynamicLoad: false }, container);
+    render(
+      graph,
+      { debug: true, configPanel: true, dynamicLoad: false },
+      container,
+    );
 
-    const panelElement = await findByRole(container, "dialog");
-    expect(panelElement).toBeDefined();
+    expect(await findByRole(container, "dialog")).toBeDefined();
+    expect(
+      await findByText(container, /centerForceFactor = 0.3/),
+    ).toBeDefined();
   });
 });

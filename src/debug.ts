@@ -11,7 +11,7 @@ const appendConfigValue = (
 
 export const renderDebugPanel = (
   document: Document,
-  containerSelector: string,
+  container: Element,
   config: GraphConfiguration,
 ) => {
   const div = document.createElement("div");
@@ -31,5 +31,5 @@ export const renderDebugPanel = (
     appendConfigValue(div, config, name as keyof GraphConfiguration),
   );
 
-  document.querySelector(containerSelector)?.appendChild(div);
+  container.appendChild(div);
 };

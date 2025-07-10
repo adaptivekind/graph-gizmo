@@ -191,9 +191,6 @@ const render = (
     ...config,
   });
   const containerSelector = fullConfig.containerSelector;
-  if (fullConfig.debug) {
-    renderDebugPanel(document, containerSelector, fullConfig);
-  }
 
   const container: Element = (() => {
     if (providedContainer) {
@@ -205,6 +202,10 @@ const render = (
     }
     return container;
   })();
+
+  if (fullConfig.debug) {
+    renderDebugPanel(document, container, fullConfig);
+  }
 
   const canvas: Canvas = withPanAndZoom(
     ((): Canvas => {
