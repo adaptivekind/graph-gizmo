@@ -143,7 +143,7 @@ const update = (
           .append("text")
           .on("mouseover", onNodeMouseOver)
           .on("mouseleave", onNodeMouseLeave)
-          .text((d: EnrichedNodeDatum) => d.label)
+          .text((d: EnrichedNodeDatum) => d.label || d.id)
           .attr("x", config.xOffsetText)
           .attr("y", config.yOffsetText)
           .classed("label", true)

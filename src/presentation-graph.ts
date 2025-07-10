@@ -1,4 +1,4 @@
-import { Graph } from "@adaptivekind/graph-schema";
+import { Graph, Link } from "@adaptivekind/graph-schema";
 import {
   EnrichedGraph as EnrichedGraph,
   InitialNodeValueMap,
@@ -48,10 +48,14 @@ export const createEnrichedGraph = (
 
   return {
     nodes: nodes,
-    links: graph.links.map((link) => {
+    links: graph.links.map((link: Link) => {
       return {
         source: nodesMap[link.source],
         target: nodesMap[link.target],
+        depth: Math.min(
+          nodesMap[link.source].depth,
+          nodesMap[link.target].depth,
+        ),
       };
     }),
   };

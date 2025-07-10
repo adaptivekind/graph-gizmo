@@ -1,10 +1,10 @@
+import { Node } from "@adaptivekind/graph-schema";
 import { SimulationLinkDatum, SimulationNodeDatum } from "d3-force";
 
 export type GraphSimulation = d3.Simulation<EnrichedNodeDatum, undefined>;
 
-export interface EnrichedNode {
+export interface EnrichedNode extends Node {
   id: string;
-  label: string;
   context?: string;
   depth: number;
   showLabel: boolean;
@@ -13,7 +13,9 @@ export interface EnrichedNode {
 
 export interface EnrichedNodeDatum extends SimulationNodeDatum, EnrichedNode {}
 
-export interface EnrichedLink {}
+export interface EnrichedLink {
+  depth: number;
+}
 
 export interface EnrichedLinkDatum
   extends SimulationLinkDatum<EnrichedNodeDatum>,

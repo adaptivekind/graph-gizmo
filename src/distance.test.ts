@@ -1,4 +1,4 @@
-import { getDistance } from "./distance";
+import { getDistance, UNCONNECTED_DISTANCE } from "./distance";
 import { builder } from "@adaptivekind/graph-schema";
 
 describe("getDistance", () => {
@@ -34,11 +34,11 @@ describe("getDistance", () => {
   });
 
   it("should return -1 for non-existent source node", () => {
-    expect(getDistance(testGraph, "X", "A")).toBe(-1);
+    expect(getDistance(testGraph, "X", "A")).toBe(UNCONNECTED_DISTANCE);
   });
 
   it("should return -1 for non-existent target node", () => {
-    expect(getDistance(testGraph, "A", "X")).toBe(-1);
+    expect(getDistance(testGraph, "A", "X")).toBe(UNCONNECTED_DISTANCE);
   });
 
   it("should handle disconnected graph components", () => {
@@ -51,19 +51,19 @@ describe("getDistance", () => {
       .id("D")
       .build();
 
-    expect(getDistance(graph, "A", "C")).toBe(-1);
-    expect(getDistance(graph, "B", "D")).toBe(-1);
+    expect(getDistance(graph, "A", "C")).toBe(UNCONNECTED_DISTANCE);
+    expect(getDistance(graph, "B", "D")).toBe(UNCONNECTED_DISTANCE);
   });
 
   it("should handle empty graph", () => {
     const graph = builder().build();
-    expect(getDistance(graph, "A", "B")).toBe(-1);
+    expect(getDistance(graph, "A", "B")).toBe(UNCONNECTED_DISTANCE);
   });
 
   it("should handle single node graph", () => {
     const graph = builder().id("A").build();
     expect(getDistance(graph, "A", "A")).toBe(0);
-    expect(getDistance(graph, "A", "B")).toBe(-1);
+    expect(getDistance(graph, "A", "B")).toBe(UNCONNECTED_DISTANCE);
   });
 
   it("should handle bidirectional links correctly", () => {

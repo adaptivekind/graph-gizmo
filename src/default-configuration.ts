@@ -1,4 +1,4 @@
-import { GraphConfiguration, EnrichedNodeDatum } from "./types";
+import { GraphConfiguration, EnrichedNodeDatum, EnrichedLink } from "./types";
 const DEPTH_1_RADIUS = 30;
 const boundarySize = DEPTH_1_RADIUS * 4;
 
@@ -6,7 +6,14 @@ const linkTypeForceWeight = () => {
   return 1;
 };
 
-const linkDepthForceWeight = () => 1;
+const linkDepthForceWeight = (link: EnrichedLink) =>
+  link.depth === 0
+    ? 1.0
+    : link.depth === 1
+      ? 1.0
+      : link.depth === 2
+        ? 0.15
+        : 0.08;
 
 const defaultConfiguration = (
   config: Partial<GraphConfiguration>,
@@ -72,8 +79,8 @@ const defaultConfiguration = (
       linkDepthForceWeight,
 
       // How much each link attracts
-      getLinkForce: (factor: number) => () =>
-        factor * linkTypeForceWeight() * linkDepthForceWeight(),
+      getLinkForce: (factor: number) => (d: EnrichedLink) =>
+        factor * linkTypeForceWeight() * linkDepthForceWeight(d),
     },
     ...config,
   };
