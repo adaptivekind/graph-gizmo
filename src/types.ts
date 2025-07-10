@@ -1,3 +1,4 @@
+import * as d3 from "d3";
 import { Node } from "@adaptivekind/graph-schema";
 import { SimulationLinkDatum, SimulationNodeDatum } from "d3-force";
 

@@ -25,6 +25,7 @@ export default defineConfig([
 
     languageOptions: {
       globals: {
+        ...globals.browser,
         ...globals.jest,
         ...globals.node,
       },
@@ -39,7 +40,7 @@ export default defineConfig([
       "@typescript-eslint/no-explicit-any": "off",
       "prefer-const": "error",
       "no-var": "error",
-      "no-undef": "off",
+      "no-undef": "error",
       "no-unused-vars": "off",
       "no-console": "error",
     },
