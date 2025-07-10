@@ -6,13 +6,26 @@
     <script src="../node_modules/d3/dist/d3.js"></script>
     <script src="../node_modules/d3-quadtree/dist/d3-quadtree.js"></script>
     <script src="../dist/graph-gizmo.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.17.1/cdn/themes/light.css"
+    />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.17.1/cdn/shoelace.js"
+    ></script>
+
     <link rel="stylesheet" href="../src/themes/default.css" />
   </head>
 
   <body>
     <div id="gizmo" />
     <script>
-      graphGizmo.render(15);
+      graphGizmo.render(30, { configPanel: true });
     </script>
   </body>
 </html>
