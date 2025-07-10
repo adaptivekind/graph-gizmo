@@ -75,7 +75,7 @@ export interface GraphConfiguration {
 }
 
 export type Canvas = d3.Selection<
-  d3.BaseType,
+  d3.ContainerElement,
   null,
   HTMLElement | null,
   undefined

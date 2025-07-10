@@ -37,7 +37,7 @@ export default defineConfig([
 
     rules: {
       "@typescript-eslint/no-unused-vars": "error",
-      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-explicit-any": "error",
       "prefer-const": "error",
       "no-var": "error",
       "no-undef": "error",

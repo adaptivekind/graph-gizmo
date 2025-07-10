@@ -1,6 +1,18 @@
 import { loadShoelaceAndAlpine } from "./dynamic-loader";
 import { GraphConfiguration } from "./types";
 
+declare global {
+  interface Window {
+    configPanel: () => {
+      linkForceFactor: number;
+      chargeForceFactor: number;
+      centerForceFactor: number;
+      alphaDecay: number;
+      velocityDecay: number;
+    };
+  }
+}
+
 export interface ConfigPanelOptions {
   config: GraphConfiguration;
   container: Element;
@@ -103,7 +115,7 @@ export const createConfigPanel = async (
   container.appendChild(div);
 
   // Initialize Alpine.js data
-  (window as any).configPanel = () => ({
+  window.configPanel = () => ({
     linkForceFactor: config.linkForceFactor,
     chargeForceFactor: config.chargeForceFactor,
     centerForceFactor: config.centerForceFactor,

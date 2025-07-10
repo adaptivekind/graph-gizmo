@@ -211,7 +211,7 @@ const render = (
       svg.setAttribute("width", String(width));
       svg.setAttribute("height", String(height));
       container.appendChild(svg);
-      const _containerSelection = d3.select<d3.BaseType, null>(svg);
+      const _containerSelection = d3.select<d3.ContainerElement, null>(svg);
       _containerSelection.attr("viewBox", `0 0 ${width} ${height}`);
       return _containerSelection;
     })(),
