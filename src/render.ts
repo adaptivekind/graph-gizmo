@@ -65,10 +65,11 @@ const update = (
     d: GraphNodeDatum,
   ) => void,
 ) => {
-  const selectGroup = svg.selectAll<SVGElement, GraphNodeDatum>(".group");
+  const canvas = svg.select("g.canvas");
+  const nodeElements = canvas.selectAll<SVGElement, GraphNodeDatum>(".group");
 
   const initialValues: InitialNodeValueMap = {};
-  selectGroup.data().forEach((node: GraphNodeDatum) => {
+  nodeElements.data().forEach((node: GraphNodeDatum) => {
     initialValues[node.id] = {
       x: safeInitialValue(node.x),
       y: safeInitialValue(node.y),
@@ -94,7 +95,7 @@ const update = (
     simulation.alpha(0.3).restart();
   }
 
-  svg
+  canvas
     .selectAll<SVGLineElement, GraphLinkDatum>(".link")
     .data(
       presentationGraph.links,
@@ -114,7 +115,7 @@ const update = (
       (exit) => exit.remove(),
     );
 
-  selectGroup
+  nodeElements
     .data(presentationGraph.nodes, (d: GraphNodeDatum) => d.id)
     .join(
       (entry) => {
@@ -177,36 +178,42 @@ const update = (
       },
     );
 
-  svg.selectAll<SVGElement, GraphNodeDatum>(".group");
+  canvas.selectAll<SVGElement, GraphNodeDatum>(".group");
 
-  return applySimulation(config, presentationGraph, svg, simulation);
+  return applySimulation(
+    config,
+    presentationGraph,
+    canvas as unknown as GraphSelect,
+    simulation,
+  );
 };
 
-const newTick = (svg: GraphSelect, xOffset: number, yOffset: number) => () => {
-  svg
-    .selectAll<SVGLineElement, GraphLinkDatum>(".link")
-    .attr("x1", (d) => ((d?.source as GraphNodeDatum)?.x ?? 0) + xOffset)
-    .attr("y1", (d) => ((d?.source as GraphNodeDatum)?.y ?? 0) + yOffset)
-    .attr("x2", (d) => ((d?.target as GraphNodeDatum)?.x ?? 0) + xOffset)
-    .attr("y2", (d) => ((d?.target as GraphNodeDatum)?.y ?? 0) + yOffset);
-  svg
-    .selectAll<SVGElement, GraphNodeDatum>(".group")
-    .attr(
-      "transform",
-      (d: GraphNodeDatum) =>
-        "translate(" +
-        (xOffset + (d?.x ?? 0)) +
-        "," +
-        (yOffset + (d?.y ?? 0)) +
-        ")",
-    );
-};
+const newTick =
+  (container: GraphSelect, xOffset: number, yOffset: number) => () => {
+    container
+      .selectAll<SVGLineElement, GraphLinkDatum>(".link")
+      .attr("x1", (d) => ((d?.source as GraphNodeDatum)?.x ?? 0) + xOffset)
+      .attr("y1", (d) => ((d?.source as GraphNodeDatum)?.y ?? 0) + yOffset)
+      .attr("x2", (d) => ((d?.target as GraphNodeDatum)?.x ?? 0) + xOffset)
+      .attr("y2", (d) => ((d?.target as GraphNodeDatum)?.y ?? 0) + yOffset);
+    container
+      .selectAll<SVGElement, GraphNodeDatum>(".group")
+      .attr(
+        "transform",
+        (d: GraphNodeDatum) =>
+          "translate(" +
+          (xOffset + (d?.x ?? 0)) +
+          "," +
+          (yOffset + (d?.y ?? 0)) +
+          ")",
+      );
+  };
 
 const createSimulation = (
   config: GraphConfiguration,
-  svg: GraphSelect,
+  container: GraphSelect,
 ): GardenSimulation => {
-  const tick = newTick(svg, config.xOffset, config.yOffset);
+  const tick = newTick(container, config.xOffset, config.yOffset);
   return d3
     .forceSimulation<GraphNodeDatum>()
     .force(
@@ -244,7 +251,7 @@ const createSimulation = (
 const applySimulation = (
   config: GraphConfiguration,
   graph: PresentationGraph,
-  svg: GraphSelect,
+  container: GraphSelect,
   simulation: GardenSimulation,
 ) => {
   simulation.nodes(graph.nodes);
@@ -282,7 +289,7 @@ const applySimulation = (
     .on("start", dragstart)
     .on("drag", dragged);
 
-  svg.selectAll<SVGElement, GraphNodeDatum>(".group").call(drag);
+  container.selectAll<SVGElement, GraphNodeDatum>(".group").call(drag);
 };
 
 const render = (
@@ -317,6 +324,20 @@ const render = (
     _graphElement.attr("viewBox", `0 0 ${width} ${height}`);
     return _graphElement;
   })();
+
+  let transform = d3.zoomIdentity;
+
+  const canvas = graphElement.append("g").classed("canvas", true);
+
+  const zoom = d3
+    .zoom()
+    .scaleExtent([0.1, 4])
+    .on("zoom", (event) => {
+      transform = event.transform;
+      canvas.attr("transform", transform.toString());
+    });
+
+  (graphElement as any).call(zoom);
 
   const actualGraph =
     typeof graph === "number" ? builder().many(graph).build() : graph;
