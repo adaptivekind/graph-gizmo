@@ -10,7 +10,6 @@ import {
   EnrichedNodeDatum,
   Container,
   InitialNodeValueMap,
-  DefaultConfigurationParameters,
 } from "./types";
 import { builder, Graph } from "@adaptivekind/graph-schema";
 import { renderDebugPanel } from "./debug";
@@ -289,7 +288,7 @@ export interface GraphRenderer {
 
 const render = (
   graph: Graph | number,
-  config: Partial<DefaultConfigurationParameters> = {},
+  config: Partial<GraphConfiguration> = {},
   providedContainer?: Container,
   callback: (name: string, event: MouseEvent) => void = () => {},
 ) => {
@@ -360,7 +359,7 @@ const render = (
     fullConfig,
     container,
     simulation,
-    config.start || Object.keys(actualGraph.nodes)[0],
+    config.rootNode || Object.keys(actualGraph.nodes)[0],
     actualGraph,
     updateEvent,
   );

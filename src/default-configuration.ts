@@ -1,8 +1,4 @@
-import {
-  DefaultConfigurationParameters,
-  GraphConfiguration,
-  EnrichedNodeDatum,
-} from "./types";
+import { GraphConfiguration, EnrichedNodeDatum } from "./types";
 const DEPTH_1_RADIUS = 30;
 const boundarySize = DEPTH_1_RADIUS * 4;
 
@@ -13,10 +9,10 @@ const linkTypeForceWeight = () => {
 const linkDepthForceWeight = () => 1;
 
 const defaultConfiguration = (
-  parameters: DefaultConfigurationParameters,
+  config: Partial<GraphConfiguration>,
 ): GraphConfiguration => {
-  const viewHeight = parameters.viewHeight;
-  const viewWidth = parameters.viewWidth;
+  const viewHeight = config.viewHeight || 100;
+  const viewWidth = config.viewWidth || 100;
   const minDimension = Math.min(viewWidth, viewHeight);
   const xOffset = viewWidth / 2;
   const yOffset = viewHeight / 2;
@@ -31,6 +27,8 @@ const defaultConfiguration = (
       chargeForceFactor: 1.2,
       containerSelector: "#gizmo",
       depth,
+      debug: false,
+      configPanel: false,
       heightText: 60,
       leftBoundary: -viewWidth / 2 + boundarySize,
       linkForceFactor: 1.2,
@@ -38,6 +36,8 @@ const defaultConfiguration = (
       minDimension,
       rightBoundary: viewWidth / 2 - boundarySize,
       topBoundary: -yOffset + boundarySize,
+      viewHeight,
+      viewWidth,
       widthText: 1500,
       xOffset,
       xOffsetText: -35,
@@ -71,7 +71,7 @@ const defaultConfiguration = (
       getLinkForce: (factor: number) => () =>
         factor * linkTypeForceWeight() * linkDepthForceWeight(),
     },
-    ...parameters,
+    ...config,
   };
 };
 
