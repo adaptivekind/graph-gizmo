@@ -10,9 +10,33 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/@adaptivekind/graph-gizmo@0.0.13/dist/default.css"
     />
+    <style>
+      div.banner {
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 9999;
+      }
+      a.github {
+        float: left;
+      }
+      a.github img {
+        width: 50;
+      }
+      div.banner span {
+        padding: 1em;
+        font-size: 150%;
+      }
+    </style>
   </head>
 
   <body>
+    <div class="banner">
+      <span>Graph Gizmo</span>
+      <a class="github" href="https://github.com/adaptivekind/graph-gizmo"
+        ><img src="images/github-mark.png" width="50"
+      /></a>
+    </div>
     <div id="gizmo" />
     <script>
       graphGizmo.render(30, { configPanel: true });
