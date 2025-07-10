@@ -40,7 +40,7 @@ export interface GraphConfiguration {
   boundarySize: number;
   centerForceFactor: number;
   chargeForceFactor: number;
-  container: string;
+  containerSelector: string;
   debug: boolean;
   depth: number;
   getCharge: (factor: number) => (d: EnrichedNodeDatum) => number;

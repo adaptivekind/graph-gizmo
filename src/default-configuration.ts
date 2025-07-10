@@ -29,7 +29,7 @@ const defaultConfiguration = (
       boundarySize,
       centerForceFactor: Math.min(0.25 * (1100.0 / minDimension) ** 2, 0.3),
       chargeForceFactor: 1.2,
-      container: "#gizmo",
+      containerSelector: "#gizmo",
       depth,
       heightText: 60,
       leftBoundary: -viewWidth / 2 + boundarySize,
