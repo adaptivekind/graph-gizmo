@@ -65,11 +65,11 @@ const update = (
     d: GraphNodeDatum,
   ) => void,
 ) => {
-  const container = svg.select("g.graph-container");
-  const selectGroup = container.selectAll<SVGElement, GraphNodeDatum>(".group");
+  const canvas = svg.select("g.canvas");
+  const nodeElements = canvas.selectAll<SVGElement, GraphNodeDatum>(".group");
 
   const initialValues: InitialNodeValueMap = {};
-  selectGroup.data().forEach((node: GraphNodeDatum) => {
+  nodeElements.data().forEach((node: GraphNodeDatum) => {
     initialValues[node.id] = {
       x: safeInitialValue(node.x),
       y: safeInitialValue(node.y),
@@ -95,7 +95,7 @@ const update = (
     simulation.alpha(0.3).restart();
   }
 
-  container
+  canvas
     .selectAll<SVGLineElement, GraphLinkDatum>(".link")
     .data(
       presentationGraph.links,
@@ -115,7 +115,7 @@ const update = (
       (exit) => exit.remove(),
     );
 
-  selectGroup
+  nodeElements
     .data(presentationGraph.nodes, (d: GraphNodeDatum) => d.id)
     .join(
       (entry) => {
@@ -178,12 +178,12 @@ const update = (
       },
     );
 
-  container.selectAll<SVGElement, GraphNodeDatum>(".group");
+  canvas.selectAll<SVGElement, GraphNodeDatum>(".group");
 
   return applySimulation(
     config,
     presentationGraph,
-    container as unknown as GraphSelect,
+    canvas as unknown as GraphSelect,
     simulation,
   );
 };
@@ -327,14 +327,14 @@ const render = (
 
   let transform = d3.zoomIdentity;
 
-  const container = graphElement.append("g").classed("graph-container", true);
+  const canvas = graphElement.append("g").classed("canvas", true);
 
   const zoom = d3
     .zoom()
     .scaleExtent([0.1, 4])
     .on("zoom", (event) => {
       transform = event.transform;
-      container.attr("transform", transform.toString());
+      canvas.attr("transform", transform.toString());
     });
 
   (graphElement as any).call(zoom);
@@ -342,10 +342,7 @@ const render = (
   const actualGraph =
     typeof graph === "number" ? builder().many(graph).build() : graph;
 
-  const simulation = createSimulation(
-    fullConfig,
-    container as unknown as GraphSelect,
-  );
+  const simulation = createSimulation(fullConfig, graphElement);
   function updateEvent(
     this: HTMLAnchorElement,
     event: MouseEvent,
