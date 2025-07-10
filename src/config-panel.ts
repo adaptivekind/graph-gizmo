@@ -1,5 +1,5 @@
-import { GraphConfiguration } from "./types";
 import { loadShoelaceAndAlpine } from "./dynamic-loader";
+import { GraphConfiguration } from "./types";
 
 export interface ConfigPanelOptions {
   config: GraphConfiguration;
@@ -18,7 +18,6 @@ export const createConfigPanel = async (
   // Load Shoelace and Alpine.js dynamically
   if (config.dynamicLoad && (config.loadAlpine || config.loadShoelace)) {
     await loadShoelaceAndAlpine();
-    console.log("X", config);
   }
 
   const div = document.createElement("div");

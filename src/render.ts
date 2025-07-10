@@ -1,10 +1,8 @@
 import * as d3 from "d3";
 
-import collideRectangle from "./collide-rectangle";
 import { createEnrichedGraph } from "./presentation-graph";
 import {
   GraphSimulation,
-  EnrichedGraph,
   GraphConfiguration,
   EnrichedLinkDatum,
   EnrichedNodeDatum,
@@ -251,7 +249,7 @@ const render = (
     onConfigChange: (configUpdate) => {
       updateConfig(configUpdate);
     },
-  }).catch(console.error);
+  });
 
   return simulation;
 };

@@ -23,7 +23,7 @@
     "clean": "rimraf tsconfig.tsbuildinfo bundle.js dist .rollup.cache",
     "start": "vite",
     "eslint": "eslint src --ext .ts",
-    "eslint:fix": "eslint src --ext .ts --fix",
+    "eslint:fix": "eslint --fix src --ext .ts",
     "lint": "npm run eslint",
     "lint:fix": "npm run eslint:fix",
     "test": "jest --no-watchman",
