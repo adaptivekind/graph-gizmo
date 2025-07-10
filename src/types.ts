@@ -1,8 +1,8 @@
 import { SimulationLinkDatum, SimulationNodeDatum } from "d3-force";
 
-export type GardenSimulation = d3.Simulation<GraphNodeDatum, undefined>;
+export type GraphSimulation = d3.Simulation<EnrichedNodeDatum, undefined>;
 
-export interface GraphNode {
+export interface EnrichedNode {
   id: string;
   label: string;
   context?: string;
@@ -11,17 +11,17 @@ export interface GraphNode {
   wanted: boolean;
 }
 
-export interface GraphNodeDatum extends SimulationNodeDatum, GraphNode {}
+export interface EnrichedNodeDatum extends SimulationNodeDatum, EnrichedNode {}
 
-export interface GraphLink {}
+export interface EnrichedLink {}
 
-export interface GraphLinkDatum
-  extends SimulationLinkDatum<GraphNodeDatum>,
-    GraphLink {}
+export interface EnrichedLinkDatum
+  extends SimulationLinkDatum<EnrichedNodeDatum>,
+    EnrichedLink {}
 
-export interface PresentationGraph {
-  nodes: GraphNodeDatum[];
-  links: GraphLinkDatum[];
+export interface EnrichedGraph {
+  nodes: EnrichedNodeDatum[];
+  links: EnrichedLinkDatum[];
 }
 
 export interface InitialNodeValue {
@@ -43,12 +43,12 @@ export interface GraphConfiguration {
   container: string;
   debug: boolean;
   depth: number;
-  getCharge: (factor: number) => (d: GraphNodeDatum) => number;
-  getLinkForce: (factor: number) => (d: GraphLink) => number;
-  getRadius: (d: GraphNodeDatum) => number;
+  getCharge: (factor: number) => (d: EnrichedNodeDatum) => number;
+  getLinkForce: (factor: number) => (d: EnrichedLink) => number;
+  getRadius: (d: EnrichedNodeDatum) => number;
   heightText: number;
   leftBoundary: number;
-  linkDepthForceWeight: (link: GraphLink) => number;
+  linkDepthForceWeight: (link: EnrichedLink) => number;
   linkForceFactor: number;
   linkTypeForceWeight: () => number;
   maxNodes: number;
@@ -64,7 +64,7 @@ export interface GraphConfiguration {
   yOffsetText: number;
 }
 
-export type GraphSelect = d3.Selection<
+export type Container = d3.Selection<
   d3.BaseType,
   null,
   HTMLElement | null,
@@ -72,7 +72,7 @@ export type GraphSelect = d3.Selection<
 >;
 
 export type DefaultConfigurationParameters = {
-  container?: string;
+  containerSelector?: string;
   debug: boolean;
   start?: string;
   viewHeight: number;

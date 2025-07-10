@@ -1,27 +1,29 @@
 import { quadtree, QuadtreeInternalNode, QuadtreeLeaf } from "d3-quadtree";
 
-import { GraphNodeDatum } from "./types";
+import { EnrichedNodeDatum } from "./types";
 
-function x(d: GraphNodeDatum) {
+function x(d: EnrichedNodeDatum) {
   return (d.x ?? 0) + (d.vx ?? 0);
 }
 
-function y(d: GraphNodeDatum) {
+function y(d: EnrichedNodeDatum) {
   return (d.y ?? 0) + (d.vy ?? 0);
 }
 
-function xCenterOfBox(d: GraphNodeDatum, box: number[]) {
+function xCenterOfBox(d: EnrichedNodeDatum, box: number[]) {
   return (d.x ?? 0) + box[0] + box[2] / 2;
 }
 
-function yCenterOfBox(d: GraphNodeDatum, box: number[]) {
+function yCenterOfBox(d: EnrichedNodeDatum, box: number[]) {
   return (d.y ?? 0) + box[1] + box[3] / 2;
 }
 
 // box is [x,y,width,height]
-function apply(d: GraphNodeDatum, box: number[], strength: number) {
+function apply(d: EnrichedNodeDatum, box: number[], strength: number) {
   return (
-    quad: QuadtreeInternalNode<GraphNodeDatum> | QuadtreeLeaf<GraphNodeDatum>,
+    quad:
+      | QuadtreeInternalNode<EnrichedNodeDatum>
+      | QuadtreeLeaf<EnrichedNodeDatum>,
   ) => {
     if (quad.length === 4 || !d) {
       return;
@@ -57,7 +59,7 @@ function apply(d: GraphNodeDatum, box: number[], strength: number) {
 }
 
 export default function (box: number[], strength = 0.4) {
-  let nodes: GraphNodeDatum[];
+  let nodes: EnrichedNodeDatum[];
   let iterations = 1;
   function force() {
     const tree = quadtree(nodes, x, y);
@@ -73,7 +75,7 @@ export default function (box: number[], strength = 0.4) {
     return arguments.length ? ((iterations = +_), force) : iterations;
   };
 
-  force.initialize = (_: GraphNodeDatum[]) =>
+  force.initialize = (_: EnrichedNodeDatum[]) =>
     (nodes = _.filter((node) => node.showLabel));
   return force;
 }

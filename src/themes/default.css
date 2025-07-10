@@ -12,11 +12,11 @@ line.active {
   transition: stroke-width 0s;
 }
 
-.node {
+.point {
   fill: #555;
 }
 
-.fixed .node {
+.fixed .point {
   stroke: #000;
   fill: #ff0080;
   fill-opacity: 1;

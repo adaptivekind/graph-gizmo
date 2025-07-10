@@ -3,9 +3,7 @@ import { findAllByText } from "@testing-library/dom";
 import * as d3 from "d3";
 import { BaseType } from "d3";
 
-import defaultConfiguration from "./default-configuration";
 import render from "./render";
-import { GraphConfiguration } from "./types";
 
 describe("render graph", () => {
   it("should render OK", async () => {
