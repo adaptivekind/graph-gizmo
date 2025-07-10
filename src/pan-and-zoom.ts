@@ -1,7 +1,7 @@
 import * as d3 from "d3";
 import { Container } from "./types";
 
-export const enablePanAndZoom = (container: Container) => {
+export const withPanAndZoom = (container: Container): Container => {
   let transform = d3.zoomIdentity;
 
   const canvas = container.append("g").classed("canvas", true);
@@ -14,4 +14,5 @@ export const enablePanAndZoom = (container: Container) => {
     });
 
   (container as any).call(zoom);
+  return canvas as any;
 };

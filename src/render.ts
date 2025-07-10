@@ -1,7 +1,7 @@
 import * as d3 from "d3";
 
 import collideRectangle from "./collide-rectangle";
-import { createEnrichedGraph as createSimulationGraph } from "./presentation-graph";
+import { createEnrichedGraph } from "./presentation-graph";
 import {
   GraphSimulation,
   EnrichedGraph,
@@ -15,7 +15,7 @@ import {
 import { builder, Graph } from "@adaptivekind/graph-schema";
 import { renderDebugPanel } from "./debug";
 import defaultConfiguration from "./default-configuration";
-import { enablePanAndZoom } from "./pan-and-zoom";
+import { withPanAndZoom } from "./pan-and-zoom";
 
 const onNodeMouseOver = (_: MouseEvent, current: EnrichedNodeDatum) => {
   d3.selectAll<SVGAElement, EnrichedNodeDatum>(".group")
@@ -66,8 +66,7 @@ const update = (
     d: EnrichedNodeDatum,
   ) => void,
 ) => {
-  const canvas = container.select("g.canvas");
-  const nodes = canvas.selectAll<SVGElement, EnrichedNodeDatum>(".group");
+  const nodes = container.selectAll<SVGElement, EnrichedNodeDatum>(".group");
 
   const initialValues: InitialNodeValueMap = {};
   nodes.data().forEach((node: EnrichedNodeDatum) => {
@@ -79,7 +78,7 @@ const update = (
     };
   });
 
-  const simulationGraph = createSimulationGraph(start, graph, initialValues);
+  const enrichedGraph = createEnrichedGraph(start, graph, initialValues);
 
   function click(
     this: SVGElement,
@@ -92,10 +91,10 @@ const update = (
     simulation.alpha(0.3).restart();
   }
 
-  canvas
+  container
     .selectAll<SVGLineElement, EnrichedLinkDatum>(".link")
     .data(
-      simulationGraph.links,
+      enrichedGraph.links,
       (d: EnrichedLinkDatum) => `${d.source}|${d.target}`,
     )
     .join(
@@ -113,7 +112,7 @@ const update = (
     );
 
   nodes
-    .data(simulationGraph.nodes, (d: EnrichedNodeDatum) => d.id)
+    .data(enrichedGraph.nodes, (d: EnrichedNodeDatum) => d.id)
     .join(
       (entry) => {
         const group = entry
@@ -175,14 +174,7 @@ const update = (
       },
     );
 
-  canvas.selectAll<SVGElement, EnrichedNodeDatum>(".group");
-
-  return applySimulation(
-    config,
-    simulationGraph,
-    canvas as unknown as Container,
-    simulation,
-  );
+  return applySimulation(config, enrichedGraph, container, simulation);
 };
 
 const newTick =
@@ -210,8 +202,6 @@ const createSimulation = (
   config: GraphConfiguration,
   container: Container,
 ): GraphSimulation => {
-  enablePanAndZoom(container);
-
   const tick = newTick(container, config.xOffset, config.yOffset);
   return d3
     .forceSimulation<EnrichedNodeDatum>()
@@ -308,26 +298,29 @@ const render = (
     renderDebugPanel(document, containerSelector, fullConfig);
   }
 
-  const container: Container = ((): Container => {
-    if (providedContainer) {
-      return providedContainer;
-    }
-    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    svg.setAttribute("width", String(width));
-    svg.setAttribute("height", String(height));
-    svg.classList.add("linkGraph");
-    document.querySelector(containerSelector)?.appendChild(svg);
-    const _containerSelection: Container = d3.select(
-      `${containerSelector} svg.linkGraph`,
-    );
-    _containerSelection.attr("viewBox", `0 0 ${width} ${height}`);
-    return _containerSelection;
-  })();
+  const container: Container = withPanAndZoom(
+    ((): Container => {
+      if (providedContainer) {
+        return providedContainer;
+      }
+      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg.setAttribute("width", String(width));
+      svg.setAttribute("height", String(height));
+      svg.classList.add("linkGraph");
+      document.querySelector(containerSelector)?.appendChild(svg);
+      const _containerSelection: Container = d3.select(
+        `${containerSelector} svg.linkGraph`,
+      );
+      _containerSelection.attr("viewBox", `0 0 ${width} ${height}`);
+      return _containerSelection;
+    })(),
+  );
 
   const actualGraph =
     typeof graph === "number" ? builder().many(graph).build() : graph;
 
   const simulation = createSimulation(fullConfig, container);
+
   function updateEvent(
     this: HTMLAnchorElement,
     event: MouseEvent,
