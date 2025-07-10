@@ -10,12 +10,12 @@ import {
   EnrichedNodeDatum,
   Container,
   InitialNodeValueMap,
-  DefaultConfigurationParameters,
 } from "./types";
 import { builder, Graph } from "@adaptivekind/graph-schema";
 import { renderDebugPanel } from "./debug";
 import defaultConfiguration from "./default-configuration";
 import { withPanAndZoom } from "./pan-and-zoom";
+import { addConfigPanelStyles, createConfigPanel } from "./config-panel";
 
 const onNodeMouseOver = (_: MouseEvent, current: EnrichedNodeDatum) => {
   d3.selectAll<SVGAElement, EnrichedNodeDatum>(".group")
@@ -283,17 +283,20 @@ const applySimulation = (
 
 const render = (
   graph: Graph | number,
-  config: Partial<DefaultConfigurationParameters> = {},
+  config: Partial<GraphConfiguration> = {},
   providedContainer?: Container,
   callback: (name: string, event: MouseEvent) => void = () => {},
 ) => {
+  // Add config panel styles
+  addConfigPanelStyles();
+
   const width = window ? window.innerWidth : 100;
   const height = window ? window.innerHeight : 100;
   const fullConfig = defaultConfiguration({
     ...{ viewWidth: width, viewHeight: height, debug: false },
     ...config,
   });
-  const containerSelector = fullConfig.container;
+  const containerSelector = fullConfig.containerSelector;
   if (fullConfig.debug) {
     renderDebugPanel(document, containerSelector, fullConfig);
   }
@@ -330,14 +333,42 @@ const render = (
     update(fullConfig, container, simulation, d.id, actualGraph, updateEvent);
   }
 
+  const updateConfig = (configUpdate: Partial<GraphConfiguration>) => {
+    const updatedConfig = { ...fullConfig, ...configUpdate };
+
+    // Get the current links from the simulation
+    const linkForce = simulation.force("link") as d3.ForceLink<
+      EnrichedNodeDatum,
+      EnrichedLinkDatum
+    >;
+    if (linkForce) {
+      // Update the link force strength
+      linkForce.strength(
+        updatedConfig.getLinkForce(updatedConfig.linkForceFactor),
+      );
+    }
+
+    // Restart the simulation with new forces
+    simulation.alpha(0.3).restart();
+  };
+
   update(
     fullConfig,
     container,
     simulation,
-    config.start || Object.keys(actualGraph.nodes)[0],
+    config.rootNode || Object.keys(actualGraph.nodes)[0],
     actualGraph,
     updateEvent,
   );
+
+  // Create the configuration panel
+  createConfigPanel({
+    config: fullConfig,
+    onConfigChange: (configUpdate) => {
+      updateConfig(configUpdate);
+    },
+  });
+
   return simulation;
 };
 

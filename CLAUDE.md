@@ -36,13 +36,11 @@ test/
 ## Development Workflow
 
 1. **Development Server**: Use `npm start` to run the development server
-
    - Serves from `dev/index.html`
    - Hot reloads on TypeScript changes
    - Runs on http://localhost:3000
 
 2. **Testing**: Tests are in the `test/` directory using Jest
-
    - Run with `npm test`
    - Watch mode: `npm run test:watch`
 

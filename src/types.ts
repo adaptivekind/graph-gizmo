@@ -40,7 +40,8 @@ export interface GraphConfiguration {
   boundarySize: number;
   centerForceFactor: number;
   chargeForceFactor: number;
-  container: string;
+  configPanel: boolean;
+  containerSelector: string;
   debug: boolean;
   depth: number;
   getCharge: (factor: number) => (d: EnrichedNodeDatum) => number;
@@ -53,6 +54,7 @@ export interface GraphConfiguration {
   linkTypeForceWeight: () => number;
   maxNodes: number;
   minDimension: number;
+  rootNode?: string;
   rightBoundary: number;
   topBoundary: number;
   viewHeight: number;
@@ -70,11 +72,3 @@ export type Container = d3.Selection<
   HTMLElement | null,
   undefined
 >;
-
-export type DefaultConfigurationParameters = {
-  containerSelector?: string;
-  debug: boolean;
-  start?: string;
-  viewHeight: number;
-  viewWidth: number;
-};
