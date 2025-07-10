@@ -1,6 +1,6 @@
 import * as d3 from "d3";
-import { Node } from "@adaptivekind/graph-schema";
 import { SimulationLinkDatum, SimulationNodeDatum } from "d3-force";
+import { Node } from "@adaptivekind/graph-schema";
 
 export type GraphSimulation = d3.Simulation<EnrichedNodeDatum, undefined>;
 

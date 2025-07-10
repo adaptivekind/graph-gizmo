@@ -3,8 +3,8 @@ import typescriptEslint from "@typescript-eslint/eslint-plugin";
 import globals from "globals";
 import tsParser from "@typescript-eslint/parser";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 import js from "@eslint/js";
+import { fileURLToPath } from "node:url";
 import { FlatCompat } from "@eslint/eslintrc";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -43,6 +43,7 @@ export default defineConfig([
       "no-unused-vars": "off", // recommended to disable no-unused-vars https://typescript-eslint.io/rules/no-unused-vars/
       "no-var": "error",
       "prefer-const": "error",
+      "sort-imports": "error",
     },
   },
 ]);

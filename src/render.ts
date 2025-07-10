@@ -1,21 +1,22 @@
 import * as d3 from "d3";
 
-import { createEnrichedGraph } from "./presentation-graph";
 import {
-  GraphSimulation,
-  GraphConfiguration,
+  Canvas,
   EnrichedLinkDatum,
   EnrichedNodeDatum,
-  Canvas,
+  GraphConfiguration,
+  GraphSimulation,
   InitialNodeValueMap,
 } from "./types";
-import { builder, Graph } from "@adaptivekind/graph-schema";
-import { renderDebugPanel } from "./debug";
-import defaultConfiguration from "./default-configuration";
-import { withPanAndZoom } from "./pan-and-zoom";
+import { Graph, builder } from "@adaptivekind/graph-schema";
 import { addConfigPanelStyles, createConfigPanel } from "./config-panel";
+import { applySimulation, createSimulation } from "./simulation";
+
+import { createEnrichedGraph } from "./presentation-graph";
 import { createUpdateConfig } from "./update-config";
-import { createSimulation, applySimulation } from "./simulation";
+import defaultConfiguration from "./default-configuration";
+import { renderDebugPanel } from "./debug";
+import { withPanAndZoom } from "./pan-and-zoom";
 
 const onNodeMouseOver = (_: MouseEvent, current: EnrichedNodeDatum) => {
   d3.selectAll<SVGAElement, EnrichedNodeDatum>(".group")

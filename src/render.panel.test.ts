@@ -1,5 +1,5 @@
-import { builder } from "@adaptivekind/graph-schema";
 import { findByRole, findByText } from "@testing-library/dom";
+import { builder } from "@adaptivekind/graph-schema";
 
 import render from "./render";
 

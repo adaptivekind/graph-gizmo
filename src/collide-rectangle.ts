@@ -1,4 +1,4 @@
-import { quadtree, QuadtreeInternalNode, QuadtreeLeaf } from "d3-quadtree";
+import { QuadtreeInternalNode, QuadtreeLeaf, quadtree } from "d3-quadtree";
 
 import { EnrichedNodeDatum } from "./types";
 

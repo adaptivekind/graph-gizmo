@@ -1,13 +1,13 @@
 import * as d3 from "d3";
-import collideRectangle from "./collide-rectangle";
 import {
-  GraphSimulation,
+  Canvas,
   EnrichedGraph,
-  GraphConfiguration,
   EnrichedLinkDatum,
   EnrichedNodeDatum,
-  Canvas,
+  GraphConfiguration,
+  GraphSimulation,
 } from "./types";
+import collideRectangle from "./collide-rectangle";
 
 function clamp(x: number, low: number, high: number) {
   return x < low ? low : x > high ? high : x;

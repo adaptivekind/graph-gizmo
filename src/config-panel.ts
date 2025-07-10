@@ -1,5 +1,5 @@
-import { loadShoelaceAndAlpine } from "./dynamic-loader";
 import { GraphConfiguration } from "./types";
+import { loadShoelaceAndAlpine } from "./dynamic-loader";
 
 declare global {
   interface Window {

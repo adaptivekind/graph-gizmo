@@ -1,4 +1,4 @@
-import { GraphConfiguration, EnrichedNodeDatum, EnrichedLink } from "./types";
+import { EnrichedLink, EnrichedNodeDatum, GraphConfiguration } from "./types";
 const DEPTH_1_RADIUS = 30;
 const boundarySize = DEPTH_1_RADIUS * 4;
 
