@@ -1,21 +1,21 @@
 <!doctype html>
 <html>
   <head>
-    <title>test from published package</title>
+    <title>Example Graph Gizmo</title>
 
     <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/d3-quadtree@3.0.1/dist/d3-quadtree.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@adaptivekind/graph-gizmo@0.0.8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@adaptivekind/graph-gizmo@0.0.13"></script>
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@adaptivekind/graph-gizmo@0.0.8/dist/default.css"
+      href="https://cdn.jsdelivr.net/npm/@adaptivekind/graph-gizmo@0.0.13/dist/default.css"
     />
   </head>
 
   <body>
     <div id="gizmo" />
     <script>
-      graphGizmo.render(20);
+      graphGizmo.render(30, { configPanel: true });
     </script>
   </body>
 </html>
