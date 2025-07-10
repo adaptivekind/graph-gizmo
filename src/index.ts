@@ -1,12 +1,8 @@
 import defaultConfiguration from "./default-configuration";
 import itemName from "./item-name";
 import render from "./render";
-import {
-  GardenSimulation,
-  PresentationGraph,
-  GraphConfiguration,
-} from "./types";
+import { GraphSimulation, EnrichedGraph, GraphConfiguration } from "./types";
 
-export type { GardenSimulation, PresentationGraph, GraphConfiguration };
+export type { GraphSimulation, EnrichedGraph, GraphConfiguration };
 
 export { defaultConfiguration, itemName, render };

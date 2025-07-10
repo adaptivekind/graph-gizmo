@@ -1,7 +1,7 @@
 import {
   DefaultConfigurationParameters,
   GraphConfiguration,
-  GraphNodeDatum,
+  EnrichedNodeDatum,
 } from "./types";
 const DEPTH_1_RADIUS = 30;
 const boundarySize = DEPTH_1_RADIUS * 4;
@@ -43,7 +43,7 @@ const defaultConfiguration = (
       xOffsetText: -35,
       yOffset,
       yOffsetText: -10,
-      getRadius: (d: GraphNodeDatum) => {
+      getRadius: (d: EnrichedNodeDatum) => {
         return d.depth === 0
           ? DEPTH_1_RADIUS
           : d.depth === 1
@@ -54,7 +54,7 @@ const defaultConfiguration = (
       },
 
       // How much node repels
-      getCharge: (factor: number) => (d: GraphNodeDatum) => {
+      getCharge: (factor: number) => (d: EnrichedNodeDatum) => {
         return d.depth === 0
           ? -8000 * factor
           : d.depth === 1

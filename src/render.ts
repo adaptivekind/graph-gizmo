@@ -1,43 +1,44 @@
 import * as d3 from "d3";
 
 import collideRectangle from "./collide-rectangle";
-import { createPresentationGraph } from "./presentation-graph";
+import { createEnrichedGraph } from "./presentation-graph";
 import {
-  GardenSimulation,
-  PresentationGraph,
+  GraphSimulation,
+  EnrichedGraph,
   GraphConfiguration,
-  GraphLinkDatum,
-  GraphNodeDatum,
-  GraphSelect,
+  EnrichedLinkDatum,
+  EnrichedNodeDatum,
+  Container,
   InitialNodeValueMap,
   DefaultConfigurationParameters,
 } from "./types";
 import { builder, Graph } from "@adaptivekind/graph-schema";
 import { renderDebugPanel } from "./debug";
 import defaultConfiguration from "./default-configuration";
+import { withPanAndZoom } from "./pan-and-zoom";
 
-const onNodeMouseOver = (_: MouseEvent, current: GraphNodeDatum) => {
-  d3.selectAll<SVGAElement, GraphNodeDatum>(".group")
-    .filter((d: GraphNodeDatum) => d.id === current.id)
+const onNodeMouseOver = (_: MouseEvent, current: EnrichedNodeDatum) => {
+  d3.selectAll<SVGAElement, EnrichedNodeDatum>(".group")
+    .filter((d: EnrichedNodeDatum) => d.id === current.id)
     .classed("active", true);
-  d3.selectAll<SVGAElement, GraphLinkDatum>("line")
+  d3.selectAll<SVGAElement, EnrichedLinkDatum>("line")
     .filter(
-      (d: GraphLinkDatum) =>
-        (d.target as GraphNodeDatum).id === current.id ||
-        (d.source as GraphNodeDatum).id === current.id,
+      (d: EnrichedLinkDatum) =>
+        (d.target as EnrichedNodeDatum).id === current.id ||
+        (d.source as EnrichedNodeDatum).id === current.id,
     )
     .classed("active", true);
 };
 
-const onNodeMouseLeave = (_: MouseEvent, current: GraphNodeDatum) => {
-  d3.selectAll<SVGAElement, GraphNodeDatum>(".group")
-    .filter((d: GraphNodeDatum) => d.id === current.id)
+const onNodeMouseLeave = (_: MouseEvent, current: EnrichedNodeDatum) => {
+  d3.selectAll<SVGAElement, EnrichedNodeDatum>(".group")
+    .filter((d: EnrichedNodeDatum) => d.id === current.id)
     .classed("active", false);
-  d3.selectAll<SVGAElement, GraphLinkDatum>("line")
+  d3.selectAll<SVGAElement, EnrichedLinkDatum>("line")
     .filter(
-      (d: GraphLinkDatum) =>
-        (d.target as GraphNodeDatum).id === current.id ||
-        (d.source as GraphNodeDatum).id === current.id,
+      (d: EnrichedLinkDatum) =>
+        (d.target as EnrichedNodeDatum).id === current.id ||
+        (d.source as EnrichedNodeDatum).id === current.id,
     )
     .classed("active", false);
 };
@@ -55,21 +56,20 @@ const safeInitialValue = (x: number | null | undefined) => {
 
 const update = (
   config: GraphConfiguration,
-  svg: GraphSelect,
-  simulation: GardenSimulation,
+  container: Container,
+  simulation: GraphSimulation,
   start: string,
   graph: Graph,
   updateEvent: (
     this: HTMLAnchorElement,
     event: MouseEvent,
-    d: GraphNodeDatum,
+    d: EnrichedNodeDatum,
   ) => void,
 ) => {
-  const canvas = svg.select("g.canvas");
-  const nodeElements = canvas.selectAll<SVGElement, GraphNodeDatum>(".group");
+  const nodes = container.selectAll<SVGElement, EnrichedNodeDatum>(".group");
 
   const initialValues: InitialNodeValueMap = {};
-  nodeElements.data().forEach((node: GraphNodeDatum) => {
+  nodes.data().forEach((node: EnrichedNodeDatum) => {
     initialValues[node.id] = {
       x: safeInitialValue(node.x),
       y: safeInitialValue(node.y),
@@ -78,16 +78,12 @@ const update = (
     };
   });
 
-  const presentationGraph = createPresentationGraph(
-    start,
-    graph,
-    initialValues,
-  );
+  const enrichedGraph = createEnrichedGraph(start, graph, initialValues);
 
   function click(
     this: SVGElement,
     _: { currentTarget: never },
-    d: GraphNodeDatum,
+    d: EnrichedNodeDatum,
   ): void {
     delete d.fx;
     delete d.fy;
@@ -95,11 +91,11 @@ const update = (
     simulation.alpha(0.3).restart();
   }
 
-  canvas
-    .selectAll<SVGLineElement, GraphLinkDatum>(".link")
+  container
+    .selectAll<SVGLineElement, EnrichedLinkDatum>(".link")
     .data(
-      presentationGraph.links,
-      (d: GraphLinkDatum) => `${d.source}|${d.target}`,
+      enrichedGraph.links,
+      (d: EnrichedLinkDatum) => `${d.source}|${d.target}`,
     )
     .join(
       (entry) =>
@@ -115,19 +111,19 @@ const update = (
       (exit) => exit.remove(),
     );
 
-  nodeElements
-    .data(presentationGraph.nodes, (d: GraphNodeDatum) => d.id)
+  nodes
+    .data(enrichedGraph.nodes, (d: EnrichedNodeDatum) => d.id)
     .join(
       (entry) => {
         const group = entry
           .append("g")
-          .attr("class", function (d: GraphNodeDatum) {
+          .attr("class", function (d: EnrichedNodeDatum) {
             return `node depth-${d.depth}`;
           })
           .classed("group", true)
-          .classed("wanted", (d: GraphNodeDatum) => d.wanted)
-          .classed("fixed", (d: GraphNodeDatum) => d.fx !== undefined)
-          .classed("hideLabel", (d: GraphNodeDatum) => !d.showLabel)
+          .classed("wanted", (d: EnrichedNodeDatum) => d.wanted)
+          .classed("fixed", (d: EnrichedNodeDatum) => d.fx !== undefined)
+          .classed("hideLabel", (d: EnrichedNodeDatum) => !d.showLabel)
           .attr("transform", `translate(${config.xOffset},${config.yOffset})`)
           .raise();
 
@@ -137,9 +133,9 @@ const update = (
           .on("mouseleave", onNodeMouseLeave)
           .on("click", click)
           .attr("r", config.getRadius)
-          .classed("node", true)
+          .classed("point", true)
           .append("title")
-          .text((d: GraphNodeDatum) => d.id);
+          .text((d: EnrichedNodeDatum) => d.id);
 
         const anchor = group.append("a").on("click", updateEvent);
 
@@ -147,26 +143,26 @@ const update = (
           .append("text")
           .on("mouseover", onNodeMouseOver)
           .on("mouseleave", onNodeMouseLeave)
-          .text((d: GraphNodeDatum) => d.label)
+          .text((d: EnrichedNodeDatum) => d.label)
           .attr("x", config.xOffsetText)
           .attr("y", config.yOffsetText)
           .classed("label", true)
           .append("text");
 
         anchor
-          .filter((d: GraphNodeDatum) => d.showLabel && !!d.context)
+          .filter((d: EnrichedNodeDatum) => d.showLabel && !!d.context)
           .append("text")
           .attr("x", config.xOffsetText)
           .attr("y", () => config.yOffsetText)
-          .text((d: GraphNodeDatum) => d.context || "n/a")
+          .text((d: EnrichedNodeDatum) => d.context || "n/a")
           .classed("context-label", true);
 
         return group;
       },
       (update) => {
         update
-          .classed("hideLabel", (d: GraphNodeDatum) => !d.showLabel)
-          .classed("fixed", (d: GraphNodeDatum) => d.fx !== undefined)
+          .classed("hideLabel", (d: EnrichedNodeDatum) => !d.showLabel)
+          .classed("fixed", (d: EnrichedNodeDatum) => d.fx !== undefined)
           .select("circle")
           .attr("r", config.getRadius);
         return update;
@@ -178,29 +174,22 @@ const update = (
       },
     );
 
-  canvas.selectAll<SVGElement, GraphNodeDatum>(".group");
-
-  return applySimulation(
-    config,
-    presentationGraph,
-    canvas as unknown as GraphSelect,
-    simulation,
-  );
+  return applySimulation(config, enrichedGraph, container, simulation);
 };
 
 const newTick =
-  (container: GraphSelect, xOffset: number, yOffset: number) => () => {
+  (container: Container, xOffset: number, yOffset: number) => () => {
     container
-      .selectAll<SVGLineElement, GraphLinkDatum>(".link")
-      .attr("x1", (d) => ((d?.source as GraphNodeDatum)?.x ?? 0) + xOffset)
-      .attr("y1", (d) => ((d?.source as GraphNodeDatum)?.y ?? 0) + yOffset)
-      .attr("x2", (d) => ((d?.target as GraphNodeDatum)?.x ?? 0) + xOffset)
-      .attr("y2", (d) => ((d?.target as GraphNodeDatum)?.y ?? 0) + yOffset);
+      .selectAll<SVGLineElement, EnrichedLinkDatum>(".link")
+      .attr("x1", (d) => ((d?.source as EnrichedNodeDatum)?.x ?? 0) + xOffset)
+      .attr("y1", (d) => ((d?.source as EnrichedNodeDatum)?.y ?? 0) + yOffset)
+      .attr("x2", (d) => ((d?.target as EnrichedNodeDatum)?.x ?? 0) + xOffset)
+      .attr("y2", (d) => ((d?.target as EnrichedNodeDatum)?.y ?? 0) + yOffset);
     container
-      .selectAll<SVGElement, GraphNodeDatum>(".group")
+      .selectAll<SVGElement, EnrichedNodeDatum>(".group")
       .attr(
         "transform",
-        (d: GraphNodeDatum) =>
+        (d: EnrichedNodeDatum) =>
           "translate(" +
           (xOffset + (d?.x ?? 0)) +
           "," +
@@ -211,20 +200,20 @@ const newTick =
 
 const createSimulation = (
   config: GraphConfiguration,
-  container: GraphSelect,
-): GardenSimulation => {
+  container: Container,
+): GraphSimulation => {
   const tick = newTick(container, config.xOffset, config.yOffset);
   return d3
-    .forceSimulation<GraphNodeDatum>()
+    .forceSimulation<EnrichedNodeDatum>()
     .force(
       "charge",
       d3
-        .forceManyBody<GraphNodeDatum>()
+        .forceManyBody<EnrichedNodeDatum>()
         .strength(config.getCharge(config.chargeForceFactor)),
     )
     .force(
       "collide",
-      d3.forceCollide<GraphNodeDatum>().radius(config.getRadius),
+      d3.forceCollide<EnrichedNodeDatum>().radius(config.getRadius),
     )
     .force(
       "collideRectangle",
@@ -250,16 +239,16 @@ const createSimulation = (
 
 const applySimulation = (
   config: GraphConfiguration,
-  graph: PresentationGraph,
-  container: GraphSelect,
-  simulation: GardenSimulation,
+  graph: EnrichedGraph,
+  container: Container,
+  simulation: GraphSimulation,
 ) => {
   simulation.nodes(graph.nodes);
   simulation.force(
     "link",
     d3
-      .forceLink<GraphNodeDatum, GraphLinkDatum>(graph.links)
-      .id((d: GraphNodeDatum) => d.id)
+      .forceLink<EnrichedNodeDatum, EnrichedLinkDatum>(graph.links)
+      .id((d: EnrichedNodeDatum) => d.id)
       .strength(config.getLinkForce(config.linkForceFactor)),
   );
 
@@ -285,17 +274,17 @@ const applySimulation = (
   }
 
   const drag = d3
-    .drag<SVGElement, GraphNodeDatum, never>()
+    .drag<SVGElement, EnrichedNodeDatum, never>()
     .on("start", dragstart)
     .on("drag", dragged);
 
-  container.selectAll<SVGElement, GraphNodeDatum>(".group").call(drag);
+  container.selectAll<SVGElement, EnrichedNodeDatum>(".group").call(drag);
 };
 
 const render = (
   graph: Graph | number,
   config: Partial<DefaultConfigurationParameters> = {},
-  providedGraphElement?: GraphSelect,
+  providedContainer?: Container,
   callback: (name: string, event: MouseEvent) => void = () => {},
 ) => {
   const width = window ? window.innerWidth : 100;
@@ -309,59 +298,41 @@ const render = (
     renderDebugPanel(document, containerSelector, fullConfig);
   }
 
-  const graphElement: GraphSelect = ((): GraphSelect => {
-    if (providedGraphElement) {
-      return providedGraphElement;
-    }
-    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    svg.setAttribute("width", String(width));
-    svg.setAttribute("height", String(height));
-    svg.classList.add("linkGraph");
-    document.querySelector(containerSelector)?.appendChild(svg);
-    const _graphElement: GraphSelect = d3.select(
-      `${containerSelector} svg.linkGraph`,
-    );
-    _graphElement.attr("viewBox", `0 0 ${width} ${height}`);
-    return _graphElement;
-  })();
-
-  let transform = d3.zoomIdentity;
-
-  const canvas = graphElement.append("g").classed("canvas", true);
-
-  const zoom = d3
-    .zoom()
-    .scaleExtent([0.1, 4])
-    .on("zoom", (event) => {
-      transform = event.transform;
-      canvas.attr("transform", transform.toString());
-    });
-
-  (graphElement as any).call(zoom);
+  const container: Container = withPanAndZoom(
+    ((): Container => {
+      if (providedContainer) {
+        return providedContainer;
+      }
+      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg.setAttribute("width", String(width));
+      svg.setAttribute("height", String(height));
+      svg.classList.add("linkGraph");
+      document.querySelector(containerSelector)?.appendChild(svg);
+      const _containerSelection: Container = d3.select(
+        `${containerSelector} svg.linkGraph`,
+      );
+      _containerSelection.attr("viewBox", `0 0 ${width} ${height}`);
+      return _containerSelection;
+    })(),
+  );
 
   const actualGraph =
     typeof graph === "number" ? builder().many(graph).build() : graph;
 
-  const simulation = createSimulation(fullConfig, graphElement);
+  const simulation = createSimulation(fullConfig, container);
+
   function updateEvent(
     this: HTMLAnchorElement,
     event: MouseEvent,
-    d: GraphNodeDatum,
+    d: EnrichedNodeDatum,
   ): void {
     callback(d.id, event);
-    update(
-      fullConfig,
-      graphElement,
-      simulation,
-      d.id,
-      actualGraph,
-      updateEvent,
-    );
+    update(fullConfig, container, simulation, d.id, actualGraph, updateEvent);
   }
 
   update(
     fullConfig,
-    graphElement,
+    container,
     simulation,
     config.start || Object.keys(actualGraph.nodes)[0],
     actualGraph,

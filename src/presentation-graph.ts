@@ -1,16 +1,16 @@
 import { Graph } from "@adaptivekind/graph-schema";
 import {
-  PresentationGraph,
+  EnrichedGraph as EnrichedGraph,
   InitialNodeValueMap,
-  GraphNodeDatum,
+  EnrichedNodeDatum,
 } from "./types";
 import getDistance from "./distance";
 
-export const createPresentationGraph = (
+export const createEnrichedGraph = (
   root: string,
   graph: Graph,
   initalValues: InitialNodeValueMap,
-): PresentationGraph => {
+): EnrichedGraph => {
   const idsInView = graph.links
     .map((link) => [link.source, link.target])
     .flat()
@@ -18,7 +18,7 @@ export const createPresentationGraph = (
 
   const getDepth = (id: string) => getDistance(graph, root, id);
 
-  const nodes: GraphNodeDatum[] = [
+  const nodes: EnrichedNodeDatum[] = [
     ...idsInView.map((id: string) => {
       const node = graph.nodes[id];
       const depth = getDepth(id);
@@ -37,9 +37,9 @@ export const createPresentationGraph = (
 
   const nodesMap = nodes.reduce(
     (
-      map: Record<string, GraphNodeDatum>,
-      node: GraphNodeDatum,
-    ): Record<string, GraphNodeDatum> => {
+      map: Record<string, EnrichedNodeDatum>,
+      node: EnrichedNodeDatum,
+    ): Record<string, EnrichedNodeDatum> => {
       map[node.id] = node;
       return map;
     },
