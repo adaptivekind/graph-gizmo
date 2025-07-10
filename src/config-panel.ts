@@ -1,16 +1,22 @@
 import { GraphConfiguration } from "./types";
+import { loadShoelaceAndAlpine } from "./dynamic-loader";
 
 export interface ConfigPanelOptions {
   config: GraphConfiguration;
   onConfigChange: (config: Partial<GraphConfiguration>) => void;
 }
 
-export const createConfigPanel = (options: ConfigPanelOptions): void => {
+export const createConfigPanel = async (
+  options: ConfigPanelOptions,
+): Promise<void> => {
   const { config, onConfigChange } = options;
 
   if (!config.configPanel) {
     return;
   }
+
+  // Load Shoelace and Alpine.js dynamically
+  await loadShoelaceAndAlpine();
 
   const container = document.querySelector(config.containerSelector);
   if (!container) {

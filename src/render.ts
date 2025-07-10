@@ -402,7 +402,7 @@ const render = (
     onConfigChange: (configUpdate) => {
       updateConfig(configUpdate);
     },
-  });
+  }).catch(console.error);
 
   return simulation;
 };
