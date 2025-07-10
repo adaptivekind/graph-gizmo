@@ -40,9 +40,9 @@ export const createConfigPanel = (options: ConfigPanelOptions): void => {
             id="linkForce"
             min="0"
             max="3.0"
-            step="0.2"
+            step="0.01"
             x-bind:value="linkForceFactor"
-            x-on:sl-change="updateLinkForce($event)"
+            x-on:sl-input="updateLinkForce($event)"
           ></sl-range>
           <span class="config-value" x-text="linkForceFactor"></span>
         </div>
@@ -52,9 +52,9 @@ export const createConfigPanel = (options: ConfigPanelOptions): void => {
             id="chargeForce"
             min="0"
             max="3.0"
-            step="0.5"
+            step="0.1"
             x-bind:value="chargeForceFactor"
-            x-on:sl-change="updateChargeForce($event)"
+            x-on:sl-input="updateChargeForce($event)"
           ></sl-range>
           <span class="config-value" x-text="chargeForceFactor"></span>
         </div>
@@ -64,9 +64,9 @@ export const createConfigPanel = (options: ConfigPanelOptions): void => {
             id="centerForce"
             min="0"
             max="1"
-            step="0.1"
+            step="0.01"
             x-bind:value="centerForceFactor"
-            x-on:sl-change="updateCenterForce($event)"
+            x-on:sl-input="updateCenterForce($event)"
           ></sl-range>
           <span class="config-value" x-text="centerForceFactor"></span>
         </div>
@@ -74,11 +74,11 @@ export const createConfigPanel = (options: ConfigPanelOptions): void => {
           <label for="alphaDecay">Alpha Decay</label>
           <sl-range
             id="alphaDecay"
-            min="0.001"
-            max="0.1"
-            step="0.001"
+            min="0.01"
+            max="0.3"
+            step="0.01"
             x-bind:value="alphaDecay"
-            x-on:sl-change="updateAlphaDecay($event)"
+            x-on:sl-input="updateAlphaDecay($event)"
           ></sl-range>
           <span class="config-value" x-text="alphaDecay"></span>
         </div>
@@ -87,10 +87,10 @@ export const createConfigPanel = (options: ConfigPanelOptions): void => {
           <sl-range
             id="velocityDecay"
             min="0.1"
-            max="1.0"
-            step="0.1"
+            max="1"
+            step="0.01"
             x-bind:value="velocityDecay"
-            x-on:sl-change="updateVelocityDecay($event)"
+            x-on:sl-input="updateVelocityDecay($event)"
           ></sl-range>
           <span class="config-value" x-text="velocityDecay"></span>
         </div>

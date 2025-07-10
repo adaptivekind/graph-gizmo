@@ -34,7 +34,7 @@ const defaultConfiguration = (
       configPanel: false,
       heightText: 60,
       leftBoundary: -viewWidth / 2 + boundarySize,
-      linkForceFactor: 1.2,
+      linkForceFactor: 0.8,
       maxNodes,
       minDimension,
       rightBoundary: viewWidth / 2 - boundarySize,

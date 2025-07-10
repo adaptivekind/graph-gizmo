@@ -36,11 +36,13 @@ test/
 ## Development Workflow
 
 1. **Development Server**: Use `npm start` to run the development server
+
    - Serves from `dev/index.html`
    - Hot reloads on TypeScript changes
    - Runs on http://localhost:3000
 
 2. **Testing**: Tests are in the `test/` directory using Jest
+
    - Run with `npm test`
    - Watch mode: `npm run test:watch`
 
@@ -70,3 +72,31 @@ test/
 - Development uses direct TypeScript imports via Vite
 - Production builds are bundled with Rollup
 - Graph schema types come from `@adaptivekind/graph-schema`
+
+## Coding Guidelines
+
+### Prefer `const` over `let`
+
+Always use `const` for variables that don't need reassignment. Avoid reassigning configuration objects when the underlying system already manages state.
+
+**Example**: In `render.ts`, `fullConfig` should remain `const` because:
+
+- It represents the initial configuration (immutable)
+- D3 simulation object maintains the actual runtime state
+- Updates are applied directly to the simulation via methods like `simulation.alphaDecay(value)`
+- Reassigning the config object creates duplicate state tracking
+
+```typescript
+// ✅ Good: Keep config as const, update simulation directly
+const fullConfig = defaultConfiguration(config);
+const updateConfig = (updates) => {
+  const updatedConfig = { ...fullConfig, ...updates };
+  simulation.alphaDecay(updatedConfig.alphaDecay);
+};
+
+// ❌ Avoid: Reassigning const or making it let unnecessarily
+let fullConfig = defaultConfiguration(config);
+const updateConfig = (updates) => {
+  fullConfig = { ...fullConfig, ...updates }; // Creates duplicate state
+};
+```

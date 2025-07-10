@@ -292,7 +292,7 @@ const render = (
 
   const width = window ? window.innerWidth : 100;
   const height = window ? window.innerHeight : 100;
-  let fullConfig = defaultConfiguration({
+  const fullConfig = defaultConfiguration({
     ...{ viewWidth: width, viewHeight: height, debug: false },
     ...config,
   });
@@ -382,9 +382,6 @@ const render = (
     if (configUpdate.velocityDecay !== undefined) {
       simulation.velocityDecay(updatedConfig.velocityDecay);
     }
-
-    // Update the config reference
-    fullConfig = updatedConfig;
 
     // Restart the simulation with new forces
     simulation.alpha(0.3).restart();
