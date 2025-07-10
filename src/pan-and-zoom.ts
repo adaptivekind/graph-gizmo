@@ -1,7 +1,7 @@
 import * as d3 from "d3";
-import { Container } from "./types";
+import { Canvas } from "./types";
 
-export const withPanAndZoom = (container: Container): Container => {
+export const withPanAndZoom = (container: Canvas): Canvas => {
   let transform = d3.zoomIdentity;
 
   const canvas = container.append("g").classed("canvas", true);

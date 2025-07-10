@@ -8,7 +8,7 @@ import {
   GraphConfiguration,
   EnrichedLinkDatum,
   EnrichedNodeDatum,
-  Container,
+  Canvas,
   InitialNodeValueMap,
 } from "./types";
 import { builder, Graph } from "@adaptivekind/graph-schema";
@@ -54,7 +54,7 @@ const safeInitialValue = (x: number | null | undefined) => {
 
 const update = (
   config: GraphConfiguration,
-  container: Container,
+  container: Canvas,
   simulation: GraphSimulation,
   start: string,
   graph: Graph,
@@ -178,7 +178,7 @@ const update = (
 const render = (
   graph: Graph | number,
   config: Partial<GraphConfiguration> = {},
-  providedContainer?: Container,
+  providedContainer?: Element,
   callback: (name: string, event: MouseEvent) => void = () => {},
 ) => {
   // Add config panel styles
@@ -195,19 +195,24 @@ const render = (
     renderDebugPanel(document, containerSelector, fullConfig);
   }
 
-  const container: Container = withPanAndZoom(
-    ((): Container => {
-      if (providedContainer) {
-        return providedContainer;
-      }
+  const container: Element = (() => {
+    if (providedContainer) {
+      return providedContainer;
+    }
+    const container = document.querySelector(containerSelector);
+    if (!container) {
+      throw Error(`Cannot find container ${containerSelector}`);
+    }
+    return container;
+  })();
+
+  const canvas: Canvas = withPanAndZoom(
+    ((): Canvas => {
       const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
       svg.setAttribute("width", String(width));
       svg.setAttribute("height", String(height));
-      svg.classList.add("linkGraph");
-      document.querySelector(containerSelector)?.appendChild(svg);
-      const _containerSelection: Container = d3.select(
-        `${containerSelector} svg.linkGraph`,
-      );
+      container.appendChild(svg);
+      const _containerSelection = d3.select<d3.BaseType, null>(svg);
       _containerSelection.attr("viewBox", `0 0 ${width} ${height}`);
       return _containerSelection;
     })(),
@@ -216,7 +221,7 @@ const render = (
   const actualGraph =
     typeof graph === "number" ? builder().many(graph).build() : graph;
 
-  const simulation = createSimulation(fullConfig, container);
+  const simulation = createSimulation(fullConfig, canvas);
 
   function updateEvent(
     this: HTMLAnchorElement,
@@ -224,14 +229,14 @@ const render = (
     d: EnrichedNodeDatum,
   ): void {
     callback(d.id, event);
-    update(fullConfig, container, simulation, d.id, actualGraph, updateEvent);
+    update(fullConfig, canvas, simulation, d.id, actualGraph, updateEvent);
   }
 
   const updateConfig = createUpdateConfig(fullConfig, simulation);
 
   update(
     fullConfig,
-    container,
+    canvas,
     simulation,
     config.rootNode || Object.keys(actualGraph.nodes)[0],
     actualGraph,
@@ -241,6 +246,7 @@ const render = (
   // Create the configuration panel
   createConfigPanel({
     config: fullConfig,
+    container,
     onConfigChange: (configUpdate) => {
       updateConfig(configUpdate);
     },

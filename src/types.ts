@@ -47,6 +47,7 @@ export interface GraphConfiguration {
   containerSelector: string;
   debug: boolean;
   depth: number;
+  dynamicLoad: boolean;
   getCharge: (factor: number) => (d: EnrichedNodeDatum) => number;
   getLinkForce: (factor: number) => (d: EnrichedLink) => number;
   getRadius: (d: EnrichedNodeDatum) => number;
@@ -68,9 +69,11 @@ export interface GraphConfiguration {
   xOffsetText: number;
   yOffset: number;
   yOffsetText: number;
+  loadShoelace: boolean;
+  loadAlpine: boolean;
 }
 
-export type Container = d3.Selection<
+export type Canvas = d3.Selection<
   d3.BaseType,
   null,
   HTMLElement | null,

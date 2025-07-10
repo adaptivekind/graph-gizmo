@@ -6,39 +6,38 @@ import {
   GraphConfiguration,
   EnrichedLinkDatum,
   EnrichedNodeDatum,
-  Container,
+  Canvas,
 } from "./types";
 
 function clamp(x: number, low: number, high: number) {
   return x < low ? low : x > high ? high : x;
 }
 
-const newTick =
-  (container: Container, xOffset: number, yOffset: number) => () => {
-    container
-      .selectAll<SVGLineElement, EnrichedLinkDatum>(".link")
-      .attr("x1", (d) => ((d?.source as EnrichedNodeDatum)?.x ?? 0) + xOffset)
-      .attr("y1", (d) => ((d?.source as EnrichedNodeDatum)?.y ?? 0) + yOffset)
-      .attr("x2", (d) => ((d?.target as EnrichedNodeDatum)?.x ?? 0) + xOffset)
-      .attr("y2", (d) => ((d?.target as EnrichedNodeDatum)?.y ?? 0) + yOffset);
-    container
-      .selectAll<SVGElement, EnrichedNodeDatum>(".group")
-      .attr(
-        "transform",
-        (d: EnrichedNodeDatum) =>
-          "translate(" +
-          (xOffset + (d?.x ?? 0)) +
-          "," +
-          (yOffset + (d?.y ?? 0)) +
-          ")",
-      );
-  };
+const newTick = (canvas: Canvas, xOffset: number, yOffset: number) => () => {
+  canvas
+    .selectAll<SVGLineElement, EnrichedLinkDatum>(".link")
+    .attr("x1", (d) => ((d?.source as EnrichedNodeDatum)?.x ?? 0) + xOffset)
+    .attr("y1", (d) => ((d?.source as EnrichedNodeDatum)?.y ?? 0) + yOffset)
+    .attr("x2", (d) => ((d?.target as EnrichedNodeDatum)?.x ?? 0) + xOffset)
+    .attr("y2", (d) => ((d?.target as EnrichedNodeDatum)?.y ?? 0) + yOffset);
+  canvas
+    .selectAll<SVGElement, EnrichedNodeDatum>(".group")
+    .attr(
+      "transform",
+      (d: EnrichedNodeDatum) =>
+        "translate(" +
+        (xOffset + (d?.x ?? 0)) +
+        "," +
+        (yOffset + (d?.y ?? 0)) +
+        ")",
+    );
+};
 
 export const createSimulation = (
   config: GraphConfiguration,
-  container: Container,
+  canvas: Canvas,
 ): GraphSimulation => {
-  const tick = newTick(container, config.xOffset, config.yOffset);
+  const tick = newTick(canvas, config.xOffset, config.yOffset);
   return d3
     .forceSimulation<EnrichedNodeDatum>()
     .force(
@@ -76,7 +75,7 @@ export const createSimulation = (
 export const applySimulation = (
   config: GraphConfiguration,
   graph: EnrichedGraph,
-  container: Container,
+  canvas: Canvas,
   simulation: GraphSimulation,
 ) => {
   simulation.nodes(graph.nodes);
@@ -114,5 +113,5 @@ export const applySimulation = (
     .on("start", dragstart)
     .on("drag", dragged);
 
-  container.selectAll<SVGElement, EnrichedNodeDatum>(".group").call(drag);
+  canvas.selectAll<SVGElement, EnrichedNodeDatum>(".group").call(drag);
 };

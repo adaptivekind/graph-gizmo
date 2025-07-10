@@ -9,12 +9,8 @@ describe("render graph", () => {
   it("should render OK", async () => {
     const graph = builder().id("foo").to("bar").id("bar").build();
 
-    const container = document.createElement("svg");
-    const svg = d3.select<d3.BaseType, null>(
-      container.getRootNode() as BaseType,
-    );
-
-    render(graph, {}, svg);
+    const container = document.createElement("div");
+    render(graph, {}, container);
 
     const fooNode = await findAllByText(container, "foo");
     expect(fooNode).toBeDefined();

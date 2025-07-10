@@ -3,28 +3,26 @@ import { loadShoelaceAndAlpine } from "./dynamic-loader";
 
 export interface ConfigPanelOptions {
   config: GraphConfiguration;
+  container: Element;
   onConfigChange: (config: Partial<GraphConfiguration>) => void;
 }
 
 export const createConfigPanel = async (
   options: ConfigPanelOptions,
 ): Promise<void> => {
-  const { config, onConfigChange } = options;
+  const { config, container, onConfigChange } = options;
 
   if (!config.configPanel) {
     return;
   }
-
   // Load Shoelace and Alpine.js dynamically
-  await loadShoelaceAndAlpine();
-
-  const container = document.querySelector(config.containerSelector);
-  if (!container) {
-    // non-fatal
-    return;
+  if (config.dynamicLoad && (config.loadAlpine || config.loadShoelace)) {
+    await loadShoelaceAndAlpine();
+    console.log("X", config);
   }
 
   const div = document.createElement("div");
+  div.role = "dialog";
   div.classList.add("config-panel");
   div.style.zIndex = "9999;";
 
@@ -103,7 +101,7 @@ export const createConfigPanel = async (
       </div>
     </div>
   `;
-  container?.appendChild(div);
+  container.appendChild(div);
 
   // Initialize Alpine.js data
   (window as any).configPanel = () => ({
