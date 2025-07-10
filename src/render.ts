@@ -292,7 +292,7 @@ const render = (
 
   const width = window ? window.innerWidth : 100;
   const height = window ? window.innerHeight : 100;
-  const fullConfig = defaultConfiguration({
+  let fullConfig = defaultConfiguration({
     ...{ viewWidth: width, viewHeight: height, debug: false },
     ...config,
   });
@@ -336,17 +336,45 @@ const render = (
   const updateConfig = (configUpdate: Partial<GraphConfiguration>) => {
     const updatedConfig = { ...fullConfig, ...configUpdate };
 
-    // Get the current links from the simulation
-    const linkForce = simulation.force("link") as d3.ForceLink<
-      EnrichedNodeDatum,
-      EnrichedLinkDatum
-    >;
-    if (linkForce) {
-      // Update the link force strength
-      linkForce.strength(
-        updatedConfig.getLinkForce(updatedConfig.linkForceFactor),
-      );
+    // Update link force if changed
+    if (configUpdate.linkForceFactor !== undefined) {
+      const linkForce = simulation.force("link") as d3.ForceLink<
+        EnrichedNodeDatum,
+        EnrichedLinkDatum
+      >;
+      if (linkForce) {
+        linkForce.strength(
+          updatedConfig.getLinkForce(updatedConfig.linkForceFactor),
+        );
+      }
     }
+
+    // Update charge force if changed
+    if (configUpdate.chargeForceFactor !== undefined) {
+      const chargeForce = simulation.force(
+        "charge",
+      ) as d3.ForceManyBody<EnrichedNodeDatum>;
+      if (chargeForce) {
+        chargeForce.strength(
+          updatedConfig.getCharge(updatedConfig.chargeForceFactor),
+        );
+      }
+    }
+
+    // Update center forces if changed
+    if (configUpdate.centerForceFactor !== undefined) {
+      const forceX = simulation.force("forceX") as d3.ForceX<EnrichedNodeDatum>;
+      const forceY = simulation.force("forceY") as d3.ForceY<EnrichedNodeDatum>;
+      if (forceX) {
+        forceX.strength(updatedConfig.centerForceFactor);
+      }
+      if (forceY) {
+        forceY.strength(updatedConfig.centerForceFactor);
+      }
+    }
+
+    // Update the config reference
+    fullConfig = updatedConfig;
 
     // Restart the simulation with new forces
     simulation.alpha(0.3).restart();

@@ -46,6 +46,30 @@ export const createConfigPanel = (options: ConfigPanelOptions): void => {
           ></sl-range>
           <span class="config-value" x-text="linkForceFactor"></span>
         </div>
+        <div class="config-item">
+          <label for="chargeForce">Charge Force Factor</label>
+          <sl-range
+            id="chargeForce"
+            min="0.1"
+            max="3.0"
+            step="0.1"
+            x-bind:value="chargeForceFactor"
+            x-on:sl-change="updateChargeForce($event)"
+          ></sl-range>
+          <span class="config-value" x-text="chargeForceFactor"></span>
+        </div>
+        <div class="config-item">
+          <label for="centerForce">Center Force Factor</label>
+          <sl-range
+            id="centerForce"
+            min="0.01"
+            max="0.5"
+            step="0.01"
+            x-bind:value="centerForceFactor"
+            x-on:sl-change="updateCenterForce($event)"
+          ></sl-range>
+          <span class="config-value" x-text="centerForceFactor"></span>
+        </div>
       </div>
     </div>
   `;
@@ -54,11 +78,25 @@ export const createConfigPanel = (options: ConfigPanelOptions): void => {
   // Initialize Alpine.js data
   (window as any).configPanel = () => ({
     linkForceFactor: config.linkForceFactor,
+    chargeForceFactor: config.chargeForceFactor,
+    centerForceFactor: config.centerForceFactor,
 
     updateLinkForce(event: CustomEvent) {
       const value = parseFloat((event.target as HTMLInputElement).value);
       this.linkForceFactor = value;
       onConfigChange({ linkForceFactor: value });
+    },
+
+    updateChargeForce(event: CustomEvent) {
+      const value = parseFloat((event.target as HTMLInputElement).value);
+      this.chargeForceFactor = value;
+      onConfigChange({ chargeForceFactor: value });
+    },
+
+    updateCenterForce(event: CustomEvent) {
+      const value = parseFloat((event.target as HTMLInputElement).value);
+      this.centerForceFactor = value;
+      onConfigChange({ centerForceFactor: value });
     },
   });
 };
