@@ -7,12 +7,15 @@ export const createEnrichedGraph = (
   graph: Graph,
   initalValues: InitialNodeValueMap,
 ): EnrichedGraph => {
-  const idsInView = graph.links
+  const links = graph.links.filter((link) => link.target in graph.nodes); // ensure that id references an existing node
+
+  const idsInView = links
     .map((link) => [link.source, link.target])
     .flat()
-    .filter((value, index, self) => self.indexOf(value) === index);
+    .filter((value, index, self) => self.indexOf(value) === index); // de-duplicate entries
 
-  const getDepth = (id: string) => getDistance(graph, root, id);
+  const getDepth = (id: string) =>
+    getDistance({ nodes: graph.nodes, links }, root, id);
 
   const nodes: EnrichedNodeDatum[] = [
     ...idsInView.map((id: string) => {
@@ -45,7 +48,7 @@ export const createEnrichedGraph = (
 
   return {
     nodes: nodes,
-    links: graph.links.map((link: Link) => {
+    links: links.map((link: Link) => {
       return {
         source: nodesMap[link.source],
         target: nodesMap[link.target],
