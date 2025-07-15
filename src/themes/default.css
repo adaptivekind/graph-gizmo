@@ -3,6 +3,14 @@ line {
   stroke-width: 1;
 }
 
+line.value-2 {
+  stroke-width: 0.5;
+}
+
+line.value-8 {
+  stroke-width: 2;
+}
+
 line.link {
   stroke: black;
 }
@@ -30,6 +38,14 @@ g.depth-1 {
 }
 g.depth-2 {
   z-index: 80;
+}
+
+g.value-2 {
+  fill-opacity: 0.2;
+}
+
+g.value-8 circle {
+  fill: #000000;
 }
 
 .depth-0 text {

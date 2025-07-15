@@ -24,6 +24,7 @@ export const createEnrichedGraph = (
         label: id in graph.nodes && node.label ? node.label : id,
         wanted: !(id in graph.nodes),
         showLabel: true,
+        value: node.weights?.value || 0.5,
         depth,
         ...fixedCoordinates,
         ...initalValues[id],
@@ -48,6 +49,7 @@ export const createEnrichedGraph = (
       return {
         source: nodesMap[link.source],
         target: nodesMap[link.target],
+        value: link.weights?.value || 0.5,
         depth: Math.min(
           nodesMap[link.source].depth,
           nodesMap[link.target].depth,

@@ -10,12 +10,14 @@ export interface EnrichedNode extends Node {
   id: string;
   showLabel: boolean;
   wanted: boolean;
+  value: number;
 }
 
 export interface EnrichedNodeDatum extends SimulationNodeDatum, EnrichedNode {}
 
 export interface EnrichedLink {
   depth: number;
+  value: number;
 }
 
 export interface EnrichedLinkDatum

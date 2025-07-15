@@ -34,7 +34,7 @@ const defaultConfiguration = (
       centerForceFactor:
         Math.round(100 * Math.min(0.25 * (1100.0 / minDimension) ** 2, 0.3)) /
         100,
-      chargeForceFactor: 1.2,
+      chargeForceFactor: 2,
       configPanel: false,
       containerSelector: "#gizmo",
       debug: false,
@@ -70,12 +70,12 @@ const defaultConfiguration = (
       // How much node repels
       getCharge: (factor: number) => (d: EnrichedNodeDatum) => {
         return d.depth === 0
-          ? -8000 * factor
+          ? -8000 * factor * d.value
           : d.depth === 1
-            ? -4000 * factor
+            ? -4000 * factor * d.value
             : d.depth === 2
-              ? -50 * factor
-              : -5 * factor;
+              ? -50 * factor * d.value
+              : -5 * factor * d.value;
       },
 
       linkTypeForceWeight,
