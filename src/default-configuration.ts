@@ -1,5 +1,5 @@
 import { EnrichedLink, EnrichedNodeDatum, GraphConfiguration } from "./types";
-const DEPTH_1_RADIUS = 30;
+const DEPTH_1_RADIUS = 60;
 const boundarySize = DEPTH_1_RADIUS * 4;
 
 const linkTypeForceWeight = () => {
@@ -8,12 +8,12 @@ const linkTypeForceWeight = () => {
 
 const linkDepthForceWeight = (link: EnrichedLink) =>
   link.depth === 0
-    ? 1.0
+    ? 1.0 * link.value
     : link.depth === 1
-      ? 1.0
+      ? 1.0 * link.value
       : link.depth === 2
-        ? 0.15
-        : 0.08;
+        ? 0.15 * link.value
+        : 0.08 * link.value;
 
 const defaultConfiguration = (
   config: Partial<GraphConfiguration>,
@@ -59,12 +59,12 @@ const defaultConfiguration = (
       yOffsetText: -10,
       getRadius: (d: EnrichedNodeDatum) => {
         return d.depth === 0
-          ? DEPTH_1_RADIUS
+          ? DEPTH_1_RADIUS * d.value
           : d.depth === 1
-            ? 15
+            ? 30 * d.value
             : d.depth === 2
-              ? 5
-              : 2;
+              ? 5 * d.value
+              : 2 * d.value;
       },
 
       // How much node repels
