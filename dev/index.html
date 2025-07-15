@@ -13,10 +13,14 @@
       import * as gizmo from "/src/index.ts";
 
       // Render the graph
-      const renderer = gizmo.render(30, {
-        debug: true,
-        configPanel: true,
-      });
+      fetch(".garden-graph.json")
+        .then((response) => response.json())
+        .then((json) =>
+          gizmo.render(json, {
+            debug: true,
+            configPanel: true,
+          }),
+        );
     </script>
   </body>
 </html>

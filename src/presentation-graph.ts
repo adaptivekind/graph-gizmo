@@ -9,10 +9,10 @@ export const createEnrichedGraph = (
 ): EnrichedGraph => {
   const links = graph.links.filter((link) => link.target in graph.nodes); // ensure that id references an existing node
 
-  const idsInView = links
-    .map((link) => [link.source, link.target])
-    .flat()
-    .filter((value, index, self) => self.indexOf(value) === index); // de-duplicate entries
+  const idsInView = [
+    ...Object.keys(graph.nodes),
+    ...links.map((link) => [link.source, link.target]).flat(),
+  ].filter((value, index, self) => self.indexOf(value) === index); // de-duplicate entries
 
   const getDepth = (id: string) =>
     getDistance({ nodes: graph.nodes, links }, root, id);
