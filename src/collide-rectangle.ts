@@ -3,11 +3,11 @@ import { QuadtreeInternalNode, QuadtreeLeaf, quadtree } from "d3-quadtree";
 import { EnrichedNodeDatum } from "./types";
 
 function x(d: EnrichedNodeDatum) {
-  return (d.x ?? 0) + (d.vx ?? 0);
+  return d.x ?? 0;
 }
 
 function y(d: EnrichedNodeDatum) {
-  return (d.y ?? 0) + (d.vy ?? 0);
+  return d.y ?? 0;
 }
 
 function xCenterOfBox(d: EnrichedNodeDatum, box: number[]) {
@@ -53,12 +53,17 @@ function apply(d: EnrichedNodeDatum, box: number[], strength: number) {
       d.vy = (d.vy ?? 0) - deltaY / 2;
       quad.data.vy = (quad.data.vy ?? 0) + deltaY / 2;
 
+      // Move nodes horizonstally with less strength
+      const deltaX = (0.0005 * strength * xDistance * overlapX) / distance;
+      d.vx = (d.vx ?? 0) - deltaX / 2;
+      quad.data.vx = (quad.data.vx ?? 0) + deltaX / 2;
+
       return true;
     }
   };
 }
 
-export default function (box: number[], strength = 0.4) {
+export default function (box: number[], strength = 0.5) {
   let nodes: EnrichedNodeDatum[];
   let iterations = 1;
   function force() {

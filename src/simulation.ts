@@ -52,15 +52,12 @@ export const createSimulation = (
     )
     .force(
       "collideRectangle",
-      collideRectangle(
-        [
-          config.xOffsetText,
-          config.yOffsetText,
-          config.widthText,
-          config.heightText,
-        ],
-        2,
-      ),
+      collideRectangle([
+        config.xOffsetText,
+        config.yOffsetText,
+        config.widthText,
+        config.heightText,
+      ]),
     )
     .force("forceX", d3.forceX(0).strength(config.centerForceFactor))
     .force("forceY", d3.forceY(0).strength(config.centerForceFactor))
