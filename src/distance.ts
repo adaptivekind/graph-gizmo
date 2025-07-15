@@ -69,5 +69,3 @@ export const getDistance = (
   // No path found
   return UNCONNECTED_DISTANCE;
 };
-
-export default getDistance;

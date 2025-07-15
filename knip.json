@@ -1,0 +1,9 @@
+{
+  "$schema": "https://unpkg.com/knip@latest/schema.json",
+  "entry": ["src/index.ts"],
+  "project": ["src/**/*.ts"],
+  "ignore": ["dist/**", ".rollup.cache/**", "**/*.js", "eslint.config.mjs"],
+  "ignoreDependencies": ["eslint-plugin-import"],
+  "ignoreBinaries": ["prettier", "semantic-release"],
+  "ignoreExportsUsedInFile": true
+}

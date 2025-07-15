@@ -1,6 +1,6 @@
 import { EnrichedGraph, EnrichedNodeDatum, InitialNodeValueMap } from "./types";
 import { Graph, Link } from "@adaptivekind/graph-schema";
-import getDistance from "./distance";
+import { getDistance } from "./distance";
 
 export const createEnrichedGraph = (
   root: string,
