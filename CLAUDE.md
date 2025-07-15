@@ -2,25 +2,43 @@
 
 A D3.js-based knowledge graph visualization library built with TypeScript.
 
-## Project Structure
+## Universal Directives
 
-```
-src/
-├── index.ts                 # Main entry point
-├── render.ts               # Core rendering logic
-├── types.ts                # TypeScript type definitions
-├── default-configuration.ts # Default configuration
-├── presentation-graph.ts   # Graph presentation logic
-├── collide-rectangle.ts    # Collision detection
-└── item-name.ts           # Item naming utilities
+1. you MUST write code that is clear and explains meaning - prefer readability
+   over condensed code.
+2. you MUST test, lint and build before declaring done.
+3. you MUST handle errors explicitly.
+4. you MUST code in a way that matches the style of the existing code.
+5. you MUST code in a way that makes it easier for future coders.
+6. you MUST focus on the task at hand, do not make changes that do not help
+   towards this goal.
+7. you SHOULD ensure a test exists that describes the intended behaviour, before
+   writing the code that delivers that behaviour. Once the test is passes you
+   should refactor the implementation to ensure the universal directives are met.
+8. you SHOULD from time to time review the code base holistically to check
+   whether it satisfies the universal directives. If you have recommendation you
+   MUST explain what you feel should be done. Only proceed with the fixes when
+   explicitly asked to.
 
-dev/
-└── index.html             # Development server page
+### Code Strategy
 
-test/
-├── index.html             # Test page
-└── *.test.ts              # Test files
-```
+- Codebase > Documentation as source of truth.
+- you MUST not use the `any` type.
+- Sort typescript imports by putting multiple imports first. After that single
+  imports should be sorted starting with a imports starting with a capital letter,
+  after which single imports starting with a lower case letter should be sorted.
+- Prefer feature tests which test the public interfaces for this package as opposed
+  to unit tests based on internal functions. This asserts the desired behaviour of
+  the package.
+- Markdown should have a `textwidth` of 80 characters
+
+## Engineering guidance
+
+- NEVER assume, always question
+- be BRUTALLY HONEST in assessments
+- NO NONSENSE, NO HYPE, NO MARKETING SPEAK - prefer hard facts and stay
+  objective
+- Use slash commands for consistent workflows
 
 ## Development Commands
 
@@ -35,36 +53,6 @@ test/
 
 ## Development Workflow
 
-1. **Development Server**: Use `npm start` to run the development server
-
-   - Serves from `dev/index.html`
-   - Hot reloads on TypeScript changes
-   - Runs on http://localhost:3000
-
-2. **Testing**: Tests are in the `test/` directory using Jest
-
-   - Run with `npm test`
-   - Watch mode: `npm run test:watch`
-
-3. **Building**: Production builds use Rollup
-   - Output: `dist/bundle.js`
-   - Watch mode: `npm run build:watch`
-
-## Code Quality
-
-- **Husky**: Pre-commit hooks configured
-- **Lint-staged**: Runs on staged files before commit
-- **ESLint**: Code linting with TypeScript support
-- **Prettier**: Code formatting (configured in lint-staged)
-
-## Key Dependencies
-
-- **D3.js**: Data visualization library
-- **TypeScript**: Type-safe JavaScript
-- **Rollup**: Module bundler for production
-- **Vite**: Development server with HMR
-- **Jest**: Testing framework
-
 ## Notes
 
 - The project uses ES modules (`"type": "module"`)
@@ -72,31 +60,3 @@ test/
 - Development uses direct TypeScript imports via Vite
 - Production builds are bundled with Rollup
 - Graph schema types come from `@adaptivekind/graph-schema`
-
-## Coding Guidelines
-
-### Prefer `const` over `let`
-
-Always use `const` for variables that don't need reassignment. Avoid reassigning configuration objects when the underlying system already manages state.
-
-**Example**: In `render.ts`, `fullConfig` should remain `const` because:
-
-- It represents the initial configuration (immutable)
-- D3 simulation object maintains the actual runtime state
-- Updates are applied directly to the simulation via methods like `simulation.alphaDecay(value)`
-- Reassigning the config object creates duplicate state tracking
-
-```typescript
-// ✅ Good: Keep config as const, update simulation directly
-const fullConfig = defaultConfiguration(config);
-const updateConfig = (updates) => {
-  const updatedConfig = { ...fullConfig, ...updates };
-  simulation.alphaDecay(updatedConfig.alphaDecay);
-};
-
-// ❌ Avoid: Reassigning const or making it let unnecessarily
-let fullConfig = defaultConfiguration(config);
-const updateConfig = (updates) => {
-  fullConfig = { ...fullConfig, ...updates }; // Creates duplicate state
-};
-```

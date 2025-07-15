@@ -1,3 +1,14 @@
+# Check for untracked files
+untracked_files=$(git ls-files --others --exclude-standard)
+if [ -n "$untracked_files" ]; then
+  echo "❌ Pre-commit failed: Found untracked files:"
+  echo "$untracked_files" | sed 's/^/  /'
+  echo ""
+  echo "Please add these files to git or add them to .gitignore if they should be ignored."
+  echo "Run: git add <file> or echo '<pattern>' >> .gitignore"
+  exit 1
+fi
+
 npx lint-staged
 npm run build
 npm run test
