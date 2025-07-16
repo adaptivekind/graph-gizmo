@@ -39,7 +39,7 @@
     </div>
     <div id="gizmo" />
     <script>
-      fetch(".garden-graph.json")
+      fetch("garden-graph.json")
         .then((response) => response.json())
         .then((json) => graphGizmo.render(json, { configPanel: true }));
     </script>
