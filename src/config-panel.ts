@@ -54,8 +54,8 @@ export const createConfigPanel = async (
           <sl-range
             id="linkForce"
             min="0"
-            max="3.0"
-            step="0.01"
+            max="6.0"
+            step="0.1"
             x-bind:value="linkForceFactor"
             x-on:sl-input="updateLinkForce($event)"
           ></sl-range>
@@ -66,7 +66,7 @@ export const createConfigPanel = async (
           <sl-range
             id="chargeForce"
             min="0"
-            max="3.0"
+            max="6.0"
             step="0.1"
             x-bind:value="chargeForceFactor"
             x-on:sl-input="updateChargeForce($event)"
@@ -78,7 +78,7 @@ export const createConfigPanel = async (
           <sl-range
             id="centerForce"
             min="0"
-            max="1"
+            max="0.2"
             step="0.01"
             x-bind:value="centerForceFactor"
             x-on:sl-input="updateCenterForce($event)"

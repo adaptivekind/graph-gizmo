@@ -16,7 +16,7 @@ describe("render graph", () => {
 
     expect(await findByRole(container, "dialog")).toBeDefined();
     expect(
-      await findByText(container, /centerForceFactor = 0.3/),
+      await findByText(container, /centerForceFactor = 0.05/),
     ).toBeDefined();
   });
 });

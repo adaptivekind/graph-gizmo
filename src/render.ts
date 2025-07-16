@@ -98,9 +98,8 @@ const update = (
       (entry) =>
         entry
           .append("line")
-          .attr("class", function (d: EnrichedLinkDatum) {
-            return `link value-${Math.floor(10 * d.value)}`;
-          })
+          .attr("class", "link")
+          .attr("stroke-width", (d: EnrichedLinkDatum) => d.value * 4)
           .attr("x1", config.xOffset)
           .attr("x2", config.xOffset)
           .attr("y1", config.yOffset)
@@ -117,7 +116,7 @@ const update = (
         const group = entry
           .append("g")
           .attr("class", function (d: EnrichedNodeDatum) {
-            return `node depth-${d.depth} value-${Math.floor(10 * d.value)}`;
+            return `node depth-${d.depth}`;
           })
           .classed("group", true)
           .classed("wanted", (d: EnrichedNodeDatum) => d.wanted)

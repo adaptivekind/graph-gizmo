@@ -47,14 +47,15 @@ export const createEnrichedGraph = (
   return {
     nodes: nodes,
     links: graph.links.map((link: Link) => {
+      const depth = Math.min(
+        nodesMap[link.source].depth,
+        nodesMap[link.target].depth,
+      );
       return {
         source: nodesMap[link.source],
         target: nodesMap[link.target],
-        value: link.weights?.value || 0.5,
-        depth: Math.min(
-          nodesMap[link.source].depth,
-          nodesMap[link.target].depth,
-        ),
+        value: (link.weights?.value || 0.5) / (1 + depth),
+        depth,
       };
     }),
   };

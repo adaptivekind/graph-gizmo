@@ -32,7 +32,7 @@ const defaultConfiguration = (
       bottomBoundary: viewHeight - yOffset - boundarySize,
       boundarySize,
       centerForceFactor:
-        Math.round(100 * Math.min(0.25 * (1100.0 / minDimension) ** 2, 0.3)) /
+        Math.round(100 * Math.min(0.1 * (1100.0 / minDimension) ** 2, 0.05)) /
         100,
       chargeForceFactor: 2,
       configPanel: false,
@@ -42,7 +42,7 @@ const defaultConfiguration = (
       dynamicLoad: !!config.configPanel,
       heightText: 30,
       leftBoundary: -viewWidth / 2 + boundarySize,
-      linkForceFactor: 0.8,
+      linkForceFactor: 8,
       loadAlpine: !!config.configPanel,
       loadShoelace: !!config.configPanel,
       maxNodes,
