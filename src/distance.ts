@@ -1,6 +1,6 @@
 import { Graph } from "@adaptivekind/graph-schema";
 
-export const UNCONNECTED_DISTANCE = 999;
+export const UNCONNECTED_DISTANCE = Infinity;
 /**
  * Calculate the shortest distance between two nodes in a graph using BFS.
  *
@@ -34,7 +34,13 @@ export const getDistance = (
 
   // Populate adjacency list with bidirectional links
   graph.links.forEach((link) => {
+    if (!(link.source in adjacencyList)) {
+      adjacencyList[link.source] = [];
+    }
     adjacencyList[link.source].push(link.target);
+    if (!(link.target in adjacencyList)) {
+      adjacencyList[link.target] = [];
+    }
     adjacencyList[link.target].push(link.source);
   });
 

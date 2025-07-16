@@ -3,18 +3,25 @@
     "readme": {
       "label": "boxofjelly"
     },
-    "cohere": {
-      "label": "Cohere",
-      "meta": {
-        "created": "202507111230",
-        "updated": "202507111255"
-      }
-    },
     "anthropic": {
       "label": "Anthropic",
       "meta": {
         "created": "202507111230",
         "updated": "202507111245"
+      }
+    },
+    "amazon-ai": {
+      "label": "Amazon AI",
+      "meta": {
+        "created": "202507111230",
+        "updated": "202507111240"
+      }
+    },
+    "cohere": {
+      "label": "Cohere",
+      "meta": {
+        "created": "202507111230",
+        "updated": "202507111255"
       }
     },
     "ai-providers": {
@@ -101,20 +108,6 @@
         "updated": "202507111255"
       }
     },
-    "amazon-ai": {
-      "label": "Amazon AI",
-      "meta": {
-        "created": "202507111230",
-        "updated": "202507111240"
-      }
-    },
-    "microsoft-ai": {
-      "label": "Microsoft AI",
-      "meta": {
-        "created": "202507111230",
-        "updated": "202507111255"
-      }
-    },
     "google-deepmind": {
       "label": "Google DeepMind",
       "meta": {
@@ -124,6 +117,41 @@
     },
     "nvidia-ai": {
       "label": "NVIDIA AI",
+      "meta": {
+        "created": "202507111230",
+        "updated": "202507111255"
+      }
+    },
+    "meta-ai": {
+      "label": "Meta AI",
+      "meta": {
+        "created": "202507111230",
+        "updated": "202507111255"
+      }
+    },
+    "microsoft-ai": {
+      "label": "Microsoft AI",
+      "meta": {
+        "created": "202507111230",
+        "updated": "202507111255"
+      }
+    },
+    "openai": {
+      "label": "OpenAI",
+      "meta": {
+        "created": "202507111230",
+        "updated": "202507111245"
+      }
+    },
+    "scale-ai": {
+      "label": "Scale AI",
+      "meta": {
+        "created": "202507111230",
+        "updated": "202507111255"
+      }
+    },
+    "xai": {
+      "label": "xAI",
       "meta": {
         "created": "202507111230",
         "updated": "202507111255"
@@ -195,124 +223,8 @@
     "boxofjelly-prompt#output-format": {
       "label": "Output Format"
     },
-    "meta-ai": {
-      "label": "Meta AI",
-      "meta": {
-        "created": "202507111230",
-        "updated": "202507111255"
-      }
-    },
-    "xai": {
-      "label": "xAI",
-      "meta": {
-        "created": "202507111230",
-        "updated": "202507111255"
-      }
-    },
-    "scale-ai": {
-      "label": "Scale AI",
-      "meta": {
-        "created": "202507111230",
-        "updated": "202507111255"
-      }
-    },
-    "openai": {
-      "label": "OpenAI",
-      "meta": {
-        "created": "202507111230",
-        "updated": "202507111245"
-      }
-    },
-    "construction": {
-      "label": "Construction",
-      "meta": {
-        "created": "202507152130",
-        "updated": "202507152145"
-      }
-    },
-    "corner-plastering": {
-      "label": "Corner Plastering",
-      "meta": {
-        "created": "202507152145",
-        "updated": "202507152145"
-      }
-    },
-    "corner-plastering#tools-required": {
-      "label": "Tools Required",
-      "meta": {
-        "created": "202507152145",
-        "updated": "202507152145"
-      }
-    },
-    "corner-plastering#corner-trowels": {
-      "label": "Corner Trowels",
-      "meta": {
-        "created": "202507152145",
-        "updated": "202507152145"
-      }
-    },
-    "corner-plastering#support-materials": {
-      "label": "Support Materials",
-      "meta": {
-        "created": "202507152145",
-        "updated": "202507152145"
-      }
-    },
-    "corner-plastering#internal-corner-technique": {
-      "label": "Internal Corner Technique",
-      "meta": {
-        "created": "202507152145",
-        "updated": "202507152145"
-      }
-    },
-    "corner-plastering#preparation": {
-      "label": "Preparation",
-      "meta": {
-        "created": "202507152145",
-        "updated": "202507152145"
-      }
-    },
-    "corner-plastering#application-process": {
-      "label": "Application Process",
-      "meta": {
-        "created": "202507152145",
-        "updated": "202507152145"
-      }
-    },
-    "corner-plastering#external-corner-method": {
-      "label": "External Corner Method",
-      "meta": {
-        "created": "202507152145",
-        "updated": "202507152145"
-      }
-    },
-    "corner-plastering#corner-bead-installation": {
-      "label": "Corner Bead Installation",
-      "meta": {
-        "created": "202507152145",
-        "updated": "202507152145"
-      }
-    },
-    "corner-plastering#plastering-process": {
-      "label": "Plastering Process",
-      "meta": {
-        "created": "202507152145",
-        "updated": "202507152145"
-      }
-    },
-    "corner-plastering#common-problems": {
-      "label": "Common Problems",
-      "meta": {
-        "created": "202507152145",
-        "updated": "202507152145"
-      }
-    },
-    "corner-plastering#professional-tips": {
-      "label": "Professional Tips",
-      "meta": {
-        "created": "202507152145",
-        "updated": "202507152145"
-      }
+    "blog-tone-of-voice": {
+      "label": "Tone of voice"
     },
     "drylining": {
       "label": "Drylining",
@@ -405,60 +317,95 @@
         "updated": "202507152145"
       }
     },
-    "cement-plaster": {
-      "label": "Cement Plaster",
+    "corner-plastering": {
+      "label": "Corner Plastering",
       "meta": {
-        "created": "202507152130",
-        "updated": "202507152130"
+        "created": "202507152145",
+        "updated": "202507152145"
       }
     },
-    "cement-plaster#composition": {
-      "label": "Composition",
+    "corner-plastering#tools-required": {
+      "label": "Tools Required",
       "meta": {
-        "created": "202507152130",
-        "updated": "202507152130"
+        "created": "202507152145",
+        "updated": "202507152145"
       }
     },
-    "cement-plaster#mixing-ratios": {
-      "label": "Mixing Ratios",
+    "corner-plastering#corner-trowels": {
+      "label": "Corner Trowels",
       "meta": {
-        "created": "202507152130",
-        "updated": "202507152130"
+        "created": "202507152145",
+        "updated": "202507152145"
       }
     },
-    "cement-plaster#application-characteristics": {
-      "label": "Application Characteristics",
+    "corner-plastering#support-materials": {
+      "label": "Support Materials",
       "meta": {
-        "created": "202507152130",
-        "updated": "202507152130"
+        "created": "202507152145",
+        "updated": "202507152145"
       }
     },
-    "cement-plaster#performance-properties": {
-      "label": "Performance Properties",
+    "corner-plastering#internal-corner-technique": {
+      "label": "Internal Corner Technique",
       "meta": {
-        "created": "202507152130",
-        "updated": "202507152130"
+        "created": "202507152145",
+        "updated": "202507152145"
       }
     },
-    "cement-plaster#advantages": {
-      "label": "Advantages",
+    "corner-plastering#preparation": {
+      "label": "Preparation",
       "meta": {
-        "created": "202507152130",
-        "updated": "202507152130"
+        "created": "202507152145",
+        "updated": "202507152145"
       }
     },
-    "cement-plaster#limitations": {
-      "label": "Limitations",
+    "corner-plastering#application-process": {
+      "label": "Application Process",
       "meta": {
-        "created": "202507152130",
-        "updated": "202507152130"
+        "created": "202507152145",
+        "updated": "202507152145"
       }
     },
-    "cement-plaster#application-areas": {
-      "label": "Application Areas",
+    "corner-plastering#external-corner-method": {
+      "label": "External Corner Method",
+      "meta": {
+        "created": "202507152145",
+        "updated": "202507152145"
+      }
+    },
+    "corner-plastering#corner-bead-installation": {
+      "label": "Corner Bead Installation",
+      "meta": {
+        "created": "202507152145",
+        "updated": "202507152145"
+      }
+    },
+    "corner-plastering#plastering-process": {
+      "label": "Plastering Process",
+      "meta": {
+        "created": "202507152145",
+        "updated": "202507152145"
+      }
+    },
+    "corner-plastering#common-problems": {
+      "label": "Common Problems",
+      "meta": {
+        "created": "202507152145",
+        "updated": "202507152145"
+      }
+    },
+    "corner-plastering#professional-tips": {
+      "label": "Professional Tips",
+      "meta": {
+        "created": "202507152145",
+        "updated": "202507152145"
+      }
+    },
+    "construction": {
+      "label": "Construction",
       "meta": {
         "created": "202507152130",
-        "updated": "202507152130"
+        "updated": "202507152145"
       }
     },
     "gypsum-plaster": {
@@ -573,155 +520,57 @@
         "updated": "202507152130"
       }
     },
-    "painting": {
-      "label": "Painting",
-      "meta": {
-        "created": "202507152145",
-        "updated": "202507152145"
-      }
-    },
-    "painting#surface-preparation-for-plaster": {
-      "label": "Surface Preparation for Plaster",
-      "meta": {
-        "created": "202507152145",
-        "updated": "202507152145"
-      }
-    },
-    "painting#new-plaster-requirements": {
-      "label": "New Plaster Requirements",
-      "meta": {
-        "created": "202507152145",
-        "updated": "202507152145"
-      }
-    },
-    "painting#primer-application": {
-      "label": "Primer Application",
-      "meta": {
-        "created": "202507152145",
-        "updated": "202507152145"
-      }
-    },
-    "painting#paint-types-for-plaster": {
-      "label": "Paint Types for Plaster",
-      "meta": {
-        "created": "202507152145",
-        "updated": "202507152145"
-      }
-    },
-    "painting#emulsion-paints": {
-      "label": "Emulsion Paints",
-      "meta": {
-        "created": "202507152145",
-        "updated": "202507152145"
-      }
-    },
-    "painting#limewash": {
-      "label": "Limewash",
-      "meta": {
-        "created": "202507152145",
-        "updated": "202507152145"
-      }
-    },
-    "painting#specialized-coatings": {
-      "label": "Specialized Coatings",
-      "meta": {
-        "created": "202507152145",
-        "updated": "202507152145"
-      }
-    },
-    "painting#application-technique": {
-      "label": "Application Technique",
-      "meta": {
-        "created": "202507152145",
-        "updated": "202507152145"
-      }
-    },
-    "painting#equipment": {
-      "label": "Equipment",
-      "meta": {
-        "created": "202507152145",
-        "updated": "202507152145"
-      }
-    },
-    "painting#method": {
-      "label": "Method",
-      "meta": {
-        "created": "202507152145",
-        "updated": "202507152145"
-      }
-    },
-    "painting#common-issues": {
-      "label": "Common Issues",
-      "meta": {
-        "created": "202507152145",
-        "updated": "202507152145"
-      }
-    },
-    "painting#maintenance": {
-      "label": "Maintenance",
-      "meta": {
-        "created": "202507152145",
-        "updated": "202507152145"
-      }
-    },
-    "plaster-application": {
-      "label": "Plaster Application",
+    "cement-plaster": {
+      "label": "Cement Plaster",
       "meta": {
         "created": "202507152130",
         "updated": "202507152130"
       }
     },
-    "plaster-application#first-coat-technique": {
-      "label": "First Coat Technique",
+    "cement-plaster#composition": {
+      "label": "Composition",
       "meta": {
         "created": "202507152130",
         "updated": "202507152130"
       }
     },
-    "plaster-application#starting-and-coverage": {
-      "label": "Starting and Coverage",
+    "cement-plaster#mixing-ratios": {
+      "label": "Mixing Ratios",
       "meta": {
         "created": "202507152130",
         "updated": "202507152130"
       }
     },
-    "plaster-application#trowel-technique": {
-      "label": "Trowel Technique",
+    "cement-plaster#application-characteristics": {
+      "label": "Application Characteristics",
       "meta": {
         "created": "202507152130",
         "updated": "202507152130"
       }
     },
-    "plaster-application#timing-between-coats": {
-      "label": "Timing Between Coats",
+    "cement-plaster#performance-properties": {
+      "label": "Performance Properties",
       "meta": {
         "created": "202507152130",
         "updated": "202507152130"
       }
     },
-    "plaster-application#second-coat-application": {
-      "label": "Second Coat Application",
+    "cement-plaster#advantages": {
+      "label": "Advantages",
       "meta": {
         "created": "202507152130",
         "updated": "202507152130"
       }
     },
-    "plaster-application#preparation-and-thickness": {
-      "label": "Preparation and Thickness",
+    "cement-plaster#limitations": {
+      "label": "Limitations",
       "meta": {
         "created": "202507152130",
         "updated": "202507152130"
       }
     },
-    "plaster-application#finishing-technique": {
-      "label": "Finishing Technique",
-      "meta": {
-        "created": "202507152130",
-        "updated": "202507152130"
-      }
-    },
-    "plaster-application#working-conditions": {
-      "label": "Working Conditions",
+    "cement-plaster#application-areas": {
+      "label": "Application Areas",
       "meta": {
         "created": "202507152130",
         "updated": "202507152130"
@@ -804,6 +653,41 @@
         "updated": "202507152130"
       }
     },
+    "plastering-tools": {
+      "label": "Plastering Tools",
+      "meta": {
+        "created": "202507152130",
+        "updated": "202507152130"
+      }
+    },
+    "plastering-tools#application-tools": {
+      "label": "Application Tools",
+      "meta": {
+        "created": "202507152130",
+        "updated": "202507152130"
+      }
+    },
+    "plastering-tools#mixing-equipment": {
+      "label": "Mixing Equipment",
+      "meta": {
+        "created": "202507152130",
+        "updated": "202507152130"
+      }
+    },
+    "plastering-tools#materials-and-safety": {
+      "label": "Materials and Safety",
+      "meta": {
+        "created": "202507152130",
+        "updated": "202507152130"
+      }
+    },
+    "plastering-tools#tool-maintenance": {
+      "label": "Tool Maintenance",
+      "meta": {
+        "created": "202507152130",
+        "updated": "202507152130"
+      }
+    },
     "plaster-mixing": {
       "label": "Plaster Mixing",
       "meta": {
@@ -853,46 +737,74 @@
         "updated": "202507152130"
       }
     },
+    "plaster-application": {
+      "label": "Plaster Application",
+      "meta": {
+        "created": "202507152130",
+        "updated": "202507152130"
+      }
+    },
+    "plaster-application#first-coat-technique": {
+      "label": "First Coat Technique",
+      "meta": {
+        "created": "202507152130",
+        "updated": "202507152130"
+      }
+    },
+    "plaster-application#starting-and-coverage": {
+      "label": "Starting and Coverage",
+      "meta": {
+        "created": "202507152130",
+        "updated": "202507152130"
+      }
+    },
+    "plaster-application#trowel-technique": {
+      "label": "Trowel Technique",
+      "meta": {
+        "created": "202507152130",
+        "updated": "202507152130"
+      }
+    },
+    "plaster-application#timing-between-coats": {
+      "label": "Timing Between Coats",
+      "meta": {
+        "created": "202507152130",
+        "updated": "202507152130"
+      }
+    },
+    "plaster-application#second-coat-application": {
+      "label": "Second Coat Application",
+      "meta": {
+        "created": "202507152130",
+        "updated": "202507152130"
+      }
+    },
+    "plaster-application#preparation-and-thickness": {
+      "label": "Preparation and Thickness",
+      "meta": {
+        "created": "202507152130",
+        "updated": "202507152130"
+      }
+    },
+    "plaster-application#finishing-technique": {
+      "label": "Finishing Technique",
+      "meta": {
+        "created": "202507152130",
+        "updated": "202507152130"
+      }
+    },
+    "plaster-application#working-conditions": {
+      "label": "Working Conditions",
+      "meta": {
+        "created": "202507152130",
+        "updated": "202507152130"
+      }
+    },
     "plastering": {
       "label": "Plastering",
       "meta": {
         "created": "202507152130",
         "updated": "202507152145"
-      }
-    },
-    "plastering-tools": {
-      "label": "Plastering Tools",
-      "meta": {
-        "created": "202507152130",
-        "updated": "202507152130"
-      }
-    },
-    "plastering-tools#application-tools": {
-      "label": "Application Tools",
-      "meta": {
-        "created": "202507152130",
-        "updated": "202507152130"
-      }
-    },
-    "plastering-tools#mixing-equipment": {
-      "label": "Mixing Equipment",
-      "meta": {
-        "created": "202507152130",
-        "updated": "202507152130"
-      }
-    },
-    "plastering-tools#materials-and-safety": {
-      "label": "Materials and Safety",
-      "meta": {
-        "created": "202507152130",
-        "updated": "202507152130"
-      }
-    },
-    "plastering-tools#tool-maintenance": {
-      "label": "Tool Maintenance",
-      "meta": {
-        "created": "202507152130",
-        "updated": "202507152130"
       }
     },
     "rendering": {
@@ -1014,6 +926,48 @@
         "updated": "202507152145"
       }
     },
+    "wall-preparation": {
+      "label": "Wall Preparation",
+      "meta": {
+        "created": "202507152130",
+        "updated": "202507152130"
+      }
+    },
+    "wall-preparation#surface-cleaning-process": {
+      "label": "Surface Cleaning Process",
+      "meta": {
+        "created": "202507152130",
+        "updated": "202507152130"
+      }
+    },
+    "wall-preparation#pva-application": {
+      "label": "PVA Application",
+      "meta": {
+        "created": "202507152130",
+        "updated": "202507152130"
+      }
+    },
+    "wall-preparation#mixing-and-application": {
+      "label": "Mixing and Application",
+      "meta": {
+        "created": "202507152130",
+        "updated": "202507152130"
+      }
+    },
+    "wall-preparation#purpose-of-pva": {
+      "label": "Purpose of PVA",
+      "meta": {
+        "created": "202507152130",
+        "updated": "202507152130"
+      }
+    },
+    "wall-preparation#surface-specific-requirements": {
+      "label": "Surface-Specific Requirements",
+      "meta": {
+        "created": "202507152130",
+        "updated": "202507152130"
+      }
+    },
     "skim-coating": {
       "label": "Skim Coating",
       "meta": {
@@ -1070,46 +1024,116 @@
         "updated": "202507152145"
       }
     },
-    "wall-preparation": {
-      "label": "Wall Preparation",
+    "painting": {
+      "label": "Painting",
       "meta": {
-        "created": "202507152130",
-        "updated": "202507152130"
+        "created": "202507152145",
+        "updated": "202507152145"
       }
     },
-    "wall-preparation#surface-cleaning-process": {
-      "label": "Surface Cleaning Process",
+    "painting#surface-preparation-for-plaster": {
+      "label": "Surface Preparation for Plaster",
       "meta": {
-        "created": "202507152130",
-        "updated": "202507152130"
+        "created": "202507152145",
+        "updated": "202507152145"
       }
     },
-    "wall-preparation#pva-application": {
-      "label": "PVA Application",
+    "painting#new-plaster-requirements": {
+      "label": "New Plaster Requirements",
       "meta": {
-        "created": "202507152130",
-        "updated": "202507152130"
+        "created": "202507152145",
+        "updated": "202507152145"
       }
     },
-    "wall-preparation#mixing-and-application": {
-      "label": "Mixing and Application",
+    "painting#primer-application": {
+      "label": "Primer Application",
       "meta": {
-        "created": "202507152130",
-        "updated": "202507152130"
+        "created": "202507152145",
+        "updated": "202507152145"
       }
     },
-    "wall-preparation#purpose-of-pva": {
-      "label": "Purpose of PVA",
+    "painting#paint-types-for-plaster": {
+      "label": "Paint Types for Plaster",
       "meta": {
-        "created": "202507152130",
-        "updated": "202507152130"
+        "created": "202507152145",
+        "updated": "202507152145"
       }
     },
-    "wall-preparation#surface-specific-requirements": {
-      "label": "Surface-Specific Requirements",
+    "painting#emulsion-paints": {
+      "label": "Emulsion Paints",
       "meta": {
-        "created": "202507152130",
-        "updated": "202507152130"
+        "created": "202507152145",
+        "updated": "202507152145"
+      }
+    },
+    "painting#limewash": {
+      "label": "Limewash",
+      "meta": {
+        "created": "202507152145",
+        "updated": "202507152145"
+      }
+    },
+    "painting#specialized-coatings": {
+      "label": "Specialized Coatings",
+      "meta": {
+        "created": "202507152145",
+        "updated": "202507152145"
+      }
+    },
+    "painting#application-technique": {
+      "label": "Application Technique",
+      "meta": {
+        "created": "202507152145",
+        "updated": "202507152145"
+      }
+    },
+    "painting#equipment": {
+      "label": "Equipment",
+      "meta": {
+        "created": "202507152145",
+        "updated": "202507152145"
+      }
+    },
+    "painting#method": {
+      "label": "Method",
+      "meta": {
+        "created": "202507152145",
+        "updated": "202507152145"
+      }
+    },
+    "painting#common-issues": {
+      "label": "Common Issues",
+      "meta": {
+        "created": "202507152145",
+        "updated": "202507152145"
+      }
+    },
+    "painting#maintenance": {
+      "label": "Maintenance",
+      "meta": {
+        "created": "202507152145",
+        "updated": "202507152145"
+      }
+    },
+    "amazon-dynamodb": {
+      "label": "Amazon DynamoDB",
+      "meta": {
+        "created": "202507111220",
+        "updated": "202507111220"
+      }
+    },
+    "big-data": {
+      "label": "Big Data",
+      "meta": {
+        "created": "202507111210",
+        "updated": "202507111255"
+      }
+    },
+    "cap-theorem": {
+      "label": "CAP Theorem",
+      "meta": {
+        "created": "202507111210",
+        "updated": "202507111210"
       }
     },
     "apache-hbase": {
@@ -1126,15 +1150,8 @@
         "updated": "202507111220"
       }
     },
-    "amazon-dynamodb": {
-      "label": "Amazon DynamoDB",
-      "meta": {
-        "created": "202507111220",
-        "updated": "202507111220"
-      }
-    },
-    "apache-cassandra": {
-      "label": "Apache Cassandra",
+    "couchbase": {
+      "label": "Couchbase",
       "meta": {
         "created": "202507111220",
         "updated": "202507111220"
@@ -1154,11 +1171,32 @@
         "updated": "202507111215"
       }
     },
+    "apache-cassandra": {
+      "label": "Apache Cassandra",
+      "meta": {
+        "created": "202507111220",
+        "updated": "202507111220"
+      }
+    },
     "databases": {
       "label": "Databases",
       "meta": {
         "created": "202507111210",
         "updated": "202507111210"
+      }
+    },
+    "graph-databases": {
+      "label": "Graph Databases",
+      "meta": {
+        "created": "202507111210",
+        "updated": "202507111215"
+      }
+    },
+    "graph-databases#leading-examples": {
+      "label": "Leading Examples",
+      "meta": {
+        "created": "202507111210",
+        "updated": "202507111215"
       }
     },
     "document-databases": {
@@ -1175,39 +1213,11 @@
         "updated": "202507111215"
       }
     },
-    "cap-theorem": {
-      "label": "CAP Theorem",
-      "meta": {
-        "created": "202507111210",
-        "updated": "202507111210"
-      }
-    },
-    "couchbase": {
-      "label": "Couchbase",
-      "meta": {
-        "created": "202507111220",
-        "updated": "202507111220"
-      }
-    },
     "elasticsearch": {
       "label": "Elasticsearch",
       "meta": {
         "created": "202507111220",
         "updated": "202507111220"
-      }
-    },
-    "graph-databases": {
-      "label": "Graph Databases",
-      "meta": {
-        "created": "202507111210",
-        "updated": "202507111215"
-      }
-    },
-    "graph-databases#leading-examples": {
-      "label": "Leading Examples",
-      "meta": {
-        "created": "202507111210",
-        "updated": "202507111215"
       }
     },
     "key-value-stores": {
@@ -1231,11 +1241,32 @@
         "updated": "202507111220"
       }
     },
+    "mongodb": {
+      "label": "MongoDB",
+      "meta": {
+        "created": "202507111220",
+        "updated": "202507111245"
+      }
+    },
+    "nosql-databases": {
+      "label": "NoSQL Databases",
+      "meta": {
+        "created": "202507111210",
+        "updated": "202507111245"
+      }
+    },
     "neo4j": {
       "label": "Neo4j",
       "meta": {
         "created": "202507111220",
         "updated": "202507111220"
+      }
+    },
+    "redis": {
+      "label": "Redis",
+      "meta": {
+        "created": "202507111220",
+        "updated": "202507111245"
       }
     },
     "plastering-research-notes-old": {
@@ -1355,41 +1386,6 @@
     "plastering-research-notes-old#resources-for-further-learning": {
       "label": "Resources for Further Learning"
     },
-    "big-data": {
-      "label": "Big Data",
-      "meta": {
-        "created": "202507111210",
-        "updated": "202507111255"
-      }
-    },
-    "mongodb": {
-      "label": "MongoDB",
-      "meta": {
-        "created": "202507111220",
-        "updated": "202507111245"
-      }
-    },
-    "nosql-databases": {
-      "label": "NoSQL Databases",
-      "meta": {
-        "created": "202507111210",
-        "updated": "202507111245"
-      }
-    },
-    "redis": {
-      "label": "Redis",
-      "meta": {
-        "created": "202507111220",
-        "updated": "202507111245"
-      }
-    },
-    "jquery-alternative": {
-      "label": "jQuery Alternative",
-      "meta": {
-        "created": "202507111200",
-        "updated": "202507111200"
-      }
-    },
     "alpine-js": {
       "label": "Alpine.js",
       "meta": {
@@ -1397,10 +1393,10 @@
         "updated": "202507111255"
       }
     },
-    "design-systems": {
-      "label": "Design Systems",
+    "jquery-alternative": {
+      "label": "jQuery Alternative",
       "meta": {
-        "created": "202507111144",
+        "created": "202507111200",
         "updated": "202507111200"
       }
     },
@@ -1411,17 +1407,17 @@
         "updated": "202507111200"
       }
     },
-    "framework-agnostic-development": {
-      "label": "Framework Agnostic Development",
-      "meta": {
-        "created": "202507111144",
-        "updated": "202507111255"
-      }
-    },
     "lightweight-javascript-frameworks": {
       "label": "Lightweight JavaScript Frameworks",
       "meta": {
         "created": "202507111200",
+        "updated": "202507111255"
+      }
+    },
+    "framework-agnostic-development": {
+      "label": "Framework Agnostic Development",
+      "meta": {
+        "created": "202507111144",
         "updated": "202507111255"
       }
     },
@@ -1432,8 +1428,8 @@
         "updated": "202507111200"
       }
     },
-    "web-components": {
-      "label": "Web Components",
+    "design-systems": {
+      "label": "Design Systems",
       "meta": {
         "created": "202507111144",
         "updated": "202507111200"
@@ -1441,6 +1437,13 @@
     },
     "web-technologies": {
       "label": "Web Technologies",
+      "meta": {
+        "created": "202507111144",
+        "updated": "202507111200"
+      }
+    },
+    "web-components": {
+      "label": "Web Components",
       "meta": {
         "created": "202507111144",
         "updated": "202507111200"
@@ -1465,60 +1468,56 @@
       "target": "ai-providers"
     },
     {
-      "source": "cohere",
-      "target": "ai-providers"
-    },
-    {
       "source": "anthropic",
       "target": "ai-providers"
-    },
-    {
-      "source": "ai-providers",
-      "target": "openai"
-    },
-    {
-      "source": "ai-providers",
-      "target": "anthropic"
-    },
-    {
-      "source": "ai-providers",
-      "target": "google-deepmind"
-    },
-    {
-      "source": "ai-providers",
-      "target": "microsoft-ai"
-    },
-    {
-      "source": "ai-providers",
-      "target": "meta-ai"
-    },
-    {
-      "source": "ai-providers",
-      "target": "xai"
-    },
-    {
-      "source": "ai-providers",
-      "target": "nvidia-ai"
-    },
-    {
-      "source": "ai-providers",
-      "target": "amazon-ai"
-    },
-    {
-      "source": "ai-providers",
-      "target": "cohere"
-    },
-    {
-      "source": "ai-providers",
-      "target": "scale-ai"
     },
     {
       "source": "amazon-ai",
       "target": "ai-providers"
     },
     {
-      "source": "microsoft-ai",
+      "source": "cohere",
       "target": "ai-providers"
+    },
+    {
+      "source": "ai-providers#1--openai-valuation-157b",
+      "target": "openai"
+    },
+    {
+      "source": "ai-providers#2--anthropic-valuation-60b",
+      "target": "anthropic"
+    },
+    {
+      "source": "ai-providers#3--google-deepmind-part-of-alphabet-1-85t",
+      "target": "google-deepmind"
+    },
+    {
+      "source": "ai-providers#4--microsoft-ai-market-cap-2-4t",
+      "target": "microsoft-ai"
+    },
+    {
+      "source": "ai-providers#5--meta-ai-market-cap-1-2t",
+      "target": "meta-ai"
+    },
+    {
+      "source": "ai-providers#6--xai-valuation-50b",
+      "target": "xai"
+    },
+    {
+      "source": "ai-providers#7--nvidia-ai-market-cap-2-4t",
+      "target": "nvidia-ai"
+    },
+    {
+      "source": "ai-providers#8--amazon-ai-market-cap-1-8t",
+      "target": "amazon-ai"
+    },
+    {
+      "source": "ai-providers#9--cohere-valuation-5-5b",
+      "target": "cohere"
+    },
+    {
+      "source": "ai-providers#10--scale-ai-valuation-14b",
+      "target": "scale-ai"
     },
     {
       "source": "google-deepmind",
@@ -1529,23 +1528,11 @@
       "target": "ai-providers"
     },
     {
-      "source": "boxofjelly-prompt",
-      "target": "nosql-databases"
-    },
-    {
-      "source": "boxofjelly-prompt",
-      "target": "design-systems"
-    },
-    {
       "source": "meta-ai",
       "target": "ai-providers"
     },
     {
-      "source": "xai",
-      "target": "ai-providers"
-    },
-    {
-      "source": "scale-ai",
+      "source": "microsoft-ai",
       "target": "ai-providers"
     },
     {
@@ -1553,220 +1540,216 @@
       "target": "ai-providers"
     },
     {
-      "source": "corner-plastering",
-      "target": "plastering"
+      "source": "scale-ai",
+      "target": "ai-providers"
     },
     {
-      "source": "corner-plastering",
-      "target": "wall-preparation"
+      "source": "xai",
+      "target": "ai-providers"
     },
     {
-      "source": "corner-plastering",
-      "target": "plaster-application"
+      "source": "boxofjelly-prompt#file-organization",
+      "target": "nosql-databases"
     },
     {
-      "source": "corner-plastering",
-      "target": "plastering"
-    },
-    {
-      "source": "corner-plastering",
-      "target": "plastering-tools"
-    },
-    {
-      "source": "corner-plastering",
-      "target": "plastering-mistakes"
-    },
-    {
-      "source": "corner-plastering",
-      "target": "plastering-tools"
+      "source": "boxofjelly-prompt#wiki-style-linking",
+      "target": "design-systems"
     },
     {
       "source": "drylining",
       "target": "plastering"
     },
     {
-      "source": "drylining",
+      "source": "drylining#finishing-process",
       "target": "painting"
     },
     {
-      "source": "drylining",
+      "source": "drylining#limitations",
       "target": "plastering"
     },
     {
-      "source": "drylining",
+      "source": "drylining#applications",
       "target": "plastering"
     },
     {
-      "source": "drylining",
+      "source": "drylining#applications",
       "target": "construction"
     },
     {
-      "source": "drylining",
+      "source": "drylining#applications",
       "target": "plaster-application"
     },
     {
-      "source": "cement-plaster",
-      "target": "lime-plaster"
-    },
-    {
-      "source": "cement-plaster",
-      "target": "gypsum-plaster"
-    },
-    {
-      "source": "cement-plaster",
+      "source": "corner-plastering",
       "target": "plastering"
     },
     {
-      "source": "cement-plaster",
-      "target": "plaster-mixing"
+      "source": "corner-plastering#preparation",
+      "target": "wall-preparation"
     },
     {
-      "source": "cement-plaster",
+      "source": "corner-plastering#plastering-process",
       "target": "plaster-application"
     },
     {
-      "source": "cement-plaster",
-      "target": "lime-plaster"
-    },
-    {
-      "source": "gypsum-plaster",
+      "source": "corner-plastering#professional-tips",
       "target": "plastering"
     },
     {
-      "source": "gypsum-plaster",
-      "target": "plaster-mixing"
-    },
-    {
-      "source": "gypsum-plaster",
-      "target": "wall-preparation"
-    },
-    {
-      "source": "gypsum-plaster",
-      "target": "plastering"
-    },
-    {
-      "source": "gypsum-plaster",
-      "target": "lime-plaster"
-    },
-    {
-      "source": "gypsum-plaster",
-      "target": "cement-plaster"
-    },
-    {
-      "source": "lime-plaster",
-      "target": "gypsum-plaster"
-    },
-    {
-      "source": "lime-plaster",
-      "target": "plaster-application"
-    },
-    {
-      "source": "lime-plaster",
-      "target": "gypsum-plaster"
-    },
-    {
-      "source": "lime-plaster",
-      "target": "cement-plaster"
-    },
-    {
-      "source": "lime-plaster",
-      "target": "plaster-mixing"
-    },
-    {
-      "source": "lime-plaster",
-      "target": "plastering"
-    },
-    {
-      "source": "painting",
-      "target": "plastering"
-    },
-    {
-      "source": "painting",
-      "target": "lime-plaster"
-    },
-    {
-      "source": "painting",
-      "target": "gypsum-plaster"
-    },
-    {
-      "source": "painting",
-      "target": "cement-plaster"
-    },
-    {
-      "source": "painting",
-      "target": "lime-plaster"
-    },
-    {
-      "source": "painting",
-      "target": "construction"
-    },
-    {
-      "source": "painting",
-      "target": "plastering"
-    },
-    {
-      "source": "painting",
-      "target": "wall-preparation"
-    },
-    {
-      "source": "painting",
-      "target": "plastering-mistakes"
-    },
-    {
-      "source": "plaster-application",
-      "target": "wall-preparation"
-    },
-    {
-      "source": "plaster-application",
-      "target": "plaster-mixing"
-    },
-    {
-      "source": "plaster-application",
-      "target": "plastering-mistakes"
-    },
-    {
-      "source": "plaster-application",
+      "source": "corner-plastering#professional-tips",
       "target": "plastering-tools"
     },
     {
-      "source": "plastering-mistakes",
+      "source": "corner-plastering#professional-tips",
+      "target": "plastering-mistakes"
+    },
+    {
+      "source": "corner-plastering#professional-tips",
+      "target": "plastering-tools"
+    },
+    {
+      "source": "gypsum-plaster",
       "target": "plastering"
     },
     {
-      "source": "plastering-mistakes",
-      "target": "wall-preparation"
-    },
-    {
-      "source": "plastering-mistakes",
+      "source": "gypsum-plaster#mixing-requirements",
       "target": "plaster-mixing"
     },
     {
-      "source": "plastering-mistakes",
+      "source": "gypsum-plaster#constraints",
+      "target": "wall-preparation"
+    },
+    {
+      "source": "gypsum-plaster#safety-considerations",
+      "target": "plastering"
+    },
+    {
+      "source": "gypsum-plaster#safety-considerations",
+      "target": "lime-plaster"
+    },
+    {
+      "source": "gypsum-plaster#safety-considerations",
+      "target": "cement-plaster"
+    },
+    {
+      "source": "lime-plaster#application-properties",
+      "target": "gypsum-plaster"
+    },
+    {
+      "source": "lime-plaster#special-needs",
       "target": "plaster-application"
     },
     {
+      "source": "lime-plaster#modern-applications",
+      "target": "gypsum-plaster"
+    },
+    {
+      "source": "lime-plaster#modern-applications",
+      "target": "cement-plaster"
+    },
+    {
+      "source": "lime-plaster#modern-applications",
+      "target": "plaster-mixing"
+    },
+    {
+      "source": "lime-plaster#modern-applications",
+      "target": "plastering"
+    },
+    {
+      "source": "cement-plaster#limitations",
+      "target": "lime-plaster"
+    },
+    {
+      "source": "cement-plaster#application-areas",
+      "target": "gypsum-plaster"
+    },
+    {
+      "source": "cement-plaster#application-areas",
+      "target": "plastering"
+    },
+    {
+      "source": "cement-plaster#application-areas",
+      "target": "plaster-mixing"
+    },
+    {
+      "source": "cement-plaster#application-areas",
+      "target": "plaster-application"
+    },
+    {
+      "source": "cement-plaster#application-areas",
+      "target": "lime-plaster"
+    },
+    {
       "source": "plastering-mistakes",
+      "target": "plastering"
+    },
+    {
+      "source": "plastering-mistakes#prevention-strategies",
+      "target": "wall-preparation"
+    },
+    {
+      "source": "plastering-mistakes#prevention-strategies",
+      "target": "plaster-mixing"
+    },
+    {
+      "source": "plastering-mistakes#prevention-strategies",
+      "target": "plaster-application"
+    },
+    {
+      "source": "plastering-mistakes#prevention-strategies",
       "target": "plastering-tools"
+    },
+    {
+      "source": "plastering-tools",
+      "target": "plastering"
+    },
+    {
+      "source": "plastering-tools#materials-and-safety",
+      "target": "wall-preparation"
+    },
+    {
+      "source": "plastering-tools#tool-maintenance",
+      "target": "plastering-mistakes"
+    },
+    {
+      "source": "plastering-tools#tool-maintenance",
+      "target": "plaster-application"
     },
     {
       "source": "plaster-mixing",
       "target": "plastering"
     },
     {
-      "source": "plaster-mixing",
+      "source": "plaster-mixing#equipment-requirements",
       "target": "plastering-tools"
     },
     {
-      "source": "plaster-mixing",
+      "source": "plaster-mixing#common-mixing-errors",
       "target": "wall-preparation"
     },
     {
-      "source": "plaster-mixing",
+      "source": "plaster-mixing#common-mixing-errors",
       "target": "plaster-application"
     },
     {
-      "source": "plaster-mixing",
+      "source": "plaster-mixing#common-mixing-errors",
       "target": "plastering-mistakes"
+    },
+    {
+      "source": "plaster-application#working-conditions",
+      "target": "wall-preparation"
+    },
+    {
+      "source": "plaster-application#working-conditions",
+      "target": "plaster-mixing"
+    },
+    {
+      "source": "plaster-application#working-conditions",
+      "target": "plastering-mistakes"
+    },
+    {
+      "source": "plaster-application#working-conditions",
+      "target": "plastering-tools"
     },
     {
       "source": "plastering",
@@ -1825,22 +1808,6 @@
       "target": "drylining"
     },
     {
-      "source": "plastering-tools",
-      "target": "plastering"
-    },
-    {
-      "source": "plastering-tools",
-      "target": "wall-preparation"
-    },
-    {
-      "source": "plastering-tools",
-      "target": "plastering-mistakes"
-    },
-    {
-      "source": "plastering-tools",
-      "target": "plaster-application"
-    },
-    {
       "source": "rendering",
       "target": "cement-plaster"
     },
@@ -1849,64 +1816,112 @@
       "target": "lime-plaster"
     },
     {
-      "source": "rendering",
+      "source": "rendering#common-problems",
       "target": "construction"
     },
     {
-      "source": "rendering",
-      "target": "plastering"
-    },
-    {
-      "source": "skim-coating",
-      "target": "plastering"
-    },
-    {
-      "source": "skim-coating",
-      "target": "wall-preparation"
-    },
-    {
-      "source": "skim-coating",
-      "target": "gypsum-plaster"
-    },
-    {
-      "source": "skim-coating",
-      "target": "plaster-mixing"
-    },
-    {
-      "source": "skim-coating",
-      "target": "plastering-tools"
-    },
-    {
-      "source": "skim-coating",
-      "target": "plastering"
-    },
-    {
-      "source": "skim-coating",
-      "target": "plastering-tools"
-    },
-    {
-      "source": "skim-coating",
-      "target": "plastering-mistakes"
-    },
-    {
-      "source": "wall-preparation",
+      "source": "rendering#common-problems",
       "target": "plastering"
     },
     {
       "source": "wall-preparation",
+      "target": "plastering"
+    },
+    {
+      "source": "wall-preparation#mixing-and-application",
       "target": "plaster-application"
     },
     {
-      "source": "wall-preparation",
+      "source": "wall-preparation#surface-specific-requirements",
       "target": "plastering-mistakes"
     },
     {
-      "source": "wall-preparation",
+      "source": "wall-preparation#surface-specific-requirements",
       "target": "plastering-tools"
     },
     {
-      "source": "wall-preparation",
+      "source": "wall-preparation#surface-specific-requirements",
       "target": "plaster-mixing"
+    },
+    {
+      "source": "skim-coating",
+      "target": "plastering"
+    },
+    {
+      "source": "skim-coating#surface-preparation",
+      "target": "wall-preparation"
+    },
+    {
+      "source": "skim-coating#mixing-and-consistency",
+      "target": "gypsum-plaster"
+    },
+    {
+      "source": "skim-coating#mixing-and-consistency",
+      "target": "plaster-mixing"
+    },
+    {
+      "source": "skim-coating#application-technique",
+      "target": "plastering-tools"
+    },
+    {
+      "source": "skim-coating#limitations",
+      "target": "plastering"
+    },
+    {
+      "source": "skim-coating#limitations",
+      "target": "plastering-tools"
+    },
+    {
+      "source": "skim-coating#limitations",
+      "target": "plastering-mistakes"
+    },
+    {
+      "source": "painting",
+      "target": "plastering"
+    },
+    {
+      "source": "painting#new-plaster-requirements",
+      "target": "lime-plaster"
+    },
+    {
+      "source": "painting#new-plaster-requirements",
+      "target": "gypsum-plaster"
+    },
+    {
+      "source": "painting#primer-application",
+      "target": "cement-plaster"
+    },
+    {
+      "source": "painting#limewash",
+      "target": "lime-plaster"
+    },
+    {
+      "source": "painting#maintenance",
+      "target": "construction"
+    },
+    {
+      "source": "painting#maintenance",
+      "target": "plastering"
+    },
+    {
+      "source": "painting#maintenance",
+      "target": "wall-preparation"
+    },
+    {
+      "source": "painting#maintenance",
+      "target": "plastering-mistakes"
+    },
+    {
+      "source": "amazon-dynamodb",
+      "target": "nosql-databases"
+    },
+    {
+      "source": "big-data",
+      "target": "nosql-databases"
+    },
+    {
+      "source": "cap-theorem",
+      "target": "nosql-databases"
     },
     {
       "source": "apache-hbase",
@@ -1917,11 +1932,7 @@
       "target": "nosql-databases"
     },
     {
-      "source": "amazon-dynamodb",
-      "target": "nosql-databases"
-    },
-    {
-      "source": "apache-cassandra",
+      "source": "couchbase",
       "target": "nosql-databases"
     },
     {
@@ -1931,6 +1942,10 @@
     {
       "source": "column-family-databases",
       "target": "cap-theorem"
+    },
+    {
+      "source": "apache-cassandra",
+      "target": "nosql-databases"
     },
     {
       "source": "databases",
@@ -1961,6 +1976,10 @@
       "target": "big-data"
     },
     {
+      "source": "graph-databases",
+      "target": "nosql-databases"
+    },
+    {
       "source": "document-databases",
       "target": "nosql-databases"
     },
@@ -1969,19 +1988,7 @@
       "target": "key-value-stores"
     },
     {
-      "source": "cap-theorem",
-      "target": "nosql-databases"
-    },
-    {
-      "source": "couchbase",
-      "target": "nosql-databases"
-    },
-    {
       "source": "elasticsearch",
-      "target": "nosql-databases"
-    },
-    {
-      "source": "graph-databases",
       "target": "nosql-databases"
     },
     {
@@ -1990,14 +1997,6 @@
     },
     {
       "source": "orientdb",
-      "target": "nosql-databases"
-    },
-    {
-      "source": "neo4j",
-      "target": "nosql-databases"
-    },
-    {
-      "source": "big-data",
       "target": "nosql-databases"
     },
     {
@@ -2029,16 +2028,12 @@
       "target": "big-data"
     },
     {
-      "source": "redis",
+      "source": "neo4j",
       "target": "nosql-databases"
     },
     {
-      "source": "jquery-alternative",
-      "target": "alpine-js"
-    },
-    {
-      "source": "jquery-alternative",
-      "target": "progressive-enhancement"
+      "source": "redis",
+      "target": "nosql-databases"
     },
     {
       "source": "alpine-js",
@@ -2049,27 +2044,15 @@
       "target": "progressive-enhancement"
     },
     {
-      "source": "design-systems",
-      "target": "framework-agnostic-development"
-    },
-    {
-      "source": "design-systems",
-      "target": "web-components"
-    },
-    {
-      "source": "design-systems",
-      "target": "shoelace-library"
-    },
-    {
-      "source": "progressive-enhancement",
+      "source": "jquery-alternative",
       "target": "alpine-js"
     },
     {
-      "source": "framework-agnostic-development",
-      "target": "shoelace-library"
+      "source": "jquery-alternative",
+      "target": "progressive-enhancement"
     },
     {
-      "source": "framework-agnostic-development",
+      "source": "progressive-enhancement",
       "target": "alpine-js"
     },
     {
@@ -2081,6 +2064,14 @@
       "target": "progressive-enhancement"
     },
     {
+      "source": "framework-agnostic-development",
+      "target": "shoelace-library"
+    },
+    {
+      "source": "framework-agnostic-development",
+      "target": "alpine-js"
+    },
+    {
       "source": "shoelace-library",
       "target": "web-components"
     },
@@ -2093,16 +2084,16 @@
       "target": "design-systems"
     },
     {
-      "source": "web-components",
+      "source": "design-systems",
       "target": "framework-agnostic-development"
     },
     {
-      "source": "web-components",
-      "target": "shoelace-library"
+      "source": "design-systems",
+      "target": "web-components"
     },
     {
-      "source": "web-components",
-      "target": "design-systems"
+      "source": "design-systems",
+      "target": "shoelace-library"
     },
     {
       "source": "web-technologies",
@@ -2131,6 +2122,114 @@
     {
       "source": "web-technologies",
       "target": "progressive-enhancement"
+    },
+    {
+      "source": "web-components",
+      "target": "framework-agnostic-development"
+    },
+    {
+      "source": "web-components",
+      "target": "shoelace-library"
+    },
+    {
+      "source": "web-components",
+      "target": "design-systems"
+    },
+    {
+      "source": "amazon-ai",
+      "target": "anthropic"
+    },
+    {
+      "source": "ai-providers",
+      "target": "openai"
+    },
+    {
+      "source": "ai-providers",
+      "target": "anthropic"
+    },
+    {
+      "source": "ai-providers",
+      "target": "anthropic"
+    },
+    {
+      "source": "ai-providers",
+      "target": "openai"
+    },
+    {
+      "source": "google-deepmind",
+      "target": "openai"
+    },
+    {
+      "source": "scale-ai",
+      "target": "openai"
+    },
+    {
+      "source": "xai",
+      "target": "openai"
+    },
+    {
+      "source": "drylining",
+      "target": "plaster-application"
+    },
+    {
+      "source": "cap-theorem",
+      "target": "mongodb"
+    },
+    {
+      "source": "apache-hbase",
+      "target": "big-data"
+    },
+    {
+      "source": "column-family-databases",
+      "target": "apache-cassandra"
+    },
+    {
+      "source": "column-family-databases",
+      "target": "databases"
+    },
+    {
+      "source": "column-family-databases",
+      "target": "apache-cassandra"
+    },
+    {
+      "source": "graph-databases",
+      "target": "neo4j"
+    },
+    {
+      "source": "graph-databases",
+      "target": "orientdb"
+    },
+    {
+      "source": "graph-databases",
+      "target": "databases"
+    },
+    {
+      "source": "graph-databases",
+      "target": "neo4j"
+    },
+    {
+      "source": "document-databases",
+      "target": "mongodb"
+    },
+    {
+      "source": "document-databases",
+      "target": "elasticsearch"
+    },
+    {
+      "source": "document-databases",
+      "target": "mongodb"
+    },
+    {
+      "source": "key-value-stores",
+      "target": "redis"
+    },
+    {
+      "source": "key-value-stores",
+      "target": "redis"
+    },
+    {
+      "source": "nosql-databases",
+      "target": "databases"
     }
   ]
 }
