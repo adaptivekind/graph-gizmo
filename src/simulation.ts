@@ -59,9 +59,18 @@ export const createSimulation = (
         config.heightText,
       ]),
     )
-    .force("forceX", d3.forceX(0).strength(config.centerForceFactor))
-    .force("forceY", d3.forceY(0).strength(config.centerForceFactor))
-    .tick(100) // Step forward 100 ticks in the simulation
+    .force(
+      "forceX",
+      d3
+        .forceX<EnrichedNodeDatum>(0)
+        .strength((d) => d.value * config.centerForceFactor),
+    )
+    .force(
+      "forceY",
+      d3
+        .forceY<EnrichedNodeDatum>(0)
+        .strength((d: EnrichedNodeDatum) => d.value * config.centerForceFactor),
+    )
     .alpha(1)
     .alphaMin(0.0002)
     .alphaDecay(config.alphaDecay)
@@ -74,7 +83,9 @@ export const applySimulation = (
   graph: EnrichedGraph,
   canvas: Canvas,
   simulation: GraphSimulation,
+  firstTime: boolean,
 ) => {
+  simulation.stop();
   simulation.nodes(graph.nodes);
   simulation.force(
     "link",
@@ -83,6 +94,10 @@ export const applySimulation = (
       .id((d: EnrichedNodeDatum) => d.id)
       .strength(config.getLinkForce(config.linkForceFactor)),
   );
+  if (firstTime) {
+    simulation.tick(100); // Step forward number of ticks in the simulation
+  }
+  simulation.alpha(0.2).restart();
 
   function dragstart(this: SVGElement) {
     d3.select(this).classed("fixed", true);

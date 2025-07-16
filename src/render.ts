@@ -62,6 +62,7 @@ const update = (
     event: MouseEvent,
     d: EnrichedNodeDatum,
   ) => void,
+  firstTime = false,
 ) => {
   const nodes = container.selectAll<SVGElement, EnrichedNodeDatum>(".group");
 
@@ -172,7 +173,13 @@ const update = (
       },
     );
 
-  return applySimulation(config, enrichedGraph, container, simulation);
+  return applySimulation(
+    config,
+    enrichedGraph,
+    container,
+    simulation,
+    firstTime,
+  );
 };
 
 const render = (
@@ -242,6 +249,7 @@ const render = (
     config.rootNode || Object.keys(actualGraph.nodes)[0],
     actualGraph,
     updateEvent,
+    true,
   );
 
   // Create the configuration panel

@@ -63,7 +63,7 @@ function apply(d: EnrichedNodeDatum, box: number[], strength: number) {
   };
 }
 
-export default function (box: number[], strength = 0.5) {
+export default function (box: number[], strength = 0.2) {
   let nodes: EnrichedNodeDatum[];
   let iterations = 1;
   function force() {
