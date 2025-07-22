@@ -9,6 +9,7 @@ declare global {
       centerForceFactor: number;
       alphaDecay: number;
       velocityDecay: number;
+      searchQuery: string;
     };
   }
 }
@@ -17,12 +18,13 @@ export interface ConfigPanelOptions {
   config: GraphConfiguration;
   container: Element;
   onConfigChange: (config: Partial<GraphConfiguration>) => void;
+  onSearchChange?: (searchQuery: string) => void;
 }
 
 export const createConfigPanel = async (
   options: ConfigPanelOptions,
 ): Promise<void> => {
-  const { config, container, onConfigChange } = options;
+  const { config, container, onConfigChange, onSearchChange } = options;
 
   if (!config.configPanel) {
     return;
@@ -49,6 +51,16 @@ export const createConfigPanel = async (
         <h3>Graph Configuration</h3>
       </div>
       <div class="config-panel-content">
+        <div class="config-item">
+          <label for="searchBox">Search Nodes</label>
+          <sl-input
+            id="searchBox"
+            placeholder="Type to filter nodes..."
+            clearable
+            x-bind:value="searchQuery"
+            x-on:sl-input="updateSearch($event)"
+          ></sl-input>
+        </div>
         <div class="config-item">
           <label for="linkForce">Link Force Factor</label>
           <sl-range
@@ -121,6 +133,7 @@ export const createConfigPanel = async (
     centerForceFactor: config.centerForceFactor,
     alphaDecay: config.alphaDecay,
     velocityDecay: config.velocityDecay,
+    searchQuery: "",
 
     updateLinkForce(event: CustomEvent) {
       const value = parseFloat((event.target as HTMLInputElement).value);
@@ -150,6 +163,14 @@ export const createConfigPanel = async (
       const value = parseFloat((event.target as HTMLInputElement).value);
       this.velocityDecay = value;
       onConfigChange({ velocityDecay: value });
+    },
+
+    updateSearch(event: CustomEvent) {
+      const value = (event.target as HTMLInputElement).value;
+      this.searchQuery = value;
+      if (onSearchChange) {
+        onSearchChange(value);
+      }
     },
   });
 };

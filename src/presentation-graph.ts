@@ -2,6 +2,54 @@ import { EnrichedGraph, EnrichedNodeDatum, InitialNodeValueMap } from "./types";
 import { Graph, Link } from "@adaptivekind/graph-schema";
 import { getDistance } from "./distance";
 
+const nodeMatchesSearch = (
+  node: EnrichedNodeDatum,
+  searchQuery: string,
+): boolean => {
+  if (!searchQuery || searchQuery.trim() === "") {
+    return true;
+  }
+
+  const query = searchQuery.toLowerCase().trim();
+  const nodeLabel = (node.label || node.id).toLowerCase();
+  const nodeId = node.id.toLowerCase();
+  const nodeContext = (node.context || "").toLowerCase();
+
+  return (
+    nodeLabel.includes(query) ||
+    nodeId.includes(query) ||
+    nodeContext.includes(query)
+  );
+};
+
+export const filterEnrichedGraph = (
+  graph: EnrichedGraph,
+  searchQuery: string,
+): EnrichedGraph => {
+  if (!searchQuery || searchQuery.trim() === "") {
+    return graph;
+  }
+
+  const filteredNodes = graph.nodes.filter((node) =>
+    nodeMatchesSearch(node, searchQuery),
+  );
+
+  const nodeIds = new Set(filteredNodes.map((node) => node.id));
+
+  const filteredLinks = graph.links.filter((link) => {
+    const sourceId =
+      typeof link.source === "object" ? link.source.id : String(link.source);
+    const targetId =
+      typeof link.target === "object" ? link.target.id : String(link.target);
+    return nodeIds.has(sourceId) && nodeIds.has(targetId);
+  });
+
+  return {
+    nodes: filteredNodes,
+    links: filteredLinks,
+  };
+};
+
 export const createEnrichedGraph = (
   root: string,
   graph: Graph,

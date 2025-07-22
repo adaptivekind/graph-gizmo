@@ -12,7 +12,7 @@ import { Graph, builder } from "@adaptivekind/graph-schema";
 import { addConfigPanelStyles, createConfigPanel } from "./config-panel";
 import { applySimulation, createSimulation } from "./simulation";
 
-import { createEnrichedGraph } from "./presentation-graph";
+import { createEnrichedGraph, filterEnrichedGraph } from "./presentation-graph";
 import { createUpdateConfig } from "./update-config";
 import defaultConfiguration from "./default-configuration";
 import { renderDebugPanel } from "./debug";
@@ -63,6 +63,7 @@ const update = (
     d: EnrichedNodeDatum,
   ) => void,
   firstTime = false,
+  searchQuery = "",
 ) => {
   const nodes = container.selectAll<SVGElement, EnrichedNodeDatum>(".group");
 
@@ -77,6 +78,7 @@ const update = (
   });
 
   const enrichedGraph = createEnrichedGraph(start, graph, initialValues);
+  const filteredGraph = filterEnrichedGraph(enrichedGraph, searchQuery);
 
   function click(
     this: SVGElement,
@@ -92,7 +94,7 @@ const update = (
   container
     .selectAll<SVGLineElement, EnrichedLinkDatum>(".link")
     .data(
-      enrichedGraph.links,
+      filteredGraph.links,
       (d: EnrichedLinkDatum) => `${d.source}|${d.target}`,
     )
     .join(
@@ -111,7 +113,7 @@ const update = (
     );
 
   nodes
-    .data(enrichedGraph.nodes, (d: EnrichedNodeDatum) => d.id)
+    .data(filteredGraph.nodes, (d: EnrichedNodeDatum) => d.id)
     .join(
       (entry) => {
         const group = entry
@@ -175,7 +177,7 @@ const update = (
 
   return applySimulation(
     config,
-    enrichedGraph,
+    filteredGraph,
     container,
     simulation,
     firstTime,
@@ -231,25 +233,53 @@ const render = (
 
   const simulation = createSimulation(fullConfig, canvas);
 
+  let currentSearchQuery = "";
+  let currentRoot = config.rootNode || Object.keys(actualGraph.nodes)[0];
+
   function updateEvent(
     this: HTMLAnchorElement,
     event: MouseEvent,
     d: EnrichedNodeDatum,
   ): void {
     callback(d.id, event);
-    update(fullConfig, canvas, simulation, d.id, actualGraph, updateEvent);
+    currentRoot = d.id;
+    update(
+      fullConfig,
+      canvas,
+      simulation,
+      d.id,
+      actualGraph,
+      updateEvent,
+      false,
+      currentSearchQuery,
+    );
   }
 
   const updateConfig = createUpdateConfig(fullConfig, simulation);
+
+  function updateWithSearch(searchQuery: string): void {
+    currentSearchQuery = searchQuery;
+    update(
+      fullConfig,
+      canvas,
+      simulation,
+      currentRoot,
+      actualGraph,
+      updateEvent,
+      false,
+      searchQuery,
+    );
+  }
 
   update(
     fullConfig,
     canvas,
     simulation,
-    config.rootNode || Object.keys(actualGraph.nodes)[0],
+    currentRoot,
     actualGraph,
     updateEvent,
     true,
+    currentSearchQuery,
   );
 
   // Create the configuration panel
@@ -259,6 +289,7 @@ const render = (
     onConfigChange: (configUpdate) => {
       updateConfig(configUpdate);
     },
+    onSearchChange: updateWithSearch,
   });
 
   return simulation;
