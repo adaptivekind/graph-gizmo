@@ -12,7 +12,10 @@ import { Graph, builder } from "@adaptivekind/graph-schema";
 import { addConfigPanelStyles, createConfigPanel } from "./config-panel";
 import { applySimulation, createSimulation } from "./simulation";
 
-import { createEnrichedGraph, filterEnrichedGraph } from "./presentation-graph";
+import {
+  createEnrichedGraph,
+  filterEnrichedGraphWithRoot,
+} from "./presentation-graph";
 import { createUpdateConfig } from "./update-config";
 import defaultConfiguration from "./default-configuration";
 import { renderDebugPanel } from "./debug";
@@ -79,11 +82,12 @@ const update = (
   });
 
   const enrichedGraph = createEnrichedGraph(start, graph, initialValues);
-  const filteredGraph = filterEnrichedGraph(
+  const filterResult = filterEnrichedGraphWithRoot(
     enrichedGraph,
     searchQuery,
     searchDepth,
   );
+  const filteredGraph = filterResult.filteredGraph;
 
   function click(
     this: SVGElement,
@@ -267,6 +271,23 @@ const render = (
   function updateWithSearch(searchQuery: string, searchDepth: number): void {
     currentSearchQuery = searchQuery;
     currentSearchDepth = searchDepth;
+
+    // Determine if there should be a root change based on search
+    const enrichedGraph = createEnrichedGraph(currentRoot, actualGraph, {});
+    const filterResult = filterEnrichedGraphWithRoot(
+      enrichedGraph,
+      searchQuery,
+      searchDepth,
+    );
+
+    // If a root is suggested and it exists in the graph, change to it
+    if (
+      filterResult.suggestedRootId &&
+      actualGraph.nodes[filterResult.suggestedRootId]
+    ) {
+      currentRoot = filterResult.suggestedRootId;
+    }
+
     update(
       fullConfig,
       canvas,

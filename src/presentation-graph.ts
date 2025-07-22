@@ -22,6 +22,21 @@ const nodeMatchesSearch = (
   );
 };
 
+const nodeExactlyMatches = (
+  node: EnrichedNodeDatum,
+  searchQuery: string,
+): boolean => {
+  if (!searchQuery || searchQuery.trim() === "") {
+    return false;
+  }
+
+  const query = searchQuery.toLowerCase().trim();
+  const nodeLabel = (node.label || node.id).toLowerCase();
+  const nodeId = node.id.toLowerCase();
+
+  return nodeLabel === query || nodeId === query;
+};
+
 const getNodesWithinDepth = (
   graph: EnrichedGraph,
   matchingNodeIds: Set<string>,
@@ -72,18 +87,37 @@ const getNodesWithinDepth = (
   return result;
 };
 
-export const filterEnrichedGraph = (
+export interface FilterResult {
+  filteredGraph: EnrichedGraph;
+  suggestedRootId?: string;
+}
+
+export const filterEnrichedGraphWithRoot = (
   graph: EnrichedGraph,
   searchQuery: string,
   searchDepth: number = 1,
-): EnrichedGraph => {
+): FilterResult => {
   if (!searchQuery || searchQuery.trim() === "") {
-    return graph;
+    return { filteredGraph: graph };
   }
 
   const matchingNodes = graph.nodes.filter((node) =>
     nodeMatchesSearch(node, searchQuery),
   );
+
+  let suggestedRootId: string | undefined;
+
+  // Check for exact match first
+  const exactMatches = matchingNodes.filter((node) =>
+    nodeExactlyMatches(node, searchQuery),
+  );
+
+  if (exactMatches.length === 1) {
+    suggestedRootId = exactMatches[0].id;
+  } else if (matchingNodes.length === 1) {
+    // If only one node matches, make it the root
+    suggestedRootId = matchingNodes[0].id;
+  }
 
   const matchingNodeIds = new Set(matchingNodes.map((node) => node.id));
   const nodeIdsWithDepth = getNodesWithinDepth(
@@ -105,9 +139,21 @@ export const filterEnrichedGraph = (
   });
 
   return {
-    nodes: filteredNodes,
-    links: filteredLinks,
+    filteredGraph: {
+      nodes: filteredNodes,
+      links: filteredLinks,
+    },
+    suggestedRootId,
   };
+};
+
+export const filterEnrichedGraph = (
+  graph: EnrichedGraph,
+  searchQuery: string,
+  searchDepth: number = 1,
+): EnrichedGraph => {
+  return filterEnrichedGraphWithRoot(graph, searchQuery, searchDepth)
+    .filteredGraph;
 };
 
 export const createEnrichedGraph = (
