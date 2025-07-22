@@ -1,3 +1,4 @@
+import { Graph } from "@adaptivekind/graph-schema";
 import { GraphConfiguration } from "./types";
 import { loadShoelaceAndAlpine } from "./dynamic-loader";
 
@@ -11,6 +12,11 @@ declare global {
       velocityDecay: number;
       searchQuery: string;
       searchDepth: number;
+      suggestions: Array<{ id: string; label: string }>;
+      selectedSuggestionIndex: number;
+      showSuggestions: boolean;
+      updateSuggestions: (query: string) => void;
+      selectSuggestion: (suggestion: { id: string; label: string }) => void;
     };
   }
 }
@@ -18,6 +24,7 @@ declare global {
 export interface ConfigPanelOptions {
   config: GraphConfiguration;
   container: Element;
+  graph: Graph;
   onConfigChange: (config: Partial<GraphConfiguration>) => void;
   onSearchChange?: (searchQuery: string, searchDepth: number) => void;
 }
@@ -25,7 +32,7 @@ export interface ConfigPanelOptions {
 export const createConfigPanel = async (
   options: ConfigPanelOptions,
 ): Promise<void> => {
-  const { config, container, onConfigChange, onSearchChange } = options;
+  const { config, container, graph, onConfigChange, onSearchChange } = options;
 
   if (!config.configPanel) {
     return;
@@ -54,13 +61,33 @@ export const createConfigPanel = async (
       <div class="config-panel-content">
         <div class="config-item">
           <label for="searchBox">Search Nodes</label>
-          <sl-input
-            id="searchBox"
-            placeholder="Type to filter nodes..."
-            clearable
-            x-bind:value="searchQuery"
-            x-on:sl-input="updateSearch($event)"
-          ></sl-input>
+          <div class="search-container">
+            <sl-input
+              id="searchBox"
+              placeholder="Type to filter nodes..."
+              clearable
+              x-bind:value="searchQuery"
+              x-on:sl-input="updateSearch($event)"
+              x-on:keydown="handleKeyDown($event)"
+              x-on:focus="showSuggestions = true"
+              x-on:blur="handleBlur()"
+            ></sl-input>
+            <div 
+              class="suggestions-dropdown" 
+              x-show="showSuggestions && suggestions.length > 0"
+              x-transition
+            >
+              <template x-for="(suggestion, index) in suggestions" :key="suggestion.id">
+                <div 
+                  class="suggestion-item"
+                  x-bind:class="{ 'selected': index === selectedSuggestionIndex }"
+                  x-on:click="selectSuggestion(suggestion)"
+                  x-on:mouseenter="selectedSuggestionIndex = index"
+                  x-text="suggestion.label || suggestion.id"
+                ></div>
+              </template>
+            </div>
+          </div>
         </div>
         <div class="config-item">
           <label for="searchDepth">Search Depth</label>
@@ -148,6 +175,9 @@ export const createConfigPanel = async (
     velocityDecay: config.velocityDecay,
     searchQuery: "",
     searchDepth: 1,
+    suggestions: [],
+    selectedSuggestionIndex: -1,
+    showSuggestions: false,
 
     updateLinkForce(event: CustomEvent) {
       const value = parseFloat((event.target as HTMLInputElement).value);
@@ -182,9 +212,81 @@ export const createConfigPanel = async (
     updateSearch(event: CustomEvent) {
       const value = (event.target as HTMLInputElement).value;
       this.searchQuery = value;
+      this.updateSuggestions(value);
       if (onSearchChange) {
         onSearchChange(value, this.searchDepth);
       }
+    },
+
+    updateSuggestions(query: string) {
+      if (!query || query.trim() === "") {
+        this.suggestions = [];
+        this.showSuggestions = false;
+        return;
+      }
+
+      const lowerQuery = query.toLowerCase().trim();
+      const matchingNodes = Object.entries(graph.nodes)
+        .filter(([id, node]) => {
+          const nodeLabel = (node?.label || id).toLowerCase();
+          const nodeId = id.toLowerCase();
+
+          // Match if query appears at start, after word boundaries, or after common separators/lowercase letters
+          const startsWithRegex = new RegExp(
+            `^${lowerQuery.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`,
+            "i",
+          );
+          const wordBoundaryRegex = new RegExp(
+            `[\\s\\-_\\.]${lowerQuery.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`,
+            "i",
+          );
+          const afterWordRegex = new RegExp(
+            `[a-z]${lowerQuery.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`,
+            "i",
+          );
+
+          const labelMatches =
+            startsWithRegex.test(nodeLabel) ||
+            wordBoundaryRegex.test(nodeLabel) ||
+            afterWordRegex.test(nodeLabel);
+          const idMatches =
+            startsWithRegex.test(nodeId) ||
+            wordBoundaryRegex.test(nodeId) ||
+            afterWordRegex.test(nodeId);
+
+          // Exclude exact matches
+          return (
+            (labelMatches || idMatches) &&
+            nodeLabel !== lowerQuery &&
+            nodeId !== lowerQuery
+          );
+        })
+        .sort(([aId, aNode], [bId, bNode]) => {
+          // Prioritize exact starts with matches
+          const aLabel = (aNode?.label || aId).toLowerCase();
+          const bLabel = (bNode?.label || bId).toLowerCase();
+          const aStartsWith =
+            aLabel.startsWith(lowerQuery) ||
+            aId.toLowerCase().startsWith(lowerQuery);
+          const bStartsWith =
+            bLabel.startsWith(lowerQuery) ||
+            bId.toLowerCase().startsWith(lowerQuery);
+
+          if (aStartsWith && !bStartsWith) return -1;
+          if (!aStartsWith && bStartsWith) return 1;
+
+          // Then sort alphabetically
+          return aLabel.localeCompare(bLabel);
+        })
+        .slice(0, 5)
+        .map(([id, node]) => ({
+          id,
+          label: node?.label || id,
+        }));
+
+      this.suggestions = matchingNodes;
+      this.selectedSuggestionIndex = -1;
+      this.showSuggestions = matchingNodes.length > 0;
     },
 
     updateSearchDepth(event: CustomEvent) {
@@ -193,6 +295,57 @@ export const createConfigPanel = async (
       if (onSearchChange) {
         onSearchChange(this.searchQuery, value);
       }
+    },
+
+    handleKeyDown(event: KeyboardEvent) {
+      if (!this.showSuggestions || this.suggestions.length === 0) {
+        return;
+      }
+
+      switch (event.key) {
+        case "ArrowDown":
+          event.preventDefault();
+          this.selectedSuggestionIndex = Math.min(
+            this.selectedSuggestionIndex + 1,
+            this.suggestions.length - 1,
+          );
+          break;
+        case "ArrowUp":
+          event.preventDefault();
+          this.selectedSuggestionIndex = Math.max(
+            this.selectedSuggestionIndex - 1,
+            0,
+          );
+          break;
+        case "Enter":
+          event.preventDefault();
+          if (this.selectedSuggestionIndex >= 0) {
+            const suggestion = this.suggestions[this.selectedSuggestionIndex];
+            this.selectSuggestion(suggestion);
+          }
+          break;
+        case "Escape":
+          event.preventDefault();
+          this.showSuggestions = false;
+          this.selectedSuggestionIndex = -1;
+          break;
+      }
+    },
+
+    selectSuggestion(suggestion: { id: string; label: string }) {
+      this.searchQuery = suggestion.label || suggestion.id;
+      this.showSuggestions = false;
+      this.selectedSuggestionIndex = -1;
+      if (onSearchChange) {
+        onSearchChange(this.searchQuery, this.searchDepth);
+      }
+    },
+
+    handleBlur() {
+      setTimeout(() => {
+        this.showSuggestions = false;
+        this.selectedSuggestionIndex = -1;
+      }, 150);
     },
   });
 };
@@ -253,6 +406,47 @@ export const addConfigPanelStyles = (): void => {
     
     sl-range {
       width: 100%;
+    }
+
+    .search-container {
+      position: relative;
+    }
+
+    .suggestions-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: white;
+      border: 1px solid #ddd;
+      border-top: none;
+      border-radius: 0 0 4px 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .suggestion-item {
+      padding: 8px 12px;
+      cursor: pointer;
+      border-bottom: 1px solid #eee;
+      font-size: 14px;
+      color: #333;
+      transition: background-color 0.2s;
+    }
+
+    .suggestion-item:last-child {
+      border-bottom: none;
+    }
+
+    .suggestion-item:hover,
+    .suggestion-item.selected {
+      background-color: #f0f0f0;
+    }
+
+    .suggestion-item.selected {
+      background-color: #e3f2fd;
     }
   `;
   document.head.appendChild(style);

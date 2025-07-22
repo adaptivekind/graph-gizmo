@@ -317,6 +317,7 @@ const render = (
   createConfigPanel({
     config: fullConfig,
     container,
+    graph: actualGraph,
     onConfigChange: (configUpdate) => {
       updateConfig(configUpdate);
     },
