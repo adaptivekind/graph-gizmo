@@ -10,6 +10,7 @@ declare global {
       alphaDecay: number;
       velocityDecay: number;
       searchQuery: string;
+      searchDepth: number;
     };
   }
 }
@@ -18,7 +19,7 @@ export interface ConfigPanelOptions {
   config: GraphConfiguration;
   container: Element;
   onConfigChange: (config: Partial<GraphConfiguration>) => void;
-  onSearchChange?: (searchQuery: string) => void;
+  onSearchChange?: (searchQuery: string, searchDepth: number) => void;
 }
 
 export const createConfigPanel = async (
@@ -60,6 +61,18 @@ export const createConfigPanel = async (
             x-bind:value="searchQuery"
             x-on:sl-input="updateSearch($event)"
           ></sl-input>
+        </div>
+        <div class="config-item">
+          <label for="searchDepth">Search Depth</label>
+          <sl-range
+            id="searchDepth"
+            min="0"
+            max="5"
+            step="1"
+            x-bind:value="searchDepth"
+            x-on:sl-input="updateSearchDepth($event)"
+          ></sl-range>
+          <span class="config-value" x-text="searchDepth"></span>
         </div>
         <div class="config-item">
           <label for="linkForce">Link Force Factor</label>
@@ -134,6 +147,7 @@ export const createConfigPanel = async (
     alphaDecay: config.alphaDecay,
     velocityDecay: config.velocityDecay,
     searchQuery: "",
+    searchDepth: 1,
 
     updateLinkForce(event: CustomEvent) {
       const value = parseFloat((event.target as HTMLInputElement).value);
@@ -169,7 +183,15 @@ export const createConfigPanel = async (
       const value = (event.target as HTMLInputElement).value;
       this.searchQuery = value;
       if (onSearchChange) {
-        onSearchChange(value);
+        onSearchChange(value, this.searchDepth);
+      }
+    },
+
+    updateSearchDepth(event: CustomEvent) {
+      const value = parseInt((event.target as HTMLInputElement).value);
+      this.searchDepth = value;
+      if (onSearchChange) {
+        onSearchChange(this.searchQuery, value);
       }
     },
   });

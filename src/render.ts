@@ -64,6 +64,7 @@ const update = (
   ) => void,
   firstTime = false,
   searchQuery = "",
+  searchDepth = 1,
 ) => {
   const nodes = container.selectAll<SVGElement, EnrichedNodeDatum>(".group");
 
@@ -78,7 +79,11 @@ const update = (
   });
 
   const enrichedGraph = createEnrichedGraph(start, graph, initialValues);
-  const filteredGraph = filterEnrichedGraph(enrichedGraph, searchQuery);
+  const filteredGraph = filterEnrichedGraph(
+    enrichedGraph,
+    searchQuery,
+    searchDepth,
+  );
 
   function click(
     this: SVGElement,
@@ -234,6 +239,7 @@ const render = (
   const simulation = createSimulation(fullConfig, canvas);
 
   let currentSearchQuery = "";
+  let currentSearchDepth = 1;
   let currentRoot = config.rootNode || Object.keys(actualGraph.nodes)[0];
 
   function updateEvent(
@@ -252,13 +258,15 @@ const render = (
       updateEvent,
       false,
       currentSearchQuery,
+      currentSearchDepth,
     );
   }
 
   const updateConfig = createUpdateConfig(fullConfig, simulation);
 
-  function updateWithSearch(searchQuery: string): void {
+  function updateWithSearch(searchQuery: string, searchDepth: number): void {
     currentSearchQuery = searchQuery;
+    currentSearchDepth = searchDepth;
     update(
       fullConfig,
       canvas,
@@ -268,6 +276,7 @@ const render = (
       updateEvent,
       false,
       searchQuery,
+      searchDepth,
     );
   }
 
@@ -280,6 +289,7 @@ const render = (
     updateEvent,
     true,
     currentSearchQuery,
+    currentSearchDepth,
   );
 
   // Create the configuration panel

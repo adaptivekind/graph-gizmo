@@ -22,26 +22,86 @@ const nodeMatchesSearch = (
   );
 };
 
+const getNodesWithinDepth = (
+  graph: EnrichedGraph,
+  matchingNodeIds: Set<string>,
+  depth: number,
+): Set<string> => {
+  if (depth === 0) {
+    return matchingNodeIds;
+  }
+
+  const result = new Set(matchingNodeIds);
+  const currentLevel = new Set(matchingNodeIds);
+
+  for (let level = 0; level < depth; level++) {
+    const nextLevel = new Set<string>();
+
+    for (const nodeId of currentLevel) {
+      graph.links.forEach((link) => {
+        const sourceId =
+          typeof link.source === "object"
+            ? link.source.id
+            : String(link.source);
+        const targetId =
+          typeof link.target === "object"
+            ? link.target.id
+            : String(link.target);
+
+        if (sourceId === nodeId && !result.has(targetId)) {
+          result.add(targetId);
+          nextLevel.add(targetId);
+        }
+        if (targetId === nodeId && !result.has(sourceId)) {
+          result.add(sourceId);
+          nextLevel.add(sourceId);
+        }
+      });
+    }
+
+    currentLevel.clear();
+    for (const nodeId of nextLevel) {
+      currentLevel.add(nodeId);
+    }
+
+    if (nextLevel.size === 0) {
+      break;
+    }
+  }
+
+  return result;
+};
+
 export const filterEnrichedGraph = (
   graph: EnrichedGraph,
   searchQuery: string,
+  searchDepth: number = 1,
 ): EnrichedGraph => {
   if (!searchQuery || searchQuery.trim() === "") {
     return graph;
   }
 
-  const filteredNodes = graph.nodes.filter((node) =>
+  const matchingNodes = graph.nodes.filter((node) =>
     nodeMatchesSearch(node, searchQuery),
   );
 
-  const nodeIds = new Set(filteredNodes.map((node) => node.id));
+  const matchingNodeIds = new Set(matchingNodes.map((node) => node.id));
+  const nodeIdsWithDepth = getNodesWithinDepth(
+    graph,
+    matchingNodeIds,
+    searchDepth,
+  );
+
+  const filteredNodes = graph.nodes.filter((node) =>
+    nodeIdsWithDepth.has(node.id),
+  );
 
   const filteredLinks = graph.links.filter((link) => {
     const sourceId =
       typeof link.source === "object" ? link.source.id : String(link.source);
     const targetId =
       typeof link.target === "object" ? link.target.id : String(link.target);
-    return nodeIds.has(sourceId) && nodeIds.has(targetId);
+    return nodeIdsWithDepth.has(sourceId) && nodeIdsWithDepth.has(targetId);
   });
 
   return {
