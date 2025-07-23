@@ -103,7 +103,7 @@ export const createConfigPanel = async (
           <sl-range
             id="searchDepth"
             min="0"
-            max="5"
+            max="10"
             step="1"
             x-bind:value="searchDepth"
             x-on:sl-input="updateSearchDepth($event)"
