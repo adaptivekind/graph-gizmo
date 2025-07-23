@@ -27,6 +27,7 @@ export interface EnrichedLinkDatum
 export interface EnrichedGraph {
   nodes: EnrichedNodeDatum[];
   links: EnrichedLinkDatum[];
+  rootId: string;
 }
 
 export interface InitialNodeValue {

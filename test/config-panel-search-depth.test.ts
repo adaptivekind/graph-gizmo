@@ -23,7 +23,12 @@ describe("Config Panel Search Depth Integration", () => {
 
   it("should demonstrate the search depth config panel workflow", () => {
     const graph = createTestGraph();
-    const enrichedGraph = createPresentationGraph("root", graph, {});
+    const enrichedGraph = createPresentationGraph(
+      "root",
+      graph,
+      {},
+      defaultConfiguration(),
+    );
 
     // Start with a configuration
     const config = defaultConfiguration({ viewWidth: 800, viewHeight: 600 });
@@ -33,13 +38,13 @@ describe("Config Panel Search Depth Integration", () => {
 
     // Test with default searchDepth (should be 1)
     const result1 = filterEnrichedGraphWithRoot(enrichedGraph, config);
-    const nodes1 = result1.filteredGraph.nodes.map((n) => n.id).sort();
+    const nodes1 = result1.nodes.map((n) => n.id).sort();
 
     // Now simulate user changing searchDepth to 0 via config panel
     config.searchDepth = 0;
 
     const result2 = filterEnrichedGraphWithRoot(enrichedGraph, config);
-    const nodes2 = result2.filteredGraph.nodes.map((n) => n.id).sort();
+    const nodes2 = result2.nodes.map((n) => n.id).sort();
 
     // The results should be different
     expect(nodes1).not.toEqual(nodes2);
@@ -54,7 +59,12 @@ describe("Config Panel Search Depth Integration", () => {
 
   it("should show that changing config searchDepth affects filtering", () => {
     const graph = createTestGraph();
-    const enrichedGraph = createPresentationGraph("root", graph, {});
+    const enrichedGraph = createPresentationGraph(
+      "root",
+      graph,
+      {},
+      defaultConfiguration(),
+    );
 
     // Test different searchDepth values
     const configDepth0 = { searchDepth: 0, searchQuery: "Target" };
@@ -65,9 +75,9 @@ describe("Config Panel Search Depth Integration", () => {
     const result1 = filterEnrichedGraphWithRoot(enrichedGraph, configDepth1);
     const result2 = filterEnrichedGraphWithRoot(enrichedGraph, configDepth2);
 
-    const count0 = result0.filteredGraph.nodes.length;
-    const count1 = result1.filteredGraph.nodes.length;
-    const count2 = result2.filteredGraph.nodes.length;
+    const count0 = result0.nodes.length;
+    const count1 = result1.nodes.length;
+    const count2 = result2.nodes.length;
 
     // Higher depth should include same or more nodes
     expect(count1).toBeGreaterThanOrEqual(count0);

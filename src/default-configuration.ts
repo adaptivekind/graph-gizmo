@@ -16,7 +16,7 @@ const linkDepthForceWeight = (link: EnrichedLink) =>
         : 0.08 * link.value;
 
 const defaultConfiguration = (
-  config: Partial<GraphConfiguration>,
+  config: Partial<GraphConfiguration> = {},
 ): GraphConfiguration => {
   const viewHeight = config.viewHeight || 100;
   const viewWidth = config.viewWidth || 100;

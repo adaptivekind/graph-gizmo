@@ -12,10 +12,7 @@ import { Graph, builder } from "@adaptivekind/graph-schema";
 import { addConfigPanelStyles, createConfigPanel } from "./config-panel";
 import { applySimulation, createSimulation } from "./simulation";
 
-import {
-  createPresentationGraph,
-  filterEnrichedGraphWithRoot,
-} from "./presentation-graph";
+import { createPresentationGraph } from "./presentation-graph";
 import { createUpdateConfig } from "./update-config";
 import defaultConfiguration from "./default-configuration";
 import { renderDebugPanel } from "./debug";
@@ -79,9 +76,12 @@ const update = (
     };
   });
 
-  const enrichedGraph = createPresentationGraph(start, graph, initialValues);
-  const filterResult = filterEnrichedGraphWithRoot(enrichedGraph, config);
-  const filteredGraph = filterResult.filteredGraph;
+  const enrichedGraph = createPresentationGraph(
+    start,
+    graph,
+    initialValues,
+    config,
+  );
 
   function click(
     this: SVGElement,
@@ -97,7 +97,7 @@ const update = (
   container
     .selectAll<SVGLineElement, EnrichedLinkDatum>(".link")
     .data(
-      filteredGraph.links,
+      enrichedGraph.links,
       (d: EnrichedLinkDatum) => `${d.source}|${d.target}`,
     )
     .join(
@@ -116,7 +116,7 @@ const update = (
     );
 
   nodes
-    .data(filteredGraph.nodes, (d: EnrichedNodeDatum) => d.id)
+    .data(enrichedGraph.nodes, (d: EnrichedNodeDatum) => d.id)
     .join(
       (entry) => {
         const group = entry
@@ -180,7 +180,7 @@ const update = (
 
   return applySimulation(
     config,
-    filteredGraph,
+    enrichedGraph,
     container,
     simulation,
     firstTime,
@@ -264,18 +264,15 @@ const render = (
       currentRoot,
       actualGraph,
       {},
-    );
-    const filterResult = filterEnrichedGraphWithRoot(
-      presentationGraph,
       fullConfig,
     );
 
     // If a root is suggested and it exists in the graph, change to it
     if (
-      filterResult.suggestedRootId &&
-      actualGraph.nodes[filterResult.suggestedRootId]
+      presentationGraph.rootId &&
+      actualGraph.nodes[presentationGraph.rootId]
     ) {
-      currentRoot = filterResult.suggestedRootId;
+      currentRoot = presentationGraph.rootId;
     }
 
     update(

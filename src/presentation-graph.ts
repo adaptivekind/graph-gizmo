@@ -1,4 +1,9 @@
-import { EnrichedGraph, EnrichedNodeDatum, InitialNodeValueMap } from "./types";
+import {
+  EnrichedGraph,
+  EnrichedNodeDatum,
+  GraphConfiguration,
+  InitialNodeValueMap,
+} from "./types";
 import { Graph, Link } from "@adaptivekind/graph-schema";
 import { getDistance } from "./distance";
 
@@ -87,17 +92,12 @@ const getNodesWithinDepth = (
   return result;
 };
 
-export interface FilterResult {
-  filteredGraph: EnrichedGraph;
-  suggestedRootId?: string;
-}
-
 export const filterEnrichedGraphWithRoot = (
   graph: EnrichedGraph,
   config: { searchDepth: number; searchQuery: string },
-): FilterResult => {
+): EnrichedGraph => {
   if (!config.searchQuery || config.searchQuery.trim() === "") {
-    return { filteredGraph: graph };
+    return graph;
   }
 
   const matchingNodes = graph.nodes.filter((node) =>
@@ -138,25 +138,17 @@ export const filterEnrichedGraphWithRoot = (
   });
 
   return {
-    filteredGraph: {
-      nodes: filteredNodes,
-      links: filteredLinks,
-    },
-    suggestedRootId,
+    nodes: filteredNodes,
+    links: filteredLinks,
+    rootId: suggestedRootId || graph.rootId,
   };
-};
-
-export const filterEnrichedGraph = (
-  graph: EnrichedGraph,
-  config: { searchDepth: number; searchQuery: string },
-): EnrichedGraph => {
-  return filterEnrichedGraphWithRoot(graph, config).filteredGraph;
 };
 
 export const createPresentationGraph = (
   root: string,
   graph: Graph,
   initalValues: InitialNodeValueMap,
+  config: GraphConfiguration,
 ): EnrichedGraph => {
   const idsInView = [
     ...Object.keys(graph.nodes),
@@ -195,19 +187,25 @@ export const createPresentationGraph = (
     {},
   );
 
-  return {
-    nodes: nodes,
-    links: graph.links.map((link: Link) => {
-      const depth = Math.min(
-        nodesMap[link.source].depth,
-        nodesMap[link.target].depth,
-      );
-      return {
-        source: nodesMap[link.source],
-        target: nodesMap[link.target],
-        value: (link.weights?.value || 0.5) / (1 + depth),
-        depth,
-      };
-    }),
-  };
+  const links = graph.links.map((link: Link) => {
+    const depth = Math.min(
+      nodesMap[link.source].depth,
+      nodesMap[link.target].depth,
+    );
+    return {
+      source: nodesMap[link.source],
+      target: nodesMap[link.target],
+      value: (link.weights?.value || 0.5) / (1 + depth),
+      depth,
+    };
+  });
+
+  return filterEnrichedGraphWithRoot(
+    {
+      nodes,
+      links,
+      rootId: root,
+    },
+    config,
+  );
 };
