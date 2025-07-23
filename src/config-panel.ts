@@ -28,12 +28,20 @@ export interface ConfigPanelOptions {
   graph: Graph;
   onConfigChange: (config: Partial<GraphConfiguration>) => void;
   onSearchChange?: (searchQuery: string) => void;
+  onPinRootNode?: () => void;
 }
 
 export const createConfigPanel = async (
   options: ConfigPanelOptions,
 ): Promise<void> => {
-  const { config, container, graph, onConfigChange, onSearchChange } = options;
+  const {
+    config,
+    container,
+    graph,
+    onConfigChange,
+    onSearchChange,
+    onPinRootNode,
+  } = options;
 
   if (!config.configPanel) {
     return;
@@ -161,6 +169,16 @@ export const createConfigPanel = async (
             x-on:sl-input="updateVelocityDecay($event)"
           ></sl-range>
           <span class="config-value" x-text="velocityDecay"></span>
+        </div>
+        <div class="config-item">
+          <label>Graph Layout</label>
+          <sl-button
+            variant="primary"
+            size="small"
+            x-on:click="pinRootNode()"
+          >
+            Pin Root to Center
+          </sl-button>
         </div>
       </div>
     </div>
@@ -293,6 +311,12 @@ export const createConfigPanel = async (
         this.showSuggestions = false;
         this.selectedSuggestionIndex = -1;
       }, 150);
+    },
+
+    pinRootNode() {
+      if (onPinRootNode) {
+        onPinRootNode();
+      }
     },
   });
 };

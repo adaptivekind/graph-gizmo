@@ -286,6 +286,27 @@ const render = (
     updateWithSearch(fullConfig.searchQuery),
   );
 
+  function pinRootNodeToCenter(): void {
+    const nodes = canvas.selectAll<SVGElement, EnrichedNodeDatum>(".group");
+
+    // Pin the current root node to center
+    nodes.data().forEach((node: EnrichedNodeDatum) => {
+      if (node.id === currentRoot) {
+        node.fx = 0;
+        node.fy = 0;
+      } else {
+        // Unpin other nodes
+        delete node.fx;
+        delete node.fy;
+      }
+    });
+
+    // Update visual state and restart simulation
+    nodes.classed("fixed", (d: EnrichedNodeDatum) => d.fx !== undefined);
+
+    simulation.alpha(0.3).restart();
+  }
+
   update(
     fullConfig,
     canvas,
@@ -305,6 +326,7 @@ const render = (
       updateConfig(configUpdate);
     },
     onSearchChange: updateWithSearch,
+    onPinRootNode: pinRootNodeToCenter,
   });
 
   return simulation;
