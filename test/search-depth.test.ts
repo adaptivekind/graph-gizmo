@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import {
-  createEnrichedGraph,
+  createPresentationGraph,
   filterEnrichedGraphWithRoot,
 } from "../src/presentation-graph";
 import { Graph } from "@adaptivekind/graph-schema";
@@ -37,7 +37,7 @@ describe("Search Depth Functionality", () => {
   describe("filterEnrichedGraphWithRoot with different search depths", () => {
     it("should include only direct matches with searchDepth = 0", () => {
       const graph = createMultiLevelGraph();
-      const enrichedGraph = createEnrichedGraph("root", graph, {});
+      const enrichedGraph = createPresentationGraph("root", graph, {});
       const config = createMockConfig(0);
 
       const result = filterEnrichedGraphWithRoot(enrichedGraph, config);
@@ -49,7 +49,7 @@ describe("Search Depth Functionality", () => {
 
     it("should include matches + 1 level with searchDepth = 1", () => {
       const graph = createMultiLevelGraph();
-      const enrichedGraph = createEnrichedGraph("root", graph, {});
+      const enrichedGraph = createPresentationGraph("root", graph, {});
       const config = createMockConfig(1);
 
       const result = filterEnrichedGraphWithRoot(enrichedGraph, config);
@@ -65,7 +65,7 @@ describe("Search Depth Functionality", () => {
 
     it("should include matches + 2 levels with searchDepth = 2", () => {
       const graph = createMultiLevelGraph();
-      const enrichedGraph = createEnrichedGraph("root", graph, {});
+      const enrichedGraph = createPresentationGraph("root", graph, {});
 
       const result = filterEnrichedGraphWithRoot(
         enrichedGraph,
@@ -82,7 +82,7 @@ describe("Search Depth Functionality", () => {
 
     it("should demonstrate different results for same search with different depths", () => {
       const graph = createMultiLevelGraph();
-      const enrichedGraph = createEnrichedGraph("root", graph, {});
+      const enrichedGraph = createPresentationGraph("root", graph, {});
 
       const result1 = filterEnrichedGraphWithRoot(
         enrichedGraph,
@@ -108,7 +108,7 @@ describe("Search Depth Functionality", () => {
   describe("Integration test with GraphConfiguration", () => {
     it("should use searchDepth from GraphConfiguration object", () => {
       const graph = createMultiLevelGraph();
-      const enrichedGraph = createEnrichedGraph("root", graph, {});
+      const enrichedGraph = createPresentationGraph("root", graph, {});
 
       // Test with a partial GraphConfiguration that includes searchDepth and searchQuery
       const configWithDepth1 = {

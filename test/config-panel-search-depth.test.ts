@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import {
-  createEnrichedGraph,
+  createPresentationGraph,
   filterEnrichedGraphWithRoot,
 } from "../src/presentation-graph";
 import { Graph } from "@adaptivekind/graph-schema";
@@ -23,7 +23,7 @@ describe("Config Panel Search Depth Integration", () => {
 
   it("should demonstrate the search depth config panel workflow", () => {
     const graph = createTestGraph();
-    const enrichedGraph = createEnrichedGraph("root", graph, {});
+    const enrichedGraph = createPresentationGraph("root", graph, {});
 
     // Start with a configuration
     const config = defaultConfiguration({ viewWidth: 800, viewHeight: 600 });
@@ -54,7 +54,7 @@ describe("Config Panel Search Depth Integration", () => {
 
   it("should show that changing config searchDepth affects filtering", () => {
     const graph = createTestGraph();
-    const enrichedGraph = createEnrichedGraph("root", graph, {});
+    const enrichedGraph = createPresentationGraph("root", graph, {});
 
     // Test different searchDepth values
     const configDepth0 = { searchDepth: 0, searchQuery: "Target" };

@@ -13,7 +13,7 @@ import { addConfigPanelStyles, createConfigPanel } from "./config-panel";
 import { applySimulation, createSimulation } from "./simulation";
 
 import {
-  createEnrichedGraph,
+  createPresentationGraph,
   filterEnrichedGraphWithRoot,
 } from "./presentation-graph";
 import { createUpdateConfig } from "./update-config";
@@ -79,7 +79,7 @@ const update = (
     };
   });
 
-  const enrichedGraph = createEnrichedGraph(start, graph, initialValues);
+  const enrichedGraph = createPresentationGraph(start, graph, initialValues);
   const filterResult = filterEnrichedGraphWithRoot(enrichedGraph, config);
   const filteredGraph = filterResult.filteredGraph;
 
@@ -260,8 +260,15 @@ const render = (
     fullConfig.searchQuery = searchQuery;
 
     // Determine if there should be a root change based on search
-    const enrichedGraph = createEnrichedGraph(currentRoot, actualGraph, {});
-    const filterResult = filterEnrichedGraphWithRoot(enrichedGraph, fullConfig);
+    const presentationGraph = createPresentationGraph(
+      currentRoot,
+      actualGraph,
+      {},
+    );
+    const filterResult = filterEnrichedGraphWithRoot(
+      presentationGraph,
+      fullConfig,
+    );
 
     // If a root is suggested and it exists in the graph, change to it
     if (

@@ -1,9 +1,9 @@
 import "@testing-library/jest-dom";
 import { EnrichedNodeDatum, InitialNodeValueMap } from "../src/types";
 import { Graph } from "@adaptivekind/graph-schema";
-import { createEnrichedGraph } from "../src/presentation-graph";
+import { createPresentationGraph } from "../src/presentation-graph";
 
-describe("createEnrichedGraph", () => {
+describe("createPresentationGraph", () => {
   const createTestGraph = (): Graph => ({
     nodes: {
       root: { label: "Root Node", weights: { value: 1.0 } },
@@ -28,7 +28,7 @@ describe("createEnrichedGraph", () => {
   describe("node creation", () => {
     it("should create enriched nodes from graph nodes", () => {
       const graph = createTestGraph();
-      const result = createEnrichedGraph("root", graph, {});
+      const result = createPresentationGraph("root", graph, {});
 
       expect(result.nodes).toHaveLength(4);
       expect(result.nodes.map((n) => n.id)).toEqual([
@@ -41,7 +41,7 @@ describe("createEnrichedGraph", () => {
 
     it("should set correct labels for nodes", () => {
       const graph = createTestGraph();
-      const result = createEnrichedGraph("root", graph, {});
+      const result = createPresentationGraph("root", graph, {});
 
       const rootNode = result.nodes.find((n) => n.id === "root");
       expect(rootNode?.label).toBe("Root Node");
@@ -57,7 +57,7 @@ describe("createEnrichedGraph", () => {
         },
         links: [],
       };
-      const result = createEnrichedGraph("noLabel", graph, {});
+      const result = createPresentationGraph("noLabel", graph, {});
 
       const node = result.nodes.find((n) => n.id === "noLabel");
       expect(node?.label).toBe("noLabel");
@@ -65,7 +65,7 @@ describe("createEnrichedGraph", () => {
 
     it("should calculate correct depth for nodes", () => {
       const graph = createTestGraph();
-      const result = createEnrichedGraph("root", graph, {});
+      const result = createPresentationGraph("root", graph, {});
 
       const rootNode = result.nodes.find((n) => n.id === "root");
       expect(rootNode?.depth).toBe(0);
@@ -79,7 +79,7 @@ describe("createEnrichedGraph", () => {
 
     it("should set wanted flag correctly", () => {
       const graph = createTestGraph();
-      const result = createEnrichedGraph("root", graph, {});
+      const result = createPresentationGraph("root", graph, {});
 
       result.nodes.forEach((node) => {
         expect(node.wanted).toBe(false);
@@ -95,7 +95,7 @@ describe("createEnrichedGraph", () => {
           { source: "existing", target: "missing", weights: { value: 0.5 } },
         ],
       };
-      const result = createEnrichedGraph("existing", graph, {});
+      const result = createPresentationGraph("existing", graph, {});
 
       const existingNode = result.nodes.find((n) => n.id === "existing");
       expect(existingNode?.wanted).toBe(false);
@@ -107,7 +107,7 @@ describe("createEnrichedGraph", () => {
 
     it("should calculate node values based on weights and depth", () => {
       const graph = createTestGraph();
-      const result = createEnrichedGraph("root", graph, {});
+      const result = createPresentationGraph("root", graph, {});
 
       const rootNode = result.nodes.find((n) => n.id === "root");
       expect(rootNode?.value).toBe(1.0 / (1 + 0)); // weight / (1 + depth)
@@ -126,7 +126,7 @@ describe("createEnrichedGraph", () => {
         },
         links: [],
       };
-      const result = createEnrichedGraph("noWeight", graph, {});
+      const result = createPresentationGraph("noWeight", graph, {});
 
       const node = result.nodes.find((n) => n.id === "noWeight");
       expect(node?.value).toBe(0.5 / (1 + 0)); // default weight 0.5 / (1 + depth)
@@ -134,7 +134,7 @@ describe("createEnrichedGraph", () => {
 
     it("should fix root node coordinates", () => {
       const graph = createTestGraph();
-      const result = createEnrichedGraph("root", graph, {});
+      const result = createPresentationGraph("root", graph, {});
 
       const rootNode = result.nodes.find((n) => n.id === "root");
       expect(rootNode?.fx).toBe(0);
@@ -143,7 +143,7 @@ describe("createEnrichedGraph", () => {
 
     it("should not fix non-root node coordinates", () => {
       const graph = createTestGraph();
-      const result = createEnrichedGraph("root", graph, {});
+      const result = createPresentationGraph("root", graph, {});
 
       const child1Node = result.nodes.find((n) => n.id === "child1");
       expect(child1Node?.fx).toBeUndefined();
@@ -156,7 +156,7 @@ describe("createEnrichedGraph", () => {
         child1: { x: 100, y: 200, fx: 150, fy: 250 },
         child2: { vx: 10, vy: 20 },
       };
-      const result = createEnrichedGraph("root", graph, initialValues);
+      const result = createPresentationGraph("root", graph, initialValues);
 
       const child1Node = result.nodes.find((n) => n.id === "child1");
       expect(child1Node?.x).toBe(100);
@@ -171,7 +171,7 @@ describe("createEnrichedGraph", () => {
 
     it("should set showLabel to true for all nodes", () => {
       const graph = createTestGraph();
-      const result = createEnrichedGraph("root", graph, {});
+      const result = createPresentationGraph("root", graph, {});
 
       result.nodes.forEach((node) => {
         expect(node.showLabel).toBe(true);
@@ -182,14 +182,14 @@ describe("createEnrichedGraph", () => {
   describe("link creation", () => {
     it("should create enriched links from graph links", () => {
       const graph = createTestGraph();
-      const result = createEnrichedGraph("root", graph, {});
+      const result = createPresentationGraph("root", graph, {});
 
       expect(result.links).toHaveLength(3);
     });
 
     it("should set correct source and target node references", () => {
       const graph = createTestGraph();
-      const result = createEnrichedGraph("root", graph, {});
+      const result = createPresentationGraph("root", graph, {});
 
       const firstLink = result.links[0];
       expect(firstLink.source).toBeDefined();
@@ -200,7 +200,7 @@ describe("createEnrichedGraph", () => {
 
     it("should set link values from weights", () => {
       const graph = createTestGraph();
-      const result = createEnrichedGraph("root", graph, {});
+      const result = createPresentationGraph("root", graph, {});
 
       const firstLink = result.links[0];
       expect(firstLink.value).toBe(0.9);
@@ -217,14 +217,14 @@ describe("createEnrichedGraph", () => {
         },
         links: [{ source: "node1", target: "node2" }],
       };
-      const result = createEnrichedGraph("node1", graph, {});
+      const result = createPresentationGraph("node1", graph, {});
 
       expect(result.links[0].value).toBe(0.5);
     });
 
     it("should calculate link depth as minimum of source and target depths", () => {
       const graph = createTestGraph();
-      const result = createEnrichedGraph("root", graph, {});
+      const result = createPresentationGraph("root", graph, {});
 
       const rootToChild1Link = result.links.find(
         (link) =>
@@ -254,7 +254,7 @@ describe("createEnrichedGraph", () => {
           { source: "node2", target: "node1", weights: { value: 0.5 } },
         ],
       };
-      const result = createEnrichedGraph("node1", graph, {});
+      const result = createPresentationGraph("node1", graph, {});
 
       expect(result.nodes).toHaveLength(2);
       expect(result.nodes.map((n) => n.id).sort()).toEqual(["node1", "node2"]);
@@ -264,7 +264,7 @@ describe("createEnrichedGraph", () => {
   describe("edge cases", () => {
     it("should handle single node graph", () => {
       const graph = createMinimalGraph();
-      const result = createEnrichedGraph("single", graph, {});
+      const result = createPresentationGraph("single", graph, {});
 
       expect(result.nodes).toHaveLength(1);
       expect(result.links).toHaveLength(0);
@@ -274,7 +274,7 @@ describe("createEnrichedGraph", () => {
 
     it("should handle empty graph", () => {
       const graph: Graph = { nodes: {}, links: [] };
-      const result = createEnrichedGraph("nonexistent", graph, {});
+      const result = createPresentationGraph("nonexistent", graph, {});
 
       expect(result.nodes).toHaveLength(0);
       expect(result.links).toHaveLength(0);
@@ -291,7 +291,7 @@ describe("createEnrichedGraph", () => {
           { source: "root", target: "connected", weights: { value: 0.5 } },
         ],
       };
-      const result = createEnrichedGraph("root", graph, {});
+      const result = createPresentationGraph("root", graph, {});
 
       expect(result.nodes).toHaveLength(3);
       expect(result.links).toHaveLength(1);
@@ -311,7 +311,7 @@ describe("createEnrichedGraph", () => {
           { source: "node2", target: "node1", weights: { value: 0.5 } },
         ],
       };
-      const result = createEnrichedGraph("node1", graph, {});
+      const result = createPresentationGraph("node1", graph, {});
 
       expect(result.nodes).toHaveLength(2);
       expect(result.links).toHaveLength(2);
@@ -336,7 +336,7 @@ describe("createEnrichedGraph", () => {
         ],
       };
 
-      const result = createEnrichedGraph("start", graph, {});
+      const result = createPresentationGraph("start", graph, {});
       expect(result.nodes).toHaveLength(3);
       expect(result.links).toHaveLength(2);
     });

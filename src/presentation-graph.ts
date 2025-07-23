@@ -153,7 +153,7 @@ export const filterEnrichedGraph = (
   return filterEnrichedGraphWithRoot(graph, config).filteredGraph;
 };
 
-export const createEnrichedGraph = (
+export const createPresentationGraph = (
   root: string,
   graph: Graph,
   initalValues: InitialNodeValueMap,
