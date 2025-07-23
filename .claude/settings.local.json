@@ -9,7 +9,8 @@
       "Bash(npm run build:*)",
       "Bash(npm start)",
       "Bash(npm run test:*)",
-      "Bash(npx prettier:*)"
+      "Bash(npx prettier:*)",
+      "Bash(npm run lint:*)"
     ],
     "deny": []
   }

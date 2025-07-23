@@ -67,7 +67,6 @@ const update = (
   ) => void,
   firstTime = false,
   searchQuery = "",
-  searchDepth = 1,
 ) => {
   const nodes = container.selectAll<SVGElement, EnrichedNodeDatum>(".group");
 
@@ -85,7 +84,7 @@ const update = (
   const filterResult = filterEnrichedGraphWithRoot(
     enrichedGraph,
     searchQuery,
-    searchDepth,
+    config,
   );
   const filteredGraph = filterResult.filteredGraph;
 
@@ -243,7 +242,6 @@ const render = (
   const simulation = createSimulation(fullConfig, canvas);
 
   let currentSearchQuery = "";
-  let currentSearchDepth = 1;
   let currentRoot = config.rootNode || Object.keys(actualGraph.nodes)[0];
 
   function updateEvent(
@@ -262,22 +260,18 @@ const render = (
       updateEvent,
       false,
       currentSearchQuery,
-      currentSearchDepth,
     );
   }
 
-  const updateConfig = createUpdateConfig(fullConfig, simulation);
-
-  function updateWithSearch(searchQuery: string, searchDepth: number): void {
+  function updateWithSearch(searchQuery: string): void {
     currentSearchQuery = searchQuery;
-    currentSearchDepth = searchDepth;
 
     // Determine if there should be a root change based on search
     const enrichedGraph = createEnrichedGraph(currentRoot, actualGraph, {});
     const filterResult = filterEnrichedGraphWithRoot(
       enrichedGraph,
       searchQuery,
-      searchDepth,
+      fullConfig,
     );
 
     // If a root is suggested and it exists in the graph, change to it
@@ -297,9 +291,12 @@ const render = (
       updateEvent,
       false,
       searchQuery,
-      searchDepth,
     );
   }
+
+  const updateConfig = createUpdateConfig(fullConfig, simulation, () =>
+    updateWithSearch(currentSearchQuery),
+  );
 
   update(
     fullConfig,
@@ -310,7 +307,6 @@ const render = (
     updateEvent,
     true,
     currentSearchQuery,
-    currentSearchDepth,
   );
 
   // Create the configuration panel

@@ -7,9 +7,16 @@ import {
 } from "./types";
 
 export const createUpdateConfig =
-  (fullConfig: GraphConfiguration, simulation: GraphSimulation) =>
+  (
+    fullConfig: GraphConfiguration,
+    simulation: GraphSimulation,
+    onSearchDepthChange: () => void,
+  ) =>
   (configUpdate: Partial<GraphConfiguration>) => {
     const updatedConfig = { ...fullConfig, ...configUpdate };
+
+    // Update the fullConfig object with new values
+    Object.assign(fullConfig, configUpdate);
 
     // Update link force if changed
     if (configUpdate.linkForceFactor !== undefined) {
@@ -56,6 +63,11 @@ export const createUpdateConfig =
     // Update velocity decay if changed
     if (configUpdate.velocityDecay !== undefined) {
       simulation.velocityDecay(updatedConfig.velocityDecay);
+    }
+
+    // Handle search depth changes
+    if (configUpdate.searchDepth !== undefined) {
+      onSearchDepthChange();
     }
 
     // Restart the simulation with new forces

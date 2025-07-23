@@ -95,7 +95,7 @@ export interface FilterResult {
 export const filterEnrichedGraphWithRoot = (
   graph: EnrichedGraph,
   searchQuery: string,
-  searchDepth: number = 1,
+  config: { searchDepth: number },
 ): FilterResult => {
   if (!searchQuery || searchQuery.trim() === "") {
     return { filteredGraph: graph };
@@ -123,7 +123,7 @@ export const filterEnrichedGraphWithRoot = (
   const nodeIdsWithDepth = getNodesWithinDepth(
     graph,
     matchingNodeIds,
-    searchDepth,
+    config.searchDepth,
   );
 
   const filteredNodes = graph.nodes.filter((node) =>
@@ -150,10 +150,9 @@ export const filterEnrichedGraphWithRoot = (
 export const filterEnrichedGraph = (
   graph: EnrichedGraph,
   searchQuery: string,
-  searchDepth: number = 1,
+  config: { searchDepth: number },
 ): EnrichedGraph => {
-  return filterEnrichedGraphWithRoot(graph, searchQuery, searchDepth)
-    .filteredGraph;
+  return filterEnrichedGraphWithRoot(graph, searchQuery, config).filteredGraph;
 };
 
 export const createEnrichedGraph = (

@@ -65,6 +65,7 @@ export interface GraphConfiguration {
   minDimension: number;
   rightBoundary: number;
   rootNode?: string;
+  searchDepth: number;
   topBoundary: number;
   velocityDecay: number;
   viewHeight: number;

@@ -46,6 +46,7 @@ const defaultConfiguration = (
       maxNodes,
       minDimension,
       rightBoundary: viewWidth / 2 - boundarySize,
+      searchDepth: 1,
       topBoundary: -yOffset + boundarySize,
       velocityDecay: 0.2,
       viewHeight,

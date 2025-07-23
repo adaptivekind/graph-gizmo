@@ -27,7 +27,7 @@ export interface ConfigPanelOptions {
   container: Element;
   graph: Graph;
   onConfigChange: (config: Partial<GraphConfiguration>) => void;
-  onSearchChange?: (searchQuery: string, searchDepth: number) => void;
+  onSearchChange?: (searchQuery: string) => void;
 }
 
 export const createConfigPanel = async (
@@ -175,7 +175,7 @@ export const createConfigPanel = async (
     alphaDecay: config.alphaDecay,
     velocityDecay: config.velocityDecay,
     searchQuery: "",
-    searchDepth: 1,
+    searchDepth: config.searchDepth,
     suggestions: [],
     selectedSuggestionIndex: -1,
     showSuggestions: false,
@@ -215,7 +215,7 @@ export const createConfigPanel = async (
       this.searchQuery = value;
       this.updateSuggestions(value);
       if (onSearchChange) {
-        onSearchChange(value, this.searchDepth);
+        onSearchChange(value);
       }
     },
 
@@ -236,8 +236,9 @@ export const createConfigPanel = async (
     updateSearchDepth(event: CustomEvent) {
       const value = parseInt((event.target as HTMLInputElement).value);
       this.searchDepth = value;
+      onConfigChange({ searchDepth: value });
       if (onSearchChange) {
-        onSearchChange(this.searchQuery, value);
+        onSearchChange(this.searchQuery);
       }
     },
 
@@ -281,7 +282,7 @@ export const createConfigPanel = async (
       this.showSuggestions = false;
       this.selectedSuggestionIndex = -1;
       if (onSearchChange) {
-        onSearchChange(this.searchQuery, this.searchDepth);
+        onSearchChange(this.searchQuery);
       }
     },
 
