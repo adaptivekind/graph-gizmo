@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom";
-import { EnrichedNodeDatum, InitialNodeValueMap } from "./types";
+import { EnrichedNodeDatum, InitialNodeValueMap } from "../src/types";
 import { Graph } from "@adaptivekind/graph-schema";
-import { createEnrichedGraph } from "./presentation-graph";
+import { createEnrichedGraph } from "../src/presentation-graph";
 
 describe("createEnrichedGraph", () => {
   const createTestGraph = (): Graph => ({

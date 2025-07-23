@@ -1,7 +1,7 @@
 import { builder } from "@adaptivekind/graph-schema";
 import { findAllByText } from "@testing-library/dom";
 
-import render from "./render";
+import render from "../src/render";
 
 describe("render graph", () => {
   it("should render OK", async () => {

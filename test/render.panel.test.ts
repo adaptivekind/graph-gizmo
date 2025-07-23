@@ -1,7 +1,7 @@
 import { findByRole, findByText } from "@testing-library/dom";
 import { builder } from "@adaptivekind/graph-schema";
 
-import render from "./render";
+import render from "../src/render";
 
 describe("render graph", () => {
   it("should render OK", async () => {

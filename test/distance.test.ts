@@ -1,4 +1,4 @@
-import { UNCONNECTED_DISTANCE, getDistance } from "./distance";
+import { UNCONNECTED_DISTANCE, getDistance } from "../src/distance";
 import { builder } from "@adaptivekind/graph-schema";
 
 describe("getDistance", () => {

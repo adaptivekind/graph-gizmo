@@ -16,5 +16,5 @@
     "strict": true,
     "target": "es2020"
   },
-  "include": ["src/**/*.ts", "../core/src/**/*.ts", "../types/src/**/*.ts"]
+  "include": ["src/**/*.ts", "test/**/*.test.ts"]
 }
