@@ -64,9 +64,11 @@ export interface GraphConfiguration {
   loadShoelace: boolean;
   maxNodes: number;
   minDimension: number;
+  pinRootNode: boolean;
   rightBoundary: number;
   rootNode?: string;
   searchDepth: number;
+  searchPanel: boolean;
   searchQuery: string;
   topBoundary: number;
   velocityDecay: number;

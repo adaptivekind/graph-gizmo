@@ -162,7 +162,8 @@ export const createDisplayGraph = (
     ...idsInView.map((id: string) => {
       const node = graph.nodes[id];
       const depth = getDepth(id);
-      const fixedCoordinates = depth == 0 ? { fx: 0, fy: 0 } : {};
+      const fixedCoordinates =
+        depth == 0 && config.pinRootNode !== false ? { fx: 0, fy: 0 } : {};
       return {
         id: id,
         label: node?.label || id,

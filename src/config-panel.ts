@@ -1,6 +1,5 @@
 import { Graph } from "@adaptivekind/graph-schema";
 import { GraphConfiguration } from "./types";
-import { findMatchingNodes } from "./suggestions";
 import { loadShoelaceAndAlpine } from "./dynamic-loader";
 
 declare global {
@@ -11,13 +10,8 @@ declare global {
       centerForceFactor: number;
       alphaDecay: number;
       velocityDecay: number;
-      searchQuery: string;
       searchDepth: number;
-      suggestions: Array<{ id: string; label: string }>;
-      selectedSuggestionIndex: number;
-      showSuggestions: boolean;
-      updateSuggestions: (query: string) => void;
-      selectSuggestion: (suggestion: { id: string; label: string }) => void;
+      pinRootNode: boolean;
     };
   }
 }
@@ -27,21 +21,13 @@ export interface ConfigPanelOptions {
   container: Element;
   graph: Graph;
   onConfigChange: (config: Partial<GraphConfiguration>) => void;
-  onSearchChange?: (searchQuery: string) => void;
   onPinRootNode?: () => void;
 }
 
 export const createConfigPanel = async (
   options: ConfigPanelOptions,
 ): Promise<void> => {
-  const {
-    config,
-    container,
-    graph,
-    onConfigChange,
-    onSearchChange,
-    onPinRootNode,
-  } = options;
+  const { config, container, onConfigChange, onPinRootNode } = options;
 
   if (!config.configPanel) {
     return;
@@ -68,36 +54,6 @@ export const createConfigPanel = async (
         <h3>Graph Configuration</h3>
       </div>
       <div class="config-panel-content">
-        <div class="config-item">
-          <label for="searchBox">Search Nodes</label>
-          <div class="search-container">
-            <sl-input
-              id="searchBox"
-              placeholder="Type to filter nodes..."
-              clearable
-              x-bind:value="searchQuery"
-              x-on:sl-input="updateSearch($event)"
-              x-on:keydown="handleKeyDown($event)"
-              x-on:focus="showSuggestions = true"
-              x-on:blur="handleBlur()"
-            ></sl-input>
-            <div 
-              class="suggestions-dropdown" 
-              x-show="showSuggestions && suggestions.length > 0"
-              x-transition
-            >
-              <template x-for="(suggestion, index) in suggestions" :key="suggestion.id">
-                <div 
-                  class="suggestion-item"
-                  x-bind:class="{ 'selected': index === selectedSuggestionIndex }"
-                  x-on:click="selectSuggestion(suggestion)"
-                  x-on:mouseenter="selectedSuggestionIndex = index"
-                  x-text="suggestion.label || suggestion.id"
-                ></div>
-              </template>
-            </div>
-          </div>
-        </div>
         <div class="config-item">
           <label for="searchDepth">Search Depth</label>
           <sl-range
@@ -172,13 +128,21 @@ export const createConfigPanel = async (
         </div>
         <div class="config-item">
           <label>Graph Layout</label>
-          <sl-button
-            variant="primary"
-            size="small"
-            x-on:click="pinRootNode()"
-          >
-            Pin Root to Center
-          </sl-button>
+          <div class="layout-controls">
+            <sl-switch
+              x-bind:checked="pinRootNode"
+              x-on:sl-change="updatePinRootNode($event)"
+            >
+              Pin Root to Center
+            </sl-switch>
+            <sl-button
+              variant="primary"
+              size="small"
+              x-on:click="pinRootNodeToCenter()"
+            >
+              Pin Root Now
+            </sl-button>
+          </div>
         </div>
       </div>
     </div>
@@ -192,11 +156,8 @@ export const createConfigPanel = async (
     centerForceFactor: config.centerForceFactor,
     alphaDecay: config.alphaDecay,
     velocityDecay: config.velocityDecay,
-    searchQuery: config.searchQuery,
     searchDepth: config.searchDepth,
-    suggestions: [],
-    selectedSuggestionIndex: -1,
-    showSuggestions: false,
+    pinRootNode: config.pinRootNode,
 
     updateLinkForce(event: CustomEvent) {
       const value = parseFloat((event.target as HTMLInputElement).value);
@@ -228,92 +189,19 @@ export const createConfigPanel = async (
       onConfigChange({ velocityDecay: value });
     },
 
-    updateSearch(event: CustomEvent) {
-      const value = (event.target as HTMLInputElement).value;
-      this.searchQuery = value;
-      onConfigChange({ searchQuery: value });
-      this.updateSuggestions(value);
-      if (onSearchChange) {
-        onSearchChange(value);
-      }
-    },
-
-    updateSuggestions(query: string) {
-      if (!query || query.trim() === "") {
-        this.suggestions = [];
-        this.showSuggestions = false;
-        return;
-      }
-
-      const matchingNodes = findMatchingNodes(graph, query);
-
-      this.suggestions = matchingNodes;
-      this.selectedSuggestionIndex = -1;
-      this.showSuggestions = matchingNodes.length > 0;
-    },
-
     updateSearchDepth(event: CustomEvent) {
       const value = parseInt((event.target as HTMLInputElement).value);
       this.searchDepth = value;
       onConfigChange({ searchDepth: value });
-      if (onSearchChange) {
-        onSearchChange(this.searchQuery);
-      }
     },
 
-    handleKeyDown(event: KeyboardEvent) {
-      if (!this.showSuggestions || this.suggestions.length === 0) {
-        return;
-      }
-
-      switch (event.key) {
-        case "ArrowDown":
-          event.preventDefault();
-          this.selectedSuggestionIndex = Math.min(
-            this.selectedSuggestionIndex + 1,
-            this.suggestions.length - 1,
-          );
-          break;
-        case "ArrowUp":
-          event.preventDefault();
-          this.selectedSuggestionIndex = Math.max(
-            this.selectedSuggestionIndex - 1,
-            0,
-          );
-          break;
-        case "Enter":
-          event.preventDefault();
-          if (this.selectedSuggestionIndex >= 0) {
-            const suggestion = this.suggestions[this.selectedSuggestionIndex];
-            this.selectSuggestion(suggestion);
-          }
-          break;
-        case "Escape":
-          event.preventDefault();
-          this.showSuggestions = false;
-          this.selectedSuggestionIndex = -1;
-          break;
-      }
+    updatePinRootNode(event: CustomEvent) {
+      const checked = (event.target as HTMLInputElement).checked;
+      this.pinRootNode = checked;
+      onConfigChange({ pinRootNode: checked });
     },
 
-    selectSuggestion(suggestion: { id: string; label: string }) {
-      this.searchQuery = suggestion.label || suggestion.id;
-      onConfigChange({ searchQuery: this.searchQuery });
-      this.showSuggestions = false;
-      this.selectedSuggestionIndex = -1;
-      if (onSearchChange) {
-        onSearchChange(this.searchQuery);
-      }
-    },
-
-    handleBlur() {
-      setTimeout(() => {
-        this.showSuggestions = false;
-        this.selectedSuggestionIndex = -1;
-      }, 150);
-    },
-
-    pinRootNode() {
+    pinRootNodeToCenter() {
       if (onPinRootNode) {
         onPinRootNode();
       }
@@ -378,46 +266,15 @@ export const addConfigPanelStyles = (): void => {
     sl-range {
       width: 100%;
     }
-
-    .search-container {
-      position: relative;
+    
+    .layout-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
-
-    .suggestions-dropdown {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      background: white;
-      border: 1px solid #ddd;
-      border-top: none;
-      border-radius: 0 0 4px 4px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      z-index: 1000;
-      max-height: 200px;
-      overflow-y: auto;
-    }
-
-    .suggestion-item {
-      padding: 8px 12px;
-      cursor: pointer;
-      border-bottom: 1px solid #eee;
-      font-size: 14px;
-      color: #333;
-      transition: background-color 0.2s;
-    }
-
-    .suggestion-item:last-child {
-      border-bottom: none;
-    }
-
-    .suggestion-item:hover,
-    .suggestion-item.selected {
-      background-color: #f0f0f0;
-    }
-
-    .suggestion-item.selected {
-      background-color: #e3f2fd;
+    
+    .layout-controls sl-switch {
+      margin-bottom: 4px;
     }
   `;
   document.head.appendChild(style);

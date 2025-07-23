@@ -10,6 +10,7 @@ import {
 } from "./types";
 import { Graph, builder } from "@adaptivekind/graph-schema";
 import { addConfigPanelStyles, createConfigPanel } from "./config-panel";
+import { addSearchPanelStyles, createSearchPanel } from "./search-panel";
 import { applySimulation, createSimulation } from "./simulation";
 
 import { createDisplayGraph } from "./display-graph";
@@ -188,8 +189,9 @@ const render = (
   providedContainer?: Element,
   callback: (name: string, event: MouseEvent) => void = () => {},
 ) => {
-  // Add config panel styles
+  // Add panel styles
   addConfigPanelStyles();
+  addSearchPanelStyles();
 
   const width = window ? window.innerWidth : 100;
   const height = window ? window.innerHeight : 100;
@@ -263,11 +265,14 @@ const render = (
     );
 
     // If a root is suggested and it exists in the graph, change to it
+    let rootChanged = false;
     if (
       presentationGraph.rootId &&
       actualGraph.nodes[presentationGraph.rootId]
     ) {
+      const previousRoot = currentRoot;
       currentRoot = presentationGraph.rootId;
+      rootChanged = currentRoot !== previousRoot;
     }
 
     update(
@@ -279,6 +284,13 @@ const render = (
       updateEvent,
       false,
     );
+
+    // If pinRootNode is enabled and root changed from search, pin the new root
+    if (fullConfig.pinRootNode && rootChanged) {
+      setTimeout(() => {
+        pinRootNodeToCenter();
+      }, 0);
+    }
   }
 
   const updateConfig = createUpdateConfig(fullConfig, simulation, () =>
@@ -324,8 +336,15 @@ const render = (
     onConfigChange: (configUpdate) => {
       updateConfig(configUpdate);
     },
-    onSearchChange: updateWithSearch,
     onPinRootNode: pinRootNodeToCenter,
+  });
+
+  // Create the search panel
+  createSearchPanel({
+    config: fullConfig,
+    container,
+    graph: actualGraph,
+    onSearchChange: updateWithSearch,
   });
 
   return simulation;
