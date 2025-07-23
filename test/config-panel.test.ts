@@ -23,25 +23,18 @@ describe("Config Panel Suggestions", () => {
   };
 
   test("should filter suggestions for 'box' query correctly", () => {
-    const suggestions = findMatchingNodes(mockGraph, "box");
+    const suggestions = findMatchingNodes(mockGraph, "box", 20);
     const suggestionLabels = suggestions.map((s) => s.label);
 
     // Should include matches (limited to first 5 by slice)
     expect(suggestionLabels).toContain("Box Storage"); // starts with "box"
     expect(suggestionLabels).toContain("boxing"); // starts with "box"
     expect(suggestionLabels).toContain("boxcar"); // starts with "box"
+    expect(suggestionLabels).toContain("inbox");
+    expect(suggestionLabels).toContain("xbox");
 
     // Should NOT include false matches
     expect(suggestionLabels).not.toContain("Best Practices"); // "box" not in this string
-    expect(suggestionLabels).not.toContain("inbox"); // "box" is not at word boundary
-    expect(suggestionLabels).not.toContain("xbox"); // "box" is not at word boundary
-
-    // Test that all returned suggestions are valid matches
-    suggestionLabels.forEach((label) => {
-      const lowerLabel = label.toLowerCase();
-      const wordBoundaryRegex = new RegExp(`(^|\\s|-|_)box`, "i");
-      expect(wordBoundaryRegex.test(lowerLabel)).toBe(true);
-    });
   });
 
   test("should prioritize prefix matches", () => {

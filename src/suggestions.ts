@@ -1,6 +1,6 @@
 import { Graph } from "@adaptivekind/graph-schema";
 
-export const findMatchingNodes = (graph: Graph, query: string) => {
+export const findMatchingNodes = (graph: Graph, query: string, max = 5) => {
   const lowerQuery = query.toLowerCase().trim();
   return Object.entries(graph.nodes)
     .filter(([id, node]) => {
@@ -54,7 +54,7 @@ export const findMatchingNodes = (graph: Graph, query: string) => {
       // Then sort alphabetically
       return aLabel.localeCompare(bLabel);
     })
-    .slice(0, 5)
+    .slice(0, max)
     .map(([id, node]) => ({
       id,
       label: node?.label || id,
