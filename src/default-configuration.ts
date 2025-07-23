@@ -47,6 +47,7 @@ const defaultConfiguration = (
       minDimension,
       rightBoundary: viewWidth / 2 - boundarySize,
       searchDepth: 1,
+      searchQuery: "",
       topBoundary: -yOffset + boundarySize,
       velocityDecay: 0.2,
       viewHeight,

@@ -94,22 +94,21 @@ export interface FilterResult {
 
 export const filterEnrichedGraphWithRoot = (
   graph: EnrichedGraph,
-  searchQuery: string,
-  config: { searchDepth: number },
+  config: { searchDepth: number; searchQuery: string },
 ): FilterResult => {
-  if (!searchQuery || searchQuery.trim() === "") {
+  if (!config.searchQuery || config.searchQuery.trim() === "") {
     return { filteredGraph: graph };
   }
 
   const matchingNodes = graph.nodes.filter((node) =>
-    nodeMatchesSearch(node, searchQuery),
+    nodeMatchesSearch(node, config.searchQuery),
   );
 
   let suggestedRootId: string | undefined;
 
   // Check for exact match first
   const exactMatches = matchingNodes.filter((node) =>
-    nodeExactlyMatches(node, searchQuery),
+    nodeExactlyMatches(node, config.searchQuery),
   );
 
   if (exactMatches.length === 1) {
@@ -149,10 +148,9 @@ export const filterEnrichedGraphWithRoot = (
 
 export const filterEnrichedGraph = (
   graph: EnrichedGraph,
-  searchQuery: string,
-  config: { searchDepth: number },
+  config: { searchDepth: number; searchQuery: string },
 ): EnrichedGraph => {
-  return filterEnrichedGraphWithRoot(graph, searchQuery, config).filteredGraph;
+  return filterEnrichedGraphWithRoot(graph, config).filteredGraph;
 };
 
 export const createEnrichedGraph = (

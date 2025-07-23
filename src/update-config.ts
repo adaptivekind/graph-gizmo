@@ -10,7 +10,7 @@ export const createUpdateConfig =
   (
     fullConfig: GraphConfiguration,
     simulation: GraphSimulation,
-    onSearchDepthChange: () => void,
+    onSearchChange: () => void,
   ) =>
   (configUpdate: Partial<GraphConfiguration>) => {
     const updatedConfig = { ...fullConfig, ...configUpdate };
@@ -65,9 +65,12 @@ export const createUpdateConfig =
       simulation.velocityDecay(updatedConfig.velocityDecay);
     }
 
-    // Handle search depth changes
-    if (configUpdate.searchDepth !== undefined) {
-      onSearchDepthChange();
+    // Handle search changes (depth or query)
+    if (
+      configUpdate.searchDepth !== undefined ||
+      configUpdate.searchQuery !== undefined
+    ) {
+      onSearchChange();
     }
 
     // Restart the simulation with new forces

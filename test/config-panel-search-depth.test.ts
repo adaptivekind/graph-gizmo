@@ -29,24 +29,16 @@ describe("Config Panel Search Depth Integration", () => {
     const config = defaultConfiguration({ viewWidth: 800, viewHeight: 600 });
 
     // Simulate user searches for "Target"
-    const searchQuery = "Target";
+    config.searchQuery = "Target";
 
     // Test with default searchDepth (should be 1)
-    const result1 = filterEnrichedGraphWithRoot(
-      enrichedGraph,
-      searchQuery,
-      config,
-    );
+    const result1 = filterEnrichedGraphWithRoot(enrichedGraph, config);
     const nodes1 = result1.filteredGraph.nodes.map((n) => n.id).sort();
 
     // Now simulate user changing searchDepth to 0 via config panel
     config.searchDepth = 0;
 
-    const result2 = filterEnrichedGraphWithRoot(
-      enrichedGraph,
-      searchQuery,
-      config,
-    );
+    const result2 = filterEnrichedGraphWithRoot(enrichedGraph, config);
     const nodes2 = result2.filteredGraph.nodes.map((n) => n.id).sort();
 
     // The results should be different
@@ -64,28 +56,14 @@ describe("Config Panel Search Depth Integration", () => {
     const graph = createTestGraph();
     const enrichedGraph = createEnrichedGraph("root", graph, {});
 
-    const searchQuery = "Target";
-
     // Test different searchDepth values
-    const configDepth0 = { searchDepth: 0 };
-    const configDepth1 = { searchDepth: 1 };
-    const configDepth2 = { searchDepth: 2 };
+    const configDepth0 = { searchDepth: 0, searchQuery: "Target" };
+    const configDepth1 = { searchDepth: 1, searchQuery: "Target" };
+    const configDepth2 = { searchDepth: 2, searchQuery: "Target" };
 
-    const result0 = filterEnrichedGraphWithRoot(
-      enrichedGraph,
-      searchQuery,
-      configDepth0,
-    );
-    const result1 = filterEnrichedGraphWithRoot(
-      enrichedGraph,
-      searchQuery,
-      configDepth1,
-    );
-    const result2 = filterEnrichedGraphWithRoot(
-      enrichedGraph,
-      searchQuery,
-      configDepth2,
-    );
+    const result0 = filterEnrichedGraphWithRoot(enrichedGraph, configDepth0);
+    const result1 = filterEnrichedGraphWithRoot(enrichedGraph, configDepth1);
+    const result2 = filterEnrichedGraphWithRoot(enrichedGraph, configDepth2);
 
     const count0 = result0.filteredGraph.nodes.length;
     const count1 = result1.filteredGraph.nodes.length;

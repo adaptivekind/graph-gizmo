@@ -26,8 +26,12 @@ describe("Search Depth Functionality", () => {
     ],
   });
 
-  const createMockConfig = (searchDepth: number): { searchDepth: number } => ({
+  const createMockConfig = (
+    searchDepth: number,
+    searchQuery: string = "Beta",
+  ): { searchDepth: number; searchQuery: string } => ({
     searchDepth,
+    searchQuery,
   });
 
   describe("filterEnrichedGraphWithRoot with different search depths", () => {
@@ -36,7 +40,7 @@ describe("Search Depth Functionality", () => {
       const enrichedGraph = createEnrichedGraph("root", graph, {});
       const config = createMockConfig(0);
 
-      const result = filterEnrichedGraphWithRoot(enrichedGraph, "Beta", config);
+      const result = filterEnrichedGraphWithRoot(enrichedGraph, config);
 
       // With searchDepth = 0, only nodes matching "Beta" should be included
       const nodeIds = result.filteredGraph.nodes.map((n) => n.id).sort();
@@ -48,7 +52,7 @@ describe("Search Depth Functionality", () => {
       const enrichedGraph = createEnrichedGraph("root", graph, {});
       const config = createMockConfig(1);
 
-      const result = filterEnrichedGraphWithRoot(enrichedGraph, "Beta", config);
+      const result = filterEnrichedGraphWithRoot(enrichedGraph, config);
 
       // With searchDepth = 1, should include "beta" and its direct connections
       const nodeIds = result.filteredGraph.nodes.map((n) => n.id).sort();
@@ -62,12 +66,10 @@ describe("Search Depth Functionality", () => {
     it("should include matches + 2 levels with searchDepth = 2", () => {
       const graph = createMultiLevelGraph();
       const enrichedGraph = createEnrichedGraph("root", graph, {});
-      const config = createMockConfig(2);
 
       const result = filterEnrichedGraphWithRoot(
         enrichedGraph,
-        "Gamma",
-        config,
+        createMockConfig(2, "Gamma"),
       );
 
       // With searchDepth = 2, should include "gamma" and nodes up to 2 levels away
@@ -84,14 +86,12 @@ describe("Search Depth Functionality", () => {
 
       const result1 = filterEnrichedGraphWithRoot(
         enrichedGraph,
-        "Gamma",
-        createMockConfig(1),
+        createMockConfig(1, "Gamma"),
       );
 
       const result2 = filterEnrichedGraphWithRoot(
         enrichedGraph,
-        "Gamma",
-        createMockConfig(2),
+        createMockConfig(2, "Gamma"),
       );
 
       const nodes1 = result1.filteredGraph.nodes.map((n) => n.id).sort();
@@ -110,19 +110,23 @@ describe("Search Depth Functionality", () => {
       const graph = createMultiLevelGraph();
       const enrichedGraph = createEnrichedGraph("root", graph, {});
 
-      // Test with a partial GraphConfiguration that includes searchDepth
-      const configWithDepth1 = { searchDepth: 1 } as GraphConfiguration;
-      const configWithDepth2 = { searchDepth: 2 } as GraphConfiguration;
+      // Test with a partial GraphConfiguration that includes searchDepth and searchQuery
+      const configWithDepth1 = {
+        searchDepth: 1,
+        searchQuery: "Gamma",
+      } as GraphConfiguration;
+      const configWithDepth2 = {
+        searchDepth: 2,
+        searchQuery: "Gamma",
+      } as GraphConfiguration;
 
       const result1 = filterEnrichedGraphWithRoot(
         enrichedGraph,
-        "Gamma",
         configWithDepth1,
       );
 
       const result2 = filterEnrichedGraphWithRoot(
         enrichedGraph,
-        "Gamma",
         configWithDepth2,
       );
 

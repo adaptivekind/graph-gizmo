@@ -174,7 +174,7 @@ export const createConfigPanel = async (
     centerForceFactor: config.centerForceFactor,
     alphaDecay: config.alphaDecay,
     velocityDecay: config.velocityDecay,
-    searchQuery: "",
+    searchQuery: config.searchQuery,
     searchDepth: config.searchDepth,
     suggestions: [],
     selectedSuggestionIndex: -1,
@@ -213,6 +213,7 @@ export const createConfigPanel = async (
     updateSearch(event: CustomEvent) {
       const value = (event.target as HTMLInputElement).value;
       this.searchQuery = value;
+      onConfigChange({ searchQuery: value });
       this.updateSuggestions(value);
       if (onSearchChange) {
         onSearchChange(value);
@@ -279,6 +280,7 @@ export const createConfigPanel = async (
 
     selectSuggestion(suggestion: { id: string; label: string }) {
       this.searchQuery = suggestion.label || suggestion.id;
+      onConfigChange({ searchQuery: this.searchQuery });
       this.showSuggestions = false;
       this.selectedSuggestionIndex = -1;
       if (onSearchChange) {
