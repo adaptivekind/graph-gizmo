@@ -12,6 +12,7 @@ declare global {
       velocityDecay: number;
       searchDepth: number;
       pinRootNode: boolean;
+      isExpanded: boolean;
     };
   }
 }
@@ -52,8 +53,16 @@ export const createConfigPanel = async (
     <div class="config-panel" x-data="configPanel()">
       <div class="config-panel-header">
         <h3>Graph Configuration</h3>
+        <sl-button
+          variant="text"
+          size="small"
+          x-on:click="togglePanel()"
+          class="toggle-button"
+        >
+          <sl-icon x-bind:name="isExpanded ? 'chevron-up' : 'chevron-down'"></sl-icon>
+        </sl-button>
       </div>
-      <div class="config-panel-content">
+      <div class="config-panel-content" x-show="isExpanded" x-transition>
         <div class="config-item">
           <label for="searchDepth">Search Depth</label>
           <sl-range
@@ -158,6 +167,7 @@ export const createConfigPanel = async (
     velocityDecay: config.velocityDecay,
     searchDepth: config.searchDepth,
     pinRootNode: config.pinRootNode,
+    isExpanded: false,
 
     updateLinkForce(event: CustomEvent) {
       const value = parseFloat((event.target as HTMLInputElement).value);
@@ -206,6 +216,10 @@ export const createConfigPanel = async (
         onPinRootNode();
       }
     },
+
+    togglePanel() {
+      this.isExpanded = !this.isExpanded;
+    },
   });
 };
 
@@ -230,6 +244,9 @@ export const addConfigPanelStyles = (): void => {
       border-bottom: 1px solid #eee;
       background: #f8f9fa;
       border-radius: 8px 8px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
     
     .config-panel-header h3 {
@@ -237,6 +254,15 @@ export const addConfigPanelStyles = (): void => {
       font-size: 16px;
       font-weight: 600;
       color: #333;
+    }
+    
+    .toggle-button {
+      --sl-color-neutral-700: #555;
+      --sl-color-neutral-600: #777;
+    }
+    
+    .toggle-button::part(base) {
+      padding: 4px;
     }
     
     .config-panel-content {
