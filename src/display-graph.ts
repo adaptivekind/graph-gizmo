@@ -169,7 +169,7 @@ export const createDisplayGraph = (
         label: node?.label || id,
         wanted: !(id in graph.nodes),
         showLabel: true,
-        value: (node?.weights?.value || 0.5) / (1 + depth),
+        value: (node?.weights?.value || 1) / (1 + depth),
         depth,
         ...fixedCoordinates,
         ...initalValues[id],
@@ -196,7 +196,7 @@ export const createDisplayGraph = (
     return {
       source: nodesMap[link.source],
       target: nodesMap[link.target],
-      value: (link.weights?.value || 0.5) / (1 + depth),
+      value: (link.weights?.value || 1) / (1 + depth),
       depth,
     };
   });

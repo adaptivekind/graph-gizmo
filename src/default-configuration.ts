@@ -1,6 +1,7 @@
 import { EnrichedLink, EnrichedNodeDatum, GraphConfiguration } from "./types";
 const DEPTH_1_RADIUS = 60;
 const boundarySize = DEPTH_1_RADIUS * 4;
+export const DEFAULT_CENTER_FORCE_FACTOR = 0.4;
 
 const linkTypeForceWeight = () => {
   return 1;
@@ -8,11 +9,11 @@ const linkTypeForceWeight = () => {
 
 const linkDepthForceWeight = (link: EnrichedLink) =>
   link.depth === 0
-    ? 1.0 * link.value
+    ? 3.0 * link.value
     : link.depth === 1
-      ? 1.0 * link.value
+      ? 2.0 * link.value
       : link.depth === 2
-        ? 0.15 * link.value
+        ? 0.55 * link.value
         : 0.08 * link.value;
 
 const defaultConfiguration = (
@@ -28,10 +29,10 @@ const defaultConfiguration = (
 
   return {
     ...{
-      alphaDecay: 0.03,
+      alphaDecay: 0.02,
       bottomBoundary: viewHeight - yOffset - boundarySize,
       boundarySize,
-      centerForceFactor: 0.8,
+      centerForceFactor: DEFAULT_CENTER_FORCE_FACTOR,
       chargeForceFactor: 2,
       configPanel: false,
       containerSelector: "#gizmo",
@@ -40,7 +41,7 @@ const defaultConfiguration = (
       dynamicLoad: !!(config.configPanel || config.searchPanel),
       heightText: 20,
       leftBoundary: -viewWidth / 2 + boundarySize,
-      linkForceFactor: 8,
+      linkForceFactor: 2,
       loadAlpine: !!(config.configPanel || config.searchPanel),
       loadShoelace: !!(config.configPanel || config.searchPanel),
       maxNodes,
@@ -51,7 +52,7 @@ const defaultConfiguration = (
       searchPanel: true,
       searchQuery: "",
       topBoundary: -yOffset + boundarySize,
-      velocityDecay: 0.2,
+      velocityDecay: 0.4,
       viewHeight,
       viewWidth,
       widthText: 1000,

@@ -54,7 +54,7 @@ function apply(d: EnrichedNodeDatum, box: number[], strength: number) {
       quad.data.vy = (quad.data.vy ?? 0) + deltaY / 2;
 
       // Move nodes horizonstally with less strength
-      const deltaX = (0.0005 * strength * xDistance * overlapX) / distance;
+      const deltaX = (0.00005 * strength * xDistance * overlapX) / distance;
       d.vx = (d.vx ?? 0) - deltaX / 2;
       quad.data.vx = (quad.data.vx ?? 0) + deltaX / 2;
 
@@ -63,7 +63,7 @@ function apply(d: EnrichedNodeDatum, box: number[], strength: number) {
   };
 }
 
-export default function (box: number[], strength = 0.2) {
+export default function (box: number[], strength = 0.8) {
   let nodes: EnrichedNodeDatum[];
   let iterations = 1;
   function force() {

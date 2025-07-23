@@ -118,7 +118,7 @@ describe("createPresentationGraph", () => {
           existing: { label: "Existing Node" },
         },
         links: [
-          { source: "existing", target: "missing", weights: { value: 0.5 } },
+          { source: "existing", target: "missing", weights: { value: 1 } },
         ],
       };
       const result = createDisplayGraph(
@@ -170,7 +170,7 @@ describe("createPresentationGraph", () => {
       );
 
       const node = result.nodes.find((n) => n.id === "noWeight");
-      expect(node?.value).toBe(0.5 / (1 + 0)); // default weight 0.5 / (1 + depth)
+      expect(node?.value).toBe(1 / (1 + 0)); // default weight 0.5 / (1 + depth)
     });
 
     it("should fix root node coordinates", () => {
@@ -300,7 +300,7 @@ describe("createPresentationGraph", () => {
         defaultConfiguration(),
       );
 
-      expect(result.links[0].value).toBe(0.5);
+      expect(result.links[0].value).toBe(1);
     });
 
     it("should calculate link depth as minimum of source and target depths", () => {
