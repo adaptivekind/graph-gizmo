@@ -1,7 +1,7 @@
 import * as d3 from "d3";
 import {
   Canvas,
-  EnrichedGraph,
+  DisplayGraph,
   EnrichedLinkDatum,
   EnrichedNodeDatum,
   GraphConfiguration,
@@ -80,7 +80,7 @@ export const createSimulation = (
 
 export const applySimulation = (
   config: GraphConfiguration,
-  graph: EnrichedGraph,
+  graph: DisplayGraph,
   canvas: Canvas,
   simulation: GraphSimulation,
   firstTime: boolean,

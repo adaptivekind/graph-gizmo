@@ -24,7 +24,7 @@ export interface EnrichedLinkDatum
   extends SimulationLinkDatum<EnrichedNodeDatum>,
     EnrichedLink {}
 
-export interface EnrichedGraph {
+export interface DisplayGraph {
   nodes: EnrichedNodeDatum[];
   links: EnrichedLinkDatum[];
   rootId: string;

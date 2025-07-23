@@ -1,8 +1,8 @@
 import "@testing-library/jest-dom";
 import {
-  createPresentationGraph,
-  filterEnrichedGraphWithRoot,
-} from "../src/presentation-graph";
+  createDisplayGraph,
+  filterDisplayGraphWithRoot,
+} from "../src/display-graph";
 import { Graph } from "@adaptivekind/graph-schema";
 import defaultConfiguration from "../src/default-configuration";
 
@@ -23,7 +23,7 @@ describe("Config Panel Search Depth Integration", () => {
 
   it("should demonstrate the search depth config panel workflow", () => {
     const graph = createTestGraph();
-    const enrichedGraph = createPresentationGraph(
+    const enrichedGraph = createDisplayGraph(
       "root",
       graph,
       {},
@@ -37,13 +37,13 @@ describe("Config Panel Search Depth Integration", () => {
     config.searchQuery = "Target";
 
     // Test with default searchDepth (should be 1)
-    const result1 = filterEnrichedGraphWithRoot(enrichedGraph, config);
+    const result1 = filterDisplayGraphWithRoot(enrichedGraph, config);
     const nodes1 = result1.nodes.map((n) => n.id).sort();
 
     // Now simulate user changing searchDepth to 0 via config panel
     config.searchDepth = 0;
 
-    const result2 = filterEnrichedGraphWithRoot(enrichedGraph, config);
+    const result2 = filterDisplayGraphWithRoot(enrichedGraph, config);
     const nodes2 = result2.nodes.map((n) => n.id).sort();
 
     // The results should be different
@@ -59,7 +59,7 @@ describe("Config Panel Search Depth Integration", () => {
 
   it("should show that changing config searchDepth affects filtering", () => {
     const graph = createTestGraph();
-    const enrichedGraph = createPresentationGraph(
+    const enrichedGraph = createDisplayGraph(
       "root",
       graph,
       {},
@@ -71,9 +71,9 @@ describe("Config Panel Search Depth Integration", () => {
     const configDepth1 = { searchDepth: 1, searchQuery: "Target" };
     const configDepth2 = { searchDepth: 2, searchQuery: "Target" };
 
-    const result0 = filterEnrichedGraphWithRoot(enrichedGraph, configDepth0);
-    const result1 = filterEnrichedGraphWithRoot(enrichedGraph, configDepth1);
-    const result2 = filterEnrichedGraphWithRoot(enrichedGraph, configDepth2);
+    const result0 = filterDisplayGraphWithRoot(enrichedGraph, configDepth0);
+    const result1 = filterDisplayGraphWithRoot(enrichedGraph, configDepth1);
+    const result2 = filterDisplayGraphWithRoot(enrichedGraph, configDepth2);
 
     const count0 = result0.nodes.length;
     const count1 = result1.nodes.length;

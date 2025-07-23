@@ -1,8 +1,8 @@
 import "@testing-library/jest-dom";
 import {
-  createPresentationGraph,
-  filterEnrichedGraphWithRoot,
-} from "../src/presentation-graph";
+  createDisplayGraph,
+  filterDisplayGraphWithRoot,
+} from "../src/display-graph";
 import { Graph } from "@adaptivekind/graph-schema";
 import { GraphConfiguration } from "../src/types";
 import { defaultConfiguration } from "../src";
@@ -39,7 +39,7 @@ describe("Search Depth Functionality", () => {
   describe("filterEnrichedGraphWithRoot with different search depths", () => {
     it("should include only direct matches with searchDepth = 0", () => {
       const graph = createMultiLevelGraph();
-      const enrichedGraph = createPresentationGraph(
+      const enrichedGraph = createDisplayGraph(
         "root",
         graph,
         {},
@@ -47,7 +47,7 @@ describe("Search Depth Functionality", () => {
       );
       const config = createMockConfig(0);
 
-      const result = filterEnrichedGraphWithRoot(enrichedGraph, config);
+      const result = filterDisplayGraphWithRoot(enrichedGraph, config);
 
       // With searchDepth = 0, only nodes matching "Beta" should be included
       const nodeIds = result.nodes.map((n) => n.id).sort();
@@ -56,7 +56,7 @@ describe("Search Depth Functionality", () => {
 
     it("should include matches + 1 level with searchDepth = 1", () => {
       const graph = createMultiLevelGraph();
-      const enrichedGraph = createPresentationGraph(
+      const enrichedGraph = createDisplayGraph(
         "root",
         graph,
         {},
@@ -64,7 +64,7 @@ describe("Search Depth Functionality", () => {
       );
       const config = createMockConfig(1);
 
-      const result = filterEnrichedGraphWithRoot(enrichedGraph, config);
+      const result = filterDisplayGraphWithRoot(enrichedGraph, config);
 
       // With searchDepth = 1, should include "beta" and its direct connections
       const nodeIds = result.nodes.map((n) => n.id).sort();
@@ -77,7 +77,7 @@ describe("Search Depth Functionality", () => {
 
     it("should include matches + 2 levels with searchDepth = 2", () => {
       const graph = createMultiLevelGraph();
-      const enrichedGraph = createPresentationGraph(
+      const enrichedGraph = createDisplayGraph(
         "root",
         graph,
         {},

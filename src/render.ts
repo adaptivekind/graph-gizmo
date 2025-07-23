@@ -12,7 +12,7 @@ import { Graph, builder } from "@adaptivekind/graph-schema";
 import { addConfigPanelStyles, createConfigPanel } from "./config-panel";
 import { applySimulation, createSimulation } from "./simulation";
 
-import { createPresentationGraph } from "./presentation-graph";
+import { createDisplayGraph } from "./display-graph";
 import { createUpdateConfig } from "./update-config";
 import defaultConfiguration from "./default-configuration";
 import { renderDebugPanel } from "./debug";
@@ -76,12 +76,7 @@ const update = (
     };
   });
 
-  const enrichedGraph = createPresentationGraph(
-    start,
-    graph,
-    initialValues,
-    config,
-  );
+  const enrichedGraph = createDisplayGraph(start, graph, initialValues, config);
 
   function click(
     this: SVGElement,
@@ -260,7 +255,7 @@ const render = (
     fullConfig.searchQuery = searchQuery;
 
     // Determine if there should be a root change based on search
-    const presentationGraph = createPresentationGraph(
+    const presentationGraph = createDisplayGraph(
       currentRoot,
       actualGraph,
       {},

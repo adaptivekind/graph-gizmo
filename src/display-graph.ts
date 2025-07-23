@@ -1,5 +1,5 @@
 import {
-  EnrichedGraph,
+  DisplayGraph,
   EnrichedNodeDatum,
   GraphConfiguration,
   InitialNodeValueMap,
@@ -43,7 +43,7 @@ const nodeExactlyMatches = (
 };
 
 const getNodesWithinDepth = (
-  graph: EnrichedGraph,
+  graph: DisplayGraph,
   matchingNodeIds: Set<string>,
   depth: number,
 ): Set<string> => {
@@ -92,10 +92,10 @@ const getNodesWithinDepth = (
   return result;
 };
 
-export const filterEnrichedGraphWithRoot = (
-  graph: EnrichedGraph,
+export const filterDisplayGraphWithRoot = (
+  graph: DisplayGraph,
   config: { searchDepth: number; searchQuery: string },
-): EnrichedGraph => {
+): DisplayGraph => {
   if (!config.searchQuery || config.searchQuery.trim() === "") {
     return graph;
   }
@@ -144,12 +144,12 @@ export const filterEnrichedGraphWithRoot = (
   };
 };
 
-export const createPresentationGraph = (
+export const createDisplayGraph = (
   root: string,
   graph: Graph,
   initalValues: InitialNodeValueMap,
   config: GraphConfiguration,
-): EnrichedGraph => {
+): DisplayGraph => {
   const idsInView = [
     ...Object.keys(graph.nodes),
     ...graph.links.map((link) => [link.source, link.target]).flat(),
@@ -200,7 +200,7 @@ export const createPresentationGraph = (
     };
   });
 
-  return filterEnrichedGraphWithRoot(
+  return filterDisplayGraphWithRoot(
     {
       nodes,
       links,
