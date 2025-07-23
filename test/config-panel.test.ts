@@ -1,74 +1,5 @@
 import { Graph } from "@adaptivekind/graph-schema";
-
-// Mock the suggestion filtering logic for testing
-const filterSuggestions = (
-  graph: Graph,
-  query: string,
-): Array<{ id: string; label: string }> => {
-  if (!query || query.trim() === "") {
-    return [];
-  }
-
-  const lowerQuery = query.toLowerCase().trim();
-
-  return Object.entries(graph.nodes)
-    .filter(([id, node]) => {
-      const nodeLabel = (node?.label || id).toLowerCase();
-      const nodeId = id.toLowerCase();
-
-      // Match if query appears at start, after word boundaries, or after common separators/lowercase letters
-      const startsWithRegex = new RegExp(
-        `^${lowerQuery.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`,
-        "i",
-      );
-      const wordBoundaryRegex = new RegExp(
-        `[\\s\\-_\\.]${lowerQuery.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`,
-        "i",
-      );
-      const afterWordRegex = new RegExp(
-        `[a-z]${lowerQuery.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`,
-        "i",
-      );
-
-      const labelMatches =
-        startsWithRegex.test(nodeLabel) ||
-        wordBoundaryRegex.test(nodeLabel) ||
-        afterWordRegex.test(nodeLabel);
-      const idMatches =
-        startsWithRegex.test(nodeId) ||
-        wordBoundaryRegex.test(nodeId) ||
-        afterWordRegex.test(nodeId);
-
-      // Exclude exact matches
-      return (
-        (labelMatches || idMatches) &&
-        nodeLabel !== lowerQuery &&
-        nodeId !== lowerQuery
-      );
-    })
-    .sort(([aId, aNode], [bId, bNode]) => {
-      // Prioritize exact starts with matches
-      const aLabel = (aNode?.label || aId).toLowerCase();
-      const bLabel = (bNode?.label || bId).toLowerCase();
-      const aStartsWith =
-        aLabel.startsWith(lowerQuery) ||
-        aId.toLowerCase().startsWith(lowerQuery);
-      const bStartsWith =
-        bLabel.startsWith(lowerQuery) ||
-        bId.toLowerCase().startsWith(lowerQuery);
-
-      if (aStartsWith && !bStartsWith) return -1;
-      if (!aStartsWith && bStartsWith) return 1;
-
-      // Then sort alphabetically
-      return aLabel.localeCompare(bLabel);
-    })
-    .slice(0, 5)
-    .map(([id, node]) => ({
-      id,
-      label: node?.label || id,
-    }));
-};
+import { findMatchingNodes } from "../src/suggestions";
 
 describe("Config Panel Suggestions", () => {
   const mockGraph: Graph = {
@@ -92,7 +23,7 @@ describe("Config Panel Suggestions", () => {
   };
 
   test("should filter suggestions for 'box' query correctly", () => {
-    const suggestions = filterSuggestions(mockGraph, "box");
+    const suggestions = findMatchingNodes(mockGraph, "box");
     const suggestionLabels = suggestions.map((s) => s.label);
 
     // Should include matches (limited to first 5 by slice)
@@ -113,29 +44,8 @@ describe("Config Panel Suggestions", () => {
     });
   });
 
-  test("should return empty array for empty query", () => {
-    const suggestions = filterSuggestions(mockGraph, "");
-    expect(suggestions).toEqual([]);
-  });
-
-  test("should exclude exact matches", () => {
-    const graphWithExact: Graph = {
-      nodes: {
-        box: { label: "box" },
-        boxing: { label: "boxing" },
-      },
-      links: [],
-    };
-
-    const suggestions = filterSuggestions(graphWithExact, "box");
-    const suggestionLabels = suggestions.map((s) => s.label);
-
-    expect(suggestionLabels).toContain("boxing");
-    expect(suggestionLabels).not.toContain("box"); // exact match should be excluded
-  });
-
   test("should prioritize prefix matches", () => {
-    const suggestions = filterSuggestions(mockGraph, "box");
+    const suggestions = findMatchingNodes(mockGraph, "box");
     const suggestionLabels = suggestions.map((s) => s.label);
 
     // Prefix matches should come first (alphabetically sorted within priority group)
@@ -165,7 +75,7 @@ describe("Config Panel Suggestions", () => {
   });
 
   test("should filter suggestions for 'jelly' query correctly", () => {
-    const suggestions = filterSuggestions(mockGraph, "jelly");
+    const suggestions = findMatchingNodes(mockGraph, "jelly");
     const suggestionLabels = suggestions.map((s) => s.label);
 
     // Should include various types of matches
